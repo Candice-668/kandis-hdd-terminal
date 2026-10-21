@@ -1,10 +1,10 @@
-# Agent 战术大屏 · v3.0
+# Agent 战术大屏 · v4.0
 
-一个纯前端的 **AI 智能体调度可视化大屏**。v3.0 在 OPS 纸面工程与 SPIDER 蛛网战术之外，新增 WebGL 主题 NEURAL 神经星环。在同一个 HTML 页面里切换三款主题，展示任务流、智能体接力、质检、交付与 token 成本。
+一个纯前端的 **AI 智能体调度可视化大屏**。v4.0 新增 WebGL 主题 FACTORY 机器人工厂，用 3D 车间展示总工程拆解、工区接力与总装发射。在同一个 HTML 页面里切换 OPS、SPIDER、NEURAL、FACTORY 四款主题，展示任务流、智能体协作、质检、交付与模拟指标。
 
 单文件，无需构建、无需后端，双击即可打开，适合展厅、办公室电视或直播背景。
 
-> 页面中的任务、指标、token 与成本全部是**模拟示例数据**，由内置模拟器生成，并未连接真实 agent、账单或业务接口。真实数据接入需要自行改造，见「配置」一节。成本使用示例单价：输入 ¥2 / 百万 token、缓存命中 ¥0.5 / 百万 token、输出 ¥8 / 百万 token。
+> 页面中的任务、指标、token 与成本全部是**模拟示例数据**，由内置模拟器生成，并未连接真实 agent、账单或业务接口。真实数据接入需要自行改造，见「配置」一节。SPIDER、NEURAL、FACTORY 的 token 成本使用示例单价：输入 ¥2 / 百万 token、缓存命中 ¥0.5 / 百万 token、输出 ¥8 / 百万 token。
 
 ## 主题
 
@@ -13,10 +13,11 @@
 | 01 | OPS 纸面工程 | 纸面工程图 + 调度飞轮，可切粒子荧光 | `index.html#ops` |
 | 02 | SPIDER 蛛网战术 | 粉框作战室 + 巡检蛛 + token 账 + 交付飞轮 | `index.html#spider` |
 | 03 | NEURAL 神经星环 | 3D 神经团 + 任务脉冲 + HUD 星环 + token 账 | `index.html#neural` |
+| 04 | FACTORY 机器人工厂 | 3D 机器人车间 + 子板块接力 + 总装发射 | `index.html#factory` |
 
-点各主题的「主题 / 换主题」按钮打开主题面板，按 T 键依次轮换 OPS → SPIDER → NEURAL，按 Esc 关闭面板。选择保存在 localStorage；地址中的 `#ops`、`#spider` 或 `#neural` 优先于上次选择。没有有效选择记录时默认打开 SPIDER。
+点各主题的「主题 / 换主题」按钮打开主题面板，按 T 键依次轮换 OPS → SPIDER → NEURAL → FACTORY，按 Esc 关闭面板。选择保存在 localStorage；地址中的 `#ops`、`#spider`、`#neural` 或 `#factory` 优先于上次选择。没有有效选择记录时默认打开 SPIDER。
 
-每款主题运行在独立的 Shadow DOM 中，样式和元素 id 互不干扰。隐藏主题暂停主动画与主要模拟刷新，减少资源占用。三款主题和主题面板使用系列水印「DEVELOPED BY @赛博老爸」。主题面板另有「04 · 下一款」占位。
+每款主题运行在独立的 Shadow DOM 中，样式和元素 id 互不干扰。隐藏主题暂停主动画与主要模拟刷新，减少资源占用。四款主题和主题面板使用系列水印「DEVELOPED BY @赛博老爸」。主题面板另有「05 · 下一款」占位。
 
 ## 功能一览
 
@@ -56,13 +57,24 @@ three.js（WebGL）渲染的 3D agent 协同大屏。13 团神经元代表 CHIEF
 - **性能与适配**：辉光效果使用 UnrealBloom；持续低帧率时先降低清晰度，再减少粒子。画板随比例伸展，窄屏或竖屏使用只保留星环和三个核心数字的精简版。
 - **背景效果**：`AMBIENT` 控制背景粒子和流星，默认全部关闭，可按需调整。
 
-v3.0 三款主题均移除暂停按钮与空格键暂停；SPIDER 移除倍速按钮。系统开启「减少动态效果」时，大屏仍照常运行，部分 CSS 动画和故障闪烁仍会减少。
+### 04 · FACTORY 机器人工厂
+
+three.js（WebGL）渲染的整座 3D 机器人车间，以俯瞰视角展示「总工程 → 8 个子板块 → 工区接力 → 中央总装 → 发射」的模拟生产流程。
+
+- **总工程与总装**：双11 大促战役、智能投标交付、新品发布会、品牌出海计划轮流开工，每项拆成 8 个子板块，对应火箭、机甲、航天飞机、战斗机四种载具。子板块完成后由无人机吊装并入；全部并入后倒计时、点火发射，显示 LAUNCH SUCCESS，再开下一个工程。
+- **12 个工区与总调度室**：CHIEF 控制全局，检索、拆解、文案、设计、代码、测试、审校、数据、剪辑、投放、客服、归档机器人各有不同造型与专属机器。货箱沿双向传送带流转，外圈有 AGV 巡线，4 架无人机吊装，CRAWLER 沿传送带巡检。
+- **进度显示**：机器人旁的卡片显示岗位、动作、进度与当前子板块；中央总工程进度条列出 8 个子板块的待派、运输、加工、返工、吊装、已并入状态。倒计时与发射横幅出现时，卡片和总工程条变淡。
+- **五个底部面板**：TASK FLOW 子板块任务流、KPI 今日指标、LINE LOAD 工区负载、RADAR 车间雷达、EXEC 执行代码。指标包含总工程交付、本工程用时、子板块、审校通过率、算力与帧率，负载面板另有 OEE 环及交接曲线。
+- **视角与交互**：工具栏按钮或 V 键切换俯瞰、斜看、环绕、特写；拖动转视角、滚轮缩放；点击机器人拉近工区，按 Esc 返回；悬停查看详情。
+- **视觉与适配**：UnrealBloom 辉光与软阴影；持续低帧率时依次降低清晰度、关闭阴影。画面适配 16:10、1366×768 等比例；窄屏或竖屏精简为车间与总工程、子板块、今日交付三个数字。
+
+当前四款主题均无暂停按钮与空格键暂停；SPIDER 无倍速按钮。系统开启「减少动态效果」时，大屏仍照常运行，部分 CSS 动画和故障闪烁仍会减少。
 
 ## 快速开始
 
 ### 本地打开
 
-直接双击 `index.html`，用支持 Shadow DOM 和 Canvas 的现代 Chrome / Edge / Safari / Firefox 打开。NEURAL 的 3D 画面另需 WebGL 与可访问 jsDelivr 的网络，three.js 及后处理脚本会在首次切入时加载。
+直接双击 `index.html`，用支持 Shadow DOM 和 Canvas 的现代 Chrome / Edge / Safari / Firefox 打开。NEURAL 与 FACTORY 的 3D 画面另需 WebGL 与可访问 jsDelivr 的网络；首次切入其中任一款时加载共用的 three.js 及后处理脚本，成功加载后可供另一款复用。
 
 也可以任选一种方式启动静态服务器：
 
@@ -72,19 +84,19 @@ python3 -m http.server 8000
 npx serve .
 ```
 
-使用 Python 命令后访问 `http://localhost:8000`；使用 `npx serve .` 时访问终端显示的地址。加上 `#ops`、`#spider` 或 `#neural` 可直达主题。
+使用 Python 命令后访问 `http://localhost:8000`；使用 `npx serve .` 时访问终端显示的地址。加上 `#ops`、`#spider`、`#neural` 或 `#factory` 可直达主题。
 
 ### 部署到 GitHub Pages
 
 1. 将文件推送到 GitHub 仓库。
 2. 在仓库 Settings → Pages 中，将 Source 选为 `Deploy from a branch`，分支选 `main`，目录选 `/ (root)`。
-3. 等待部署完成，使用 Pages 设置页提供的地址访问；在地址末尾加 `#ops`、`#spider` 或 `#neural` 检查三款主题。
+3. 等待部署完成，使用 Pages 设置页提供的地址访问；在地址末尾加 `#ops`、`#spider`、`#neural` 或 `#factory` 检查四款主题。
 
 也可以部署到其他静态托管服务，无需安装运行时或构建项目。
 
 ### 放到大屏上
 
-在电脑或小主机上打开页面，使用浏览器全屏功能；常见快捷键为 F11（Mac 为 Ctrl+Cmd+F）。三款主题均提供「全屏」按钮。推荐 1920×1080 或更高分辨率。
+在电脑或小主机上打开页面，使用浏览器全屏功能；常见快捷键为 F11（Mac 为 Ctrl+Cmd+F）。四款主题均提供「全屏」按钮。推荐 1920×1080 或更高分辨率。
 
 ## 配置（换成你自己的数据）
 
@@ -104,7 +116,12 @@ npx serve .
 | `mountNeural(host, SR)` | `PRICE`、`TOKR`、`INR` | token 示例单价、各 agent 用量速率、输入占比 |
 | `mountNeural(host, SR)` | `DAY_TARGET`、`PER_MIN` | 今日产出目标、初始化历史交付量的每分钟基准 |
 | `mountNeural(host, SR)` | `AMBIENT` | 背景粒子与流星；`chatter`、`spark`、`meteor`、`burst` 默认均为 0 |
-| 系列外壳脚本 | `THREE_CDN`、`NEURAL_DEPS` | three.js CDN 基址及按需加载的脚本列表 |
+| `mountFactory(host, SR)` | `AG`、`WF`、`CH`、`CHECKS` | 机器人岗位、工作流、渠道与质检项 |
+| `mountFactory(host, SR)` | `PROJECTS` | 总工程名称、载具类型、8 个子板块及对应工作流索引 |
+| `mountFactory(host, SR)` | `VEH` | 载具类型、部件、尺寸与总装显示参数 |
+| `mountFactory(host, SR)` | `PRICE`、`TOKR`、`INR` | token 示例单价、用量速率、输入占比 |
+| `mountFactory(host, SR)` 的车间布局段 | `LOOP`、`ROAD`、`WS`、`MPT` | 主传送带、AGV 道路、工区与机器位置 |
+| 系列外壳脚本 | `THREE_CDN`、`THREE_DEPS` | 两款 3D 主题共用的 CDN 基址与按需脚本列表 |
 
 配色在对应 `<template>` 内的 `<style>` 中。OPS 使用 `:host` 定义纸面配色，使用 `:host([data-theme="dark"])` 和系统深色媒体查询定义粒子荧光配色；Canvas 从这些变量读取颜色。
 
@@ -115,6 +132,7 @@ npx serve .
 - **OPS**：`mountOps` 中的 `tasks`、`agents`、`wfs` 保存模拟状态，`step()` 每 900 毫秒更新，`renderAll()` 刷新面板。可替换模拟更新逻辑，将业务接口返回的数据映射到这些状态；日志可通过 `log(verb, task)` 追加，动作包括 `read`、`build`、`check`、`review`。
 - **SPIDER**：`mountSpider` 中的 `simStep(dt)` 驱动任务接力模拟，`tokenStep(dt)` 生成 token 用量；任务、角色、质检、账本和可视化相互关联。接入时需要将真实运行事件和用量记录映射到相应状态，并替换模拟推进与初始化数据，避免模拟值与真实指标混用。
 - **NEURAL**：`mountNeural` 内有独立的模拟状态与 `simStep(dt)`，维护任务、角色、信号脉冲及 token 状态。需要替换模拟初始化与推进逻辑，将真实事件映射到面板和 3D 信号。修改 SPIDER 的配置不会自动同步到 NEURAL。
+- **FACTORY**：`mountFactory` 的「3. 模拟」段维护总工程、子板块、货箱、工区与 token 状态，由 `simStep(dt)` 推进。接入需要将真实工程、工序交接、返工与交付事件映射到这些状态，替换示例初始化及模拟推进。`PROJECTS` 的 8 个子板块、工作流索引与 `VEH` 部件需保持对应关系。
 - `PRICE`、`TOKR`、`INR` 等参数的调整只会改变演示，不会自动接入真实账单或 agent 执行记录。
 
 ## 新增主题的步骤
@@ -127,11 +145,11 @@ npx serve .
 
 ## 技术说明
 
-- 单文件 HTML，无构建步骤。OPS 与 SPIDER 使用原生 JavaScript + CSS + Canvas 2D；NEURAL 使用 three.js（WebGL）与后处理效果。
+- 单文件 HTML，无构建步骤。OPS 与 SPIDER 使用原生 JavaScript + CSS + Canvas 2D；NEURAL 与 FACTORY 使用 three.js（WebGL）与后处理效果。
 - 系列外壳按需挂载主题；每款主题由 `<template>`、独立 Shadow DOM 与对应的 `mountXxx(host, SR)` 函数组成。选择保存在 localStorage 的 `agent-series-theme` 中。
-- **NEURAL 按需依赖**：首次切入神经星环时，从 `https://cdn.jsdelivr.net/npm/three@0.147.0/` 依次加载 `build/three.min.js`，以及 `examples/js` 下的 CopyShader、LuminosityHighPassShader、EffectComposer、RenderPass、ShaderPass、UnrealBloomPass。打开 OPS 或 SPIDER 时不会请求这组脚本。
-- **3D 故障提示**：依赖加载失败或无法初始化 WebGL 时，NEURAL 显示 3D 画面不可用的提示，数据面板仍可运行，OPS 与 SPIDER 不受影响。网络请求长时间无响应可能延迟初始化，恢复后可刷新重试。若仅辉光后处理不可用，源码会关闭辉光渲染。
-- 字体为 Archivo、JetBrains Mono、Noto Sans SC、Michroma，经 Google Fonts 加载。字体无法加载时回退至系统字体；完全离线使用需要自行本地化字体及 NEURAL 的依赖脚本。
+- **两款 3D 主题共用按需依赖**：首次切入 NEURAL 或 FACTORY 时，从 `https://cdn.jsdelivr.net/npm/three@0.147.0/` 依次加载 `build/three.min.js`，以及 `examples/js` 下的 CopyShader、LuminosityHighPassShader、EffectComposer、RenderPass、ShaderPass、UnrealBloomPass。两款 3D 主题使用同一份 `THREE_DEPS`，正常加载完成后可复用。建议首次加载完成后再切换另一款 3D 主题；加载中快速切换可能重复请求或缺少辉光，异常时刷新重试。打开 OPS 或 SPIDER 时不会请求这组脚本。
+- **3D 故障提示**：依赖加载失败或无法初始化 WebGL 时，对应的 3D 主题显示画面不可用的提示，数据面板仍可运行，OPS 与 SPIDER 不受影响。网络请求长时间无响应可能延迟初始化，恢复后可刷新重试。若仅辉光后处理不可用，源码会关闭辉光渲染。
+- 字体为 Archivo、JetBrains Mono、Noto Sans SC、Michroma、Big Shoulders Stencil Display（FACTORY 标题），经 Google Fonts 加载。字体无法加载时回退至系统字体；完全离线使用需要自行本地化字体及两款 3D 主题的依赖脚本。
 - 系统的 `prefers-reduced-motion` 设置不再让大屏默认停住；部分 CSS 动画及故障闪烁仍会降级。
 - OPS 的部分静态图层使用离屏画布缓存；荧光发光会增加渲染开销。不支持 Canvas 柔光或锥形渐变时，相关效果会降级。
 
@@ -139,7 +157,7 @@ npx serve .
 
 ```text
 agent-display/
-├── index.html          # 三款主题与系列外壳（HTML + CSS + JS）
+├── index.html          # 四款主题与系列外壳（HTML + CSS + JS）
 ├── README.md
 ├── CHANGELOG.md
 └── LICENSE             # MIT 许可证

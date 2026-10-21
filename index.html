@@ -3,7 +3,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800;900&family=JetBrains+Mono:wght@400;500;700;800&family=Michroma&family=Noto+Sans+SC:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800;900&family=Big+Shoulders+Stencil+Display:wght@900&family=JetBrains+Mono:wght@400;500;700;800&family=Michroma&family=Noto+Sans+SC:wght@400;500;700;900&display=swap">
 <style>
 /* Layout: 系列外壳 —— 每个主题是一块铺满视口的独立画面（各自的 Shadow DOM，样式和 id 互不干扰），外壳只负责切换和记住选择。
    主题自己的按钮里有「主题」入口，打开下面的选择面板；T 键快速轮换。外壳的面板固定用深色，盖在任何主题上都清楚。 */
@@ -38,6 +38,7 @@ body{background:var(--page);overflow:hidden}
 .sw-ops{background:radial-gradient(circle at -30% 55%,transparent 58%,#151515 58.6% 59.6%,transparent 60.2% 77%,#151515 77.6% 78.4%,transparent 79%),repeating-linear-gradient(-28deg,transparent 0 9px,rgba(21,21,21,.18) 9px 10px),#eeede8}
 .sw-spider{border:4px solid #ec4fae;background:linear-gradient(118deg,transparent 46%,#45e6f5 47% 48.5%,transparent 49.5%),linear-gradient(62deg,transparent 54%,#45e6f5 55% 56.5%,transparent 57.5%),radial-gradient(circle at 51% 50%,#ff3f8e 0 3px,transparent 3.5px),#0b0c12}
 .sw-neural{background:radial-gradient(circle at 50% 50%,rgba(240,246,255,.95) 0 2px,rgba(170,205,255,.45) 4px,rgba(120,160,220,.12) 10px,transparent 13px),radial-gradient(circle at 50% 50%,transparent 15px,rgba(220,236,255,.85) 15.5px 16.5px,transparent 17px 18.5px,rgba(220,236,255,.5) 19px 21px,transparent 21.5px 22.5px,rgba(220,236,255,.3) 23px 23.6px,transparent 24px),#04060b}
+.sw-factory{background:linear-gradient(90deg,transparent 10px,#ffc21a 10px 12px,transparent 12px 72px,#ffc21a 72px 74px,transparent 74px),linear-gradient(180deg,transparent 9px,#ffc21a 9px 11px,transparent 11px 37px,#ffc21a 37px 39px,transparent 39px),radial-gradient(ellipse 6px 12px at 50% 46%,#e6e9ee 0 60%,transparent 64%),linear-gradient(90deg,#2fd27a 0 8px,transparent 8px 76px,#3b7cff 76px),repeating-linear-gradient(90deg,#1a212b 0 10px,#151b23 10px 20px)}
 .tcard.next{cursor:default;border-style:dashed;opacity:.55}
 .tcard.next:hover{border-color:var(--sheet-line)}
 .sw-next{border:1px dashed var(--sheet-mute);background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(125,130,152,.15) 6px 7px)}
@@ -48,6 +49,7 @@ body{background:var(--page);overflow:hidden}
 <div class="th-host" id="host-ops" hidden></div>
 <div class="th-host" id="host-spider" hidden></div>
 <div class="th-host" id="host-neural" hidden></div>
+<div class="th-host" id="host-factory" hidden></div>
 
 <div class="picker" id="picker" hidden>
  <div class="pk" role="dialog" aria-modal="true" aria-labelledby="pkT">
@@ -56,7 +58,8 @@ body{background:var(--page);overflow:hidden}
    <button class="tcard" type="button" data-theme-id="ops"><span class="sw sw-ops" aria-hidden="true"></span><span class="tn"><b>01 · OPS 纸面工程</b><small>纸与墨的工程图 · 调度飞轮 · 可切粒子荧光</small></span><em>当前</em></button>
    <button class="tcard" type="button" data-theme-id="spider"><span class="sw sw-spider" aria-hidden="true"></span><span class="tn"><b>02 · SPIDER 蛛网战术</b><small>粉框作战室 · 巡检蛛 · token 账与交付飞轮</small></span><em>当前</em></button>
    <button class="tcard" type="button" data-theme-id="neural"><span class="sw sw-neural" aria-hidden="true"></span><span class="tn"><b>03 · NEURAL 神经星环</b><small>13 个神经团 · 突触脉冲派单 · HUD 星环</small></span><em>当前</em></button>
-   <div class="tcard next" aria-disabled="true"><span class="sw sw-next" aria-hidden="true"></span><span class="tn"><b>04 · 下一款</b><small>系列主题筹备中</small></span></div>
+   <button class="tcard" type="button" data-theme-id="factory"><span class="sw sw-factory" aria-hidden="true"></span><span class="tn"><b>04 · FACTORY 机器人工厂</b><small>整座 3D 车间 · 12 台机器人接力 · 总工程造完就发射</small></span><em>当前</em></button>
+   <div class="tcard next" aria-disabled="true"><span class="sw sw-next" aria-hidden="true"></span><span class="tn"><b>05 · 下一款</b><small>系列主题筹备中</small></span></div>
   </div>
   <div class="pk-f"><span>按 T 键直接轮换主题 · 选择会被记住</span><span>DEVELOPED BY @赛博老爸</span></div>
  </div>
@@ -730,6 +733,358 @@ body{background:var(--page);overflow:hidden}
 </div>
 <div class="tip" id="tip" hidden></div>
 <div class="glfail" id="glFail" hidden>这台设备的浏览器没法显示 3D 画面（WebGL 不可用），右侧数据照常在跑。换 Chrome / Edge 打开即可看到星环。</div>
+</template>
+
+<!-- ===== 主题 04 · FACTORY 机器人工厂 ===== -->
+<template id="tpl-factory">
+<style>
+/* Layout: 整屏就是一座 3D 车间 —— 中间总装区造总工程（火箭 / 机甲 / 航天飞机 / 战斗机轮流），四周 12 个工区各有一台不同造型的机器人和自己的机器，
+   货箱沿圆角矩形主传送带和支线在工区之间接力。每台机器人旁边挂一张小进度卡，总工程旁边竖着一根子板块进度条。
+   HUD 只占上下两条边：上边标题 / 最近动作 / 工具，下边指标条 + 日志。工业夜班配色：暗钢灰 + 警示黄，单一深色。 */
+:host{
+  color-scheme:dark;
+  --bg:#07090d; --ink:#e9edf0; --ink2:#aeb7c1; --mute:#6c7581; --dim:#3d4550;
+  --hair:rgba(220,230,240,.13); --hair2:rgba(220,230,240,.28);
+  --hz:#ffc21a; --hz-ink:#191304; --cyan:#45e6f5; --good:#3ce69a; --bad:#ff4d5e; --fire:#ff8a3a;
+  --display:"Michroma","Noto Sans SC",system-ui,sans-serif;
+  --stencil:"Big Shoulders Stencil Display","Noto Sans SC",system-ui,sans-serif;
+  --mono:"JetBrains Mono","Noto Sans SC","PingFang SC",ui-monospace,Menlo,monospace;
+  --cjk:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+}
+:host{display:block;height:100%;position:relative;overflow:hidden;background:var(--bg);color:var(--ink);font-family:var(--mono);-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+.gl{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+.gl.drag{cursor:grabbing}
+.gl.hov{cursor:pointer}
+.vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(130% 100% at 50% 50%,transparent 62%,rgba(2,3,5,.45) 88%,rgba(2,3,5,.75))}
+.fit{position:absolute;inset:0;box-sizing:border-box;padding-block:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));pointer-events:none}
+.fit-in{position:relative;width:100%;height:100%}
+.board{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:translate(-50%,-50%) scale(var(--s,.5));pointer-events:none}
+.pe{pointer-events:auto}
+
+/* ---------- 3D 里的浮层（宿主坐标） ---------- */
+.ovl{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lbls{transition:opacity .6s}
+.lbls.dim{opacity:.1}
+.ac{--c:#fff;position:absolute;left:0;top:0;width:178px;box-sizing:border-box;padding:7px 9px 7px;background:rgba(6,10,16,.84);border:1px solid rgba(90,190,255,.2);border-left:3px solid var(--c);font:700 12.5px/1 var(--mono);color:var(--ink);transform-origin:0 50%;transition:box-shadow .3s,border-color .3s}
+.ac::before{content:"";position:absolute;right:100%;top:50%;width:12px;height:1px;background:var(--c);opacity:.7}
+.ac.flip{border-left-width:1px;border-right:3px solid var(--c)}
+.ac.flip::before{right:auto;left:100%}
+.ac .h{display:flex;align-items:baseline;gap:5px;white-space:nowrap}
+.ac .h b{color:var(--c);font-weight:800;letter-spacing:.03em}
+.ac .h i{font-style:normal;font-family:var(--cjk);font-weight:500;color:var(--ink2);font-size:11.5px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.ac .h em{font-style:normal;font-variant-numeric:tabular-nums;color:var(--ink)}
+.ac u{display:block;height:6px;margin:6px 0 5px;background:rgba(220,230,240,.12);position:relative;overflow:hidden;text-decoration:none}
+.ac u s{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--c);text-decoration:none;box-shadow:0 0 6px var(--c)}
+.ac small{display:block;font:400 11px/1.2 var(--cjk);color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ac.work small{color:var(--ink2)}
+.ac{opacity:var(--f,1)}
+.ac.idle{opacity:calc(var(--f,1) * .72)}
+.ac.idle .h em{color:var(--dim)}
+.ac.alert{border-color:var(--bad)}
+.ac.alert small{color:var(--bad)}
+.ac.hit{box-shadow:0 0 0 1px var(--c),0 0 14px -3px var(--c)}
+.ac.foc{box-shadow:0 0 0 1px var(--hz),0 0 18px -2px var(--hz)}
+
+/* 总工程旁的竖直进度条 */
+.pjv{position:absolute;left:0;top:0;width:204px;transition:opacity .4s;box-sizing:border-box;padding:10px 11px 9px;background:linear-gradient(180deg,rgba(8,14,22,.9),rgba(6,10,16,.78));border:1px solid rgba(255,194,26,.42);transform-origin:0 50%;pointer-events:none}
+.pjv::before{content:"";position:absolute;left:-1px;right:-1px;top:-1px;height:2px;background:var(--hz);box-shadow:0 0 8px var(--hz)}
+.pjv::after{content:"";position:absolute;left:100%;top:50%;width:26px;height:1px;background:linear-gradient(270deg,transparent,var(--hz))}
+.pv-h{display:flex;justify-content:space-between;align-items:baseline;font-size:9px;letter-spacing:.22em;color:var(--mute)}
+.pv-h b{color:var(--hz);font-weight:700;letter-spacing:.06em;font-size:10px}
+.pv-name{margin-top:5px;font:900 15px/1.15 var(--cjk);color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.02em}
+.pv-veh{display:flex;gap:8px;align-items:baseline;margin-top:4px;font-size:10px;color:var(--ink2);white-space:nowrap}
+.pv-veh b{font-family:var(--display);font-weight:400;font-size:11px;color:var(--hz);letter-spacing:.06em}
+.pv-veh span:last-child{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--ink)}
+.pv-body{display:grid;grid-template-columns:12px minmax(0,1fr);gap:8px;margin-top:8px}
+.pv-bar{display:flex;flex-direction:column-reverse;gap:3px}
+.pv-bar i{display:block;height:16px;box-sizing:border-box;background:rgba(220,230,240,.06);border:1px solid rgba(220,230,240,.16)}
+.pv-bar i.s-move,.pv-bar i.s-queue{border-color:rgba(69,230,245,.55)}
+.pv-bar i.s-work{border-color:var(--hz);background:repeating-linear-gradient(-45deg,rgba(255,194,26,.75) 0 3px,rgba(255,194,26,.18) 3px 6px)}
+.pv-bar i.s-ready,.pv-bar i.s-fly{border-color:var(--cyan);background:rgba(69,230,245,.35)}
+.pv-bar i.s-bad{border-color:var(--bad);background:rgba(255,77,94,.25)}
+.pv-bar i.s-done{border-color:var(--good);background:var(--good);box-shadow:0 0 8px -1px var(--good)}
+.pv-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column-reverse;gap:3px}
+.pv-list li{height:16px;display:flex;align-items:center;gap:6px;white-space:nowrap;min-width:0}
+.pv-list .pn{font:700 10.5px/1 var(--cjk);color:var(--ink)}
+.pv-list .ps{margin-left:auto;font:500 9px/1 var(--mono);color:var(--mute)}
+.pv-list li.s-work .ps{color:var(--hz)}
+.pv-list li.s-move .ps,.pv-list li.s-queue .ps,.pv-list li.s-ready .ps,.pv-list li.s-fly .ps{color:var(--cyan)}
+.pv-list li.s-bad .ps{color:var(--bad)}
+.pv-list li.s-done .pn{color:var(--mute)}
+.pv-list li.s-done .ps{color:var(--good)}
+.pv-f{display:flex;justify-content:space-between;align-items:baseline;white-space:nowrap;gap:6px;margin-top:8px;border-top:1px solid var(--hair2);padding-top:6px;font-size:10px;color:var(--ink2)}
+.pv-f b{font-family:var(--mono);font-weight:700;font-size:21px;line-height:1;color:var(--hz)}
+.pv-st{margin-top:3px;font:700 10px/1.2 var(--cjk);letter-spacing:.12em;color:var(--ink2)}
+.pv-st.fire{color:var(--fire)}
+
+/* ---------- 作战大屏版式：上方只留大标题 / 最近动作 / 倒计时；五个数据框体在底部排成一条；车间自动缩放到上方空当 ---------- */
+.topfade{position:absolute;left:-40px;right:-40px;top:0;height:340px;background:radial-gradient(ellipse 980px 330px at 0 0,rgba(3,6,10,.86),rgba(3,6,10,.5) 50%,rgba(3,6,10,0) 80%),linear-gradient(180deg,rgba(3,6,10,.6),rgba(3,6,10,0) 90px)}
+.botfade{position:absolute;left:-40px;right:-40px;bottom:0;height:290px;background:linear-gradient(0deg,rgba(3,6,10,.92),rgba(3,6,10,.7) 70%,rgba(3,6,10,0))}
+.hd{position:absolute;left:24px;top:20px;width:max-content;text-shadow:0 0 4px var(--bg),0 0 12px var(--bg)}
+.eb{width:max-content;font-size:10px;letter-spacing:.26em;color:var(--mute);white-space:nowrap}
+.eb b{color:var(--cyan);font-weight:500}
+.hd h1{margin:10px 0 0;font-family:var(--stencil);font-weight:900;font-size:76px;line-height:.86;letter-spacing:.03em;color:var(--ink)}
+.hd h1 span{display:block;width:max-content;white-space:nowrap}
+.hd h1 .l1{display:flex;align-items:center;width:max-content}
+.hd h1 em{font-style:normal;font-family:var(--cjk);font-weight:900;font-size:65px;line-height:1;letter-spacing:.06em;margin-left:22px;position:relative;top:-5px;color:var(--hz)}
+.sub{width:max-content;margin-top:12px;font-family:var(--cjk);font-size:14px;letter-spacing:.06em;color:var(--ink2);white-space:nowrap}
+.sub2{width:max-content;margin-top:6px;font-size:10px;letter-spacing:.16em;color:var(--mute);white-space:nowrap}
+.sub2 b{color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums}
+.cap{position:absolute;left:50%;top:20px;transform:translateX(-50%);width:660px;text-align:center;text-shadow:0 0 4px var(--bg),0 0 10px var(--bg)}
+.cap-l{width:max-content;margin:0 auto;font-size:9px;letter-spacing:.3em;color:var(--mute)}
+.cap-b{width:max-content;max-width:100%;margin:7px auto 0;display:flex;justify-content:center;align-items:baseline;gap:12px;white-space:nowrap;overflow:hidden}
+.cap-b .ck{font-family:var(--display);font-size:15px;letter-spacing:.1em}
+.cap-b .cv{font-family:var(--cjk);font-size:12px;color:var(--ink2);border:1px solid var(--hair2);padding:1px 7px}
+.cap-b .ct{font-family:var(--cjk);font-size:13.5px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;max-width:440px}
+.cap.bad .cv{color:var(--bad);border-color:rgba(255,77,94,.6)}
+.cap.ship .cv{color:var(--good);border-color:rgba(60,230,154,.5)}
+.cap.fire .cv{color:var(--fire);border-color:rgba(255,138,58,.6)}
+.tools{position:absolute;right:24px;top:20px;display:flex;gap:6px}
+button.tb{font:500 11px/1 var(--mono);letter-spacing:.1em;color:var(--ink2);background:rgba(6,10,16,.7);border:1px solid rgba(90,190,255,.28);padding:8px 11px;cursor:pointer;white-space:nowrap}
+button.tb b{color:var(--ink);font-weight:700;font-family:var(--cjk);margin-left:6px;letter-spacing:.04em}
+button.tb:hover{border-color:var(--cyan);color:var(--ink)}
+button.tb:focus-visible{outline:1px solid var(--cyan);outline-offset:2px}
+/* 框体 */
+.dp{position:absolute;box-sizing:border-box;display:flex;flex-direction:column;min-width:0;padding:8px 12px 9px;
+  background:repeating-linear-gradient(0deg,rgba(120,200,255,.03) 0 1px,transparent 1px 22px),repeating-linear-gradient(90deg,rgba(120,200,255,.03) 0 1px,transparent 1px 22px),linear-gradient(180deg,rgba(8,14,22,.9),rgba(6,10,16,.8));
+  border:1px solid rgba(90,190,255,.24);box-shadow:inset 0 0 40px rgba(40,140,255,.06),0 10px 30px rgba(0,0,0,.35)}
+.dp::before{content:"";position:absolute;left:-1px;top:-1px;width:16px;height:16px;border:solid var(--cyan);border-width:2px 0 0 2px}
+.dp::after{content:"";position:absolute;right:-1px;bottom:-1px;width:16px;height:16px;border:solid var(--cyan);border-width:0 2px 2px 0}
+.dp-h{position:relative;display:flex;align-items:center;gap:9px;white-space:nowrap;padding-bottom:6px;margin-bottom:7px;border-bottom:1px solid rgba(90,190,255,.18)}
+.dp-h::after{content:"";position:absolute;left:0;bottom:-1px;width:72px;height:2px;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.dp-h em{font:700 10px/17px var(--mono);font-style:normal;color:#04121a;background:var(--cyan);padding:0 6px;letter-spacing:.04em}
+.dp-h b{font-family:var(--display);font-weight:400;font-size:12px;letter-spacing:.16em;color:var(--ink)}
+.dp-h i{font-style:normal;font-family:var(--cjk);font-size:11.5px;color:var(--ink2);letter-spacing:.08em}
+.dp-h span{margin-left:auto;font-size:10px;letter-spacing:.06em;color:var(--mute);font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.dp-h span::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--good);margin-right:6px;vertical-align:1px;box-shadow:0 0 6px var(--good)}
+.p-flow{left:24px;bottom:30px;width:440px;height:214px}
+.p-kpi{left:476px;bottom:30px;width:288px;height:214px}
+.p-load{left:776px;bottom:30px;width:340px;height:214px}
+.p-rad{left:1128px;bottom:30px;width:360px;height:214px}
+.p-exec{right:24px;bottom:30px;width:396px;height:214px}
+/* KPI */
+.kpis{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr);gap:4px 12px;min-height:0}
+.k{position:relative;display:grid;align-content:start;gap:2px;min-width:0;padding:2px 0 0 9px;border-left:1px solid rgba(90,190,255,.2)}
+.k>span{font:500 10px/1 var(--cjk);letter-spacing:.08em;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.k>span i{font:500 8.5px/1 var(--mono);font-style:normal;letter-spacing:.14em;color:var(--mute);margin-left:5px}
+.k>b{font:600 19px/1.1 var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink)}
+.k>b small{font-size:11px;color:var(--mute);margin-left:4px}
+.k>small{font:400 9px/1.25 var(--cjk);color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.k>small b{font:500 9.5px/1 var(--mono);color:var(--ink2)}
+.k.big{border-left:2px solid var(--hz)}
+.k.big>b{font-family:var(--display);font-weight:400;font-size:22px;line-height:1.05;color:var(--hz);letter-spacing:.02em}
+.kb{display:block;height:3px;margin-top:3px;background:rgba(220,230,240,.08);position:relative;overflow:hidden}
+.kb i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--good);box-shadow:0 0 6px var(--good)}
+/* 工区负载 */
+.ld{flex:1;display:flex;flex-direction:column;gap:6px;min-height:0}
+.ld-r{flex:1;display:flex;gap:16px;align-items:center;min-height:0}
+.dp-eq{width:100%;height:auto;display:block;flex:none}
+.dp-ring{width:70px;height:70px;display:block;flex:none}
+.ld-tp{flex:1;min-width:0;display:grid;gap:3px}
+.ld-tp span{font-size:8.5px;letter-spacing:.16em;color:var(--mute);white-space:nowrap}
+.ld-tp span i{font-style:normal;font-family:var(--cjk);letter-spacing:.06em;color:var(--ink2);font-size:10px}
+.ld-tp b{font:600 22px/1 var(--mono);color:var(--hz);font-variant-numeric:tabular-nums}
+.ld-tp b small{font-size:10px;color:var(--mute);margin-left:4px}
+.dp-spark{display:block;width:100%;height:28px}
+/* 任务流 */
+.fh,.flow li{display:grid;grid-template-columns:36px 92px minmax(0,1fr) 78px 32px;align-items:center;gap:6px;white-space:nowrap}
+.fh{font-size:8.5px;letter-spacing:.14em;color:var(--mute);padding-bottom:3px;margin-bottom:3px;border-bottom:1px dashed rgba(90,190,255,.14)}
+.fh span:last-child{text-align:right}
+.flow{list-style:none;margin:0;padding:0;display:grid;gap:2px;font-size:10px;line-height:16px;min-height:0;overflow:hidden;align-content:start}
+.flow li{height:16px;padding:0 0 0 0;background:linear-gradient(90deg,rgba(90,190,255,.05),transparent 70%)}
+.flow .id{color:var(--ink2);font-weight:700;font-variant-numeric:tabular-nums;padding-left:4px}
+.flow .pn{font-family:var(--cjk);font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis}
+.flow .pp{display:flex;gap:2px;min-width:0;overflow:hidden}
+.flow .pp i{--c:#fff;flex:none;width:27px;height:12px;box-sizing:border-box;font:700 8px/10px var(--mono);font-style:normal;text-align:center;color:var(--c);border:1px solid var(--c);opacity:.4}
+.flow .pp i.d{background:var(--c);color:#06090d;opacity:.5}
+.flow .pp i.c{background:var(--c);color:#06090d;opacity:1;box-shadow:0 0 8px var(--c);animation:pulse .9s ease-in-out infinite alternate}
+.flow .pp i.a{--c:#ffc21a;width:16px;margin-left:2px}
+.flow .st{font-family:var(--cjk);color:var(--mute);overflow:hidden;text-overflow:ellipsis}
+.flow .pc{text-align:right;color:var(--ink);font-variant-numeric:tabular-nums}
+.flow li.s-work .st{color:var(--hz)}
+.flow li.s-move .st,.flow li.s-queue .st,.flow li.s-ready .st,.flow li.s-fly .st{color:var(--cyan)}
+.flow li.s-bad .st,.flow li.s-bad .id{color:var(--bad)}
+.flow li.s-wait{opacity:.55}
+.flow li.s-done .st{color:var(--good)}
+.flow li.s-done .pn{color:var(--ink2)}
+.flow .pp i.a.d{background:var(--hz);color:#06090d;opacity:.6}
+@keyframes pulse{from{opacity:.65}to{opacity:1}}
+/* 执行代码 */
+.term{list-style:none;margin:0;padding:0;font:400 10px/15px var(--mono);min-height:0;overflow:hidden;flex:1}
+.term li{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#8f9aa6}
+.term li:nth-child(odd){background:rgba(90,190,255,.03)}
+.term .ln{display:inline-block;width:26px;color:#2f3a46;text-align:right;margin-right:8px}
+.term .tm{color:var(--dim);margin-right:8px}
+.term .ag{font-weight:700}
+.term .fn{color:#7fe9ff}
+.term .sx{color:#e8c37a}
+.term .ok{color:var(--good)}
+.term .er{color:var(--bad);font-weight:700}
+.term .lw{color:var(--fire);font-weight:700}
+.term .dm{color:var(--dim)}
+.term li.cur{color:var(--good);background:none}
+.term li.cur::after{content:"▌";animation:blink 1s steps(1) infinite;margin-left:2px}
+@keyframes blink{50%{opacity:0}}
+/* 雷达 */
+.rad-b{flex:1;display:flex;gap:12px;min-height:0}
+.rad-l{flex:none;display:grid;gap:6px;align-content:start}
+.dp-rad{display:block;width:186px;height:auto}
+.rad-lg{display:flex;flex-wrap:wrap;width:186px;gap:4px 10px;margin-top:2px;font-size:9px;letter-spacing:.06em;color:var(--mute);font-family:var(--cjk);white-space:nowrap}
+.rad-lg i{display:inline-block;width:7px;height:7px;margin-right:4px;vertical-align:0}
+.dp-st{flex:1;display:grid;gap:2px;align-content:start;min-width:0}
+.dp-st div{display:grid;gap:0;padding:1px 0 2px;border-bottom:1px solid rgba(90,190,255,.1);min-width:0}
+.dp-st span{font-size:9.5px;letter-spacing:.06em;color:var(--mute);font-family:var(--cjk);white-space:nowrap}
+.dp-st b{font:600 14px/1.1 var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+/* 底部状态条（两个下角框体之间） */
+.sb{position:absolute;left:24px;right:24px;bottom:7px;display:flex;align-items:center;justify-content:center;gap:28px;font-size:9.5px;letter-spacing:.14em;color:var(--mute);white-space:nowrap;overflow:hidden}
+.sb b{color:var(--ink2);font-weight:500;font-variant-numeric:tabular-nums}
+.sb .on::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--good);margin-right:7px;vertical-align:1px;box-shadow:0 0 6px var(--good)}
+.sb .wm{font-family:var(--display);font-size:9.5px;letter-spacing:.24em;color:var(--dim)}
+.hint{position:absolute;right:24px;top:52px;display:none}
+
+/* ---------- 倒计时 / 发射横幅 ---------- */
+.count{position:absolute;left:50%;top:calc((100% - 244px * var(--bs,.5)) / 2);transform:translate(-50%,-50%) scale(var(--cs,1));transform-origin:50% 50%;text-align:center;white-space:nowrap;pointer-events:none;text-shadow:0 0 30px rgba(255,138,58,.6),0 0 4px #000}
+.count::before{content:"";position:absolute;inset:-20px -90px -24px;z-index:-1;background:radial-gradient(closest-side,rgba(3,6,10,.7),rgba(3,6,10,0))}
+.count b{display:block;font-family:var(--stencil);font-weight:900;font-size:210px;line-height:1;color:var(--hz)}
+.count span{display:block;margin-top:4px;font-family:var(--cjk);font-weight:900;font-size:26px;letter-spacing:.3em;color:var(--ink)}
+.banner{position:absolute;left:50%;top:calc((100% - 244px * var(--bs,.5)) / 2);transform:translate(-50%,-50%) scale(var(--cs,1));transform-origin:50% 50%;text-align:center;pointer-events:none;padding:14px 34px 16px;background:rgba(7,9,13,.82);border:1px solid rgba(255,194,26,.6);box-shadow:0 0 40px -10px rgba(255,194,26,.6)}
+.banner::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:repeating-linear-gradient(-45deg,var(--hz) 0 6px,var(--hz-ink) 6px 12px)}
+.banner b{display:block;font-family:var(--stencil);font-weight:900;font-size:52px;letter-spacing:.08em;color:var(--hz);line-height:1.05;white-space:nowrap}
+.banner span{display:block;margin-top:6px;font-family:var(--cjk);font-size:16px;color:var(--ink);letter-spacing:.06em;white-space:nowrap}
+
+/* ---------- 悬停提示 ---------- */
+.tip{position:absolute;z-index:5;pointer-events:none;min-width:200px;max-width:290px;background:rgba(7,9,13,.94);border:1px solid var(--hair2);border-left:2px solid var(--c,#fff);padding:8px 11px;font-size:11px;line-height:1.6;font-family:var(--cjk);color:var(--ink2)}
+.tip b{font-family:var(--mono);font-weight:800;color:var(--c,#fff);margin-right:8px;letter-spacing:.04em}
+.tip strong{color:var(--ink);font-weight:500}
+.tip span{display:block}
+.tip .h{color:var(--mute);font-size:10px;margin-top:3px}
+
+/* ---------- 窄屏 / 竖屏 ---------- */
+.mini{display:none;position:absolute;inset:0;flex-direction:column;justify-content:space-between;pointer-events:none;padding-block:10px}
+.narrow .board{display:none}
+.narrow .mini{display:flex}
+.m-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.m-title{font-family:var(--stencil);font-weight:900;font-size:28px;letter-spacing:.05em;line-height:1;text-shadow:0 0 8px var(--bg)}
+.m-title i{display:block;font-style:normal;font-family:var(--cjk);font-weight:700;font-size:12px;color:var(--hz);letter-spacing:.12em;margin-top:4px}
+.m-btns{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px;max-width:210px}
+.m-btns .tb{padding:6px 8px;font-size:10px}
+.m-bot{background:linear-gradient(0deg,rgba(4,6,9,.92),rgba(4,6,9,.6) 70%,transparent);margin-inline:-16px;padding:24px 16px 0}
+.m-cap{font-family:var(--cjk);font-size:12px;color:var(--ink2);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m-cap b{font-family:var(--mono);margin-right:6px}
+.m-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;border-top:1px solid var(--hair2);padding-top:8px;margin-top:8px}
+.m-stats div{display:grid;gap:2px;min-width:0}
+.m-stats span{font-size:9px;letter-spacing:.12em;color:var(--mute);white-space:nowrap}
+.m-stats b{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m-wm{margin-top:6px;font-family:var(--display);font-weight:400;font-size:9px;letter-spacing:.3em;color:var(--dim);text-align:center}
+.glfail{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);max-width:340px;text-align:center;font-family:var(--cjk);font-size:13px;line-height:1.7;color:var(--ink2);border:1px solid var(--hair2);padding:14px 18px;background:rgba(7,9,13,.85)}
+@media (prefers-reduced-motion:reduce){.ac,.lbls{transition:none}.flow .pp i.c,.term li.cur::after{animation:none}}
+</style>
+
+<canvas class="gl" id="gl" aria-label="机器人工厂车间：12 个工区各有一台机器人在干活，货箱沿传送带在工区之间接力，无人机把子板块并入中间的总工程，全部并入就发射。拖动转视角，滚轮缩放，点机器人可以拉近看它的工区"></canvas>
+<div class="vig" aria-hidden="true"></div>
+<div class="ovl lbls" id="lbls" aria-hidden="true"></div>
+<div class="ovl" aria-hidden="true">
+ <div class="pjv" id="pjv">
+  <div class="pv-h"><span>MASTER · 总工程</span><b id="pvNo">#07</b></div>
+  <div class="pv-name" id="pvName">—</div>
+  <div class="pv-veh"><b id="pvCode">—</b><span id="pvType">—</span><span id="pvTime">00:00</span></div>
+  <div class="pv-body"><div class="pv-bar" id="pvBar"></div><ol class="pv-list" id="pvList"></ol></div>
+  <div class="pv-f"><span id="pvParts">子板块 0 / 8</span><b id="pvPct">0%</b></div>
+  <div class="pv-st" id="pvState">装配中</div>
+ </div>
+</div>
+<div class="nr" id="nr">
+<div class="fit"><div class="fit-in" id="fitIn">
+ <div class="board" id="board">
+  <div class="topfade"></div>
+  <div class="botfade"></div>
+  <header class="hd">
+   <div class="eb">AGENT OPS · THEME <b>04</b> · MASTER ASSEMBLY</div>
+   <h1><span class="l1">ROBOT<em>机器人工厂</em></span><span>FOUNDRY</span></h1>
+   <div class="sub">CHIEF 拆分总工程 · 12 个工区并行子板块 · 无人机总装 · 交付即发射</div>
+   <div class="sub2">示例数据 · 本地模拟 · 未接模型 · <b id="clock">--:--:--</b></div>
+  </header>
+  <div class="cap" id="cap">
+   <div class="cap-l">LAST ACTION · 最近动作</div>
+   <div class="cap-b"><span class="ck" id="capK">CHIEF</span><span class="cv" id="capV">派单</span><span class="ct" id="capT">—</span></div>
+  </div>
+  <div class="tools pe">
+   <button class="tb" type="button" data-act="mode">视角<b data-f="mode">俯瞰</b></button>
+   <button class="tb" type="button" data-series-pick>主题</button>
+   <button class="tb" type="button" data-act="full" data-f="full">全屏</button>
+  </div>
+
+  <section class="dp p-kpi" aria-label="今日指标">
+   <div class="dp-h"><em>02</em><b>KPI</b><i>今日指标</i><span id="kpiMeta">LIVE</span></div>
+   <div class="kpis">
+    <div class="k big"><span>交付总工程<i>DONE</i></span><b id="bLaunch">0</b><small id="bLaunchS">—</small></div>
+    <div class="k"><span>本工程用时<i>CYCLE</i></span><b id="bCycle">—</b><small id="bCycleS">—</small></div>
+    <div class="k"><span>今日子板块<i>MODULES</i></span><b id="bOut">0</b><small id="bOutS">—</small><i class="kb"><i id="bOutBar"></i></i></div>
+    <div class="k"><span>审校通过<i>QC</i></span><b id="bPass">—</b><small id="bPassS">—</small></div>
+    <div class="k"><span>算力<i>TOKENS</i></span><b id="bTok">0</b><small id="bTokS">—</small></div>
+    <div class="k"><span>渲染<i>FPS</i></span><b id="bFps">—</b><small id="bFpsS">—</small></div>
+   </div>
+  </section>
+  <section class="dp p-load" aria-label="工区负载">
+   <div class="dp-h"><em>03</em><b>LINE LOAD</b><i>工区负载</i><span id="dpOee">OEE —</span></div>
+   <div class="ld">
+    <canvas class="dp-eq" id="eqC" width="712" height="160"></canvas>
+    <div class="ld-r">
+     <canvas class="dp-ring" id="ringC" width="184" height="184"></canvas>
+     <div class="ld-tp"><span>THROUGHPUT <i>交接 / 分钟</i></span><b id="dpThr">—</b><canvas class="dp-spark" id="sparkC" width="400" height="76"></canvas></div>
+    </div>
+   </div>
+  </section>
+  <section class="dp p-rad" aria-label="车间雷达">
+   <div class="dp-h"><em>04</em><b>RADAR</b><i>车间雷达</i><span>LIVE</span></div>
+   <div class="rad-b">
+    <div class="rad-l"><canvas class="dp-rad" id="radC" width="560" height="352"></canvas>
+     <div class="rad-lg"><span><i style="background:#ffd23f"></i>货箱</span><span><i style="background:#45e6f5;clip-path:polygon(50% 0,100% 100%,0 100%)"></i>无人机</span><span><i style="background:#ffc21a"></i>AGV</span><span><i style="background:#ff3f8e;border-radius:50%"></i>巡检蛛</span><span><i style="border:1px solid #ffc21a;box-sizing:border-box;border-radius:50%"></i>总装</span></div>
+    </div>
+    <div class="dp-st">
+     <div><span>货箱在途</span><b id="dpCr">0</b></div>
+     <div><span>无人机在飞</span><b id="dpDr">0 / 4</b></div>
+     <div><span>AGV 巡线</span><b id="dpAg">5</b></div>
+     <div><span>巡检蛛</span><b id="dpSp">—</b></div>
+     <div><span>传送带</span><b id="dpBelt">5.2 m/s</b></div>
+    </div>
+   </div>
+  </section>
+  <section class="dp p-flow" aria-label="子板块任务流">
+   <div class="dp-h"><em>01</em><b>TASK FLOW</b><i>子板块任务流</i><span id="flowMeta">—</span></div>
+   <div class="fh"><span>编号</span><span>子板块</span><span>流转工区 → 总装</span><span>状态</span><span>进度</span></div>
+   <ol class="flow" id="flow"></ol>
+  </section>
+  <section class="dp p-exec" aria-label="执行代码">
+   <div class="dp-h"><em>05</em><b>EXEC</b><i>执行代码</i><span id="execMeta">—</span></div>
+   <ol class="term" id="term"></ol>
+  </section>
+  <footer class="sb">
+   <span class="on">SYSTEM ONLINE</span><span>ACTIVE <b id="sbLive">0 / 12</b></span><span>QUEUE <b id="sbQ">0</b></span><span>MASTER <b id="sbProj">—</b></span><span class="wm">DEVELOPED BY @赛博老爸</span>
+  </footer>
+ </div>
+
+ <div class="mini" id="mini">
+  <div class="m-top">
+   <div class="m-title">ROBOT FOUNDRY<i>机器人工厂 · 示例数据</i></div>
+   <div class="m-btns pe">
+    <button class="tb" type="button" data-act="mode">视角<b data-f="mode">俯瞰</b></button>
+    <button class="tb" type="button" data-series-pick>主题</button>
+   </div>
+  </div>
+  <div class="m-bot">
+   <div class="m-cap" id="mCap">—</div>
+   <div class="m-stats"><div><span>总工程</span><b id="mProj">—</b></div><div><span>子板块</span><b id="mParts">0 / 8</b></div><div><span>今日交付</span><b id="mLaunch">0</b></div></div>
+   <div class="m-wm">DEVELOPED BY @赛博老爸</div>
+  </div>
+ </div>
+</div></div>
+</div>
+<div class="count" id="count" hidden><b id="countN">3</b><span id="countT">点火倒计时</span></div>
+<div class="banner" id="banner" hidden><b id="bannerT">LAUNCH SUCCESS</b><span id="bannerS">—</span></div>
+<div class="tip" id="tip" hidden></div>
+<div class="glfail" id="glFail" hidden>这台设备的浏览器没法显示 3D 画面（WebGL 不可用），面板数据照常在跑。换 Chrome / Edge 打开即可看到工厂。</div>
 </template>
 
 <script>
@@ -4153,20 +4508,1951 @@ host.__nr = {ff(sec){ for (let t = 0; t < sec; t += .05) { simStep(.05); decay(.
 requestAnimationFrame(frame);
 }
 
+/* ===== 主题 04 · FACTORY 机器人工厂 ===== */
+function mountFactory(host, SR){
+'use strict';
+
+/* ================= 0. 工具 ================= */
+const $ = s => SR.querySelector(s), $$ = s => SR.querySelectorAll(s);
+const TAU = Math.PI * 2, HP = Math.PI / 2;
+const rnd = (a, b) => a + Math.random() * (b - a);
+const pick = a => a[(Math.random() * a.length) | 0];
+const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
+const lerp = (a, b, t) => a + (b - a) * t;
+const pad = (n, w = 2) => String(n).padStart(w, '0');
+const fmt = n => Math.round(n).toLocaleString('en-US');
+const fmtTok = n => n >= 1e6 ? (n / 1e6).toFixed(2) + 'M' : n >= 1e3 ? (n / 1e3).toFixed(1) + 'k' : String(Math.round(n));
+const hms = d => `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+const mmss = s => `${pad(Math.floor(s / 60))}:${pad(Math.floor(s % 60))}`;
+const hex3 = h => { const n = parseInt(h.slice(1), 16); return [(n >> 16 & 255) / 255, (n >> 8 & 255) / 255, (n & 255) / 255]; };
+const easeOut = t => 1 - Math.pow(1 - t, 3);
+const easeBack = t => { const c = 1.7; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };
+const ease2 = u => u < .5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+function mulberry32(a){ return function(){ a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const rng = mulberry32(20261021);
+
+/* ================= 1. 配置：和前几款同一套智能体 / 工作流（换成你自己的即可） ================= */
+// design = 机器人造型，fx = 工位特效
+const AG = [
+  {k:'CHIEF',  zh:'总调度', job:'控制室',   design:'commander', fx:'none',  role:'只拆不干，盯全局',   col:'#f3f4f8', sp:1},
+  {k:'SCOUT',  zh:'检索',   job:'雷达扫描', design:'rover',  fx:'scan',  role:'读全网，找资料',     col:'#2fd27a', sp:.9},
+  {k:'SPLIT',  zh:'拆解',   job:'激光切割', design:'crab',   fx:'laser', role:'把需求切成小块',     col:'#a774ff', sp:.8},
+  {k:'COPY',   zh:'文案',   job:'排版印刷', design:'typist', fx:'tap',   role:'脚本 · 话术 · 标书', col:'#ff4458', sp:.7},
+  {k:'DESIGN', zh:'设计',   job:'喷涂',     design:'painter', fx:'paint', role:'封面 · 海报 · 页面', col:'#ff5cae', sp:.9},
+  {k:'CODE',   zh:'代码',   job:'装配',     design:'dual',   fx:'tap',   role:'页面 · 接口 · 脚本', col:'#3b7cff', sp:1},
+  {k:'TEST',   zh:'测试',   job:'敲击测试', design:'tester', fx:'hammer',  role:'跑用例，卡发版',     col:'#25d6f0', sp:.7},
+  {k:'PROOF',  zh:'审校',   job:'X 光质检', design:'eye',    fx:'scan',  role:'不过不发，打回重写', col:'#ff9a1f', sp:.5},
+  {k:'DATA',   zh:'数据',   job:'校准建模', design:'cart',   fx:'probe', role:'拉数 · 报表 · 归因', col:'#ffd23f', sp:.8},
+  {k:'CUT',    zh:'剪辑',   job:'数控切削', design:'gantry', fx:'grind', role:'切片 · 字幕 · 节奏', col:'#ff7b54', sp:.9},
+  {k:'ADS',    zh:'投放',   job:'喷码贴标', design:'herald', fx:'stamp', role:'小预算跑 AB',        col:'#b5ef3a', sp:.8},
+  {k:'CARE',   zh:'客服',   job:'打磨包装', design:'ball',   fx:'grind', role:'评论 · 私信 · 回访', col:'#62e6c7', sp:.8},
+  {k:'VAULT',  zh:'归档',   job:'焊接封装', design:'welder', fx:'weld',  role:'打标签，进知识库',   col:'#9aa6ff', sp:.55},
+  {k:'CRAWLER',zh:'巡检蛛', job:'巡检',     design:'spider', fx:'none',  role:'先读再派，满场巡逻', col:'#45e6f5', sp:1}
+];
+const PROOF = 7, CRAWLER = 13;
+const WF = [
+  {id:'W01', zh:'短视频',   ch:0, path:[1,3,9,7,10],  names:['口播短视频','产品种草短视频','教程短视频']},
+  {id:'W02', zh:'落地页',   ch:2, path:[2,4,5,6,7],   names:['落地页改版','活动页上线','官网首页']},
+  {id:'W03', zh:'投标文件', ch:1, path:[1,2,3,7,12],  names:['投标文件生成','技术方案标书','资质材料整理']},
+  {id:'W04', zh:'周报',     ch:1, path:[8,3,7,12],    names:['周报数据汇总','月度经营复盘','客户报表']},
+  {id:'W05', zh:'广告素材', ch:4, path:[4,10,8],      names:['广告素材测试','信息流素材','投放 AB 组']},
+  {id:'W06', zh:'私域话术', ch:3, path:[11,3,7],      names:['私域话术更新','社群活动文案','回访话术']},
+  {id:'W07', zh:'发版',     ch:2, path:[5,6,12],      names:['发版检查','接口联调','热修复']},
+  {id:'W08', zh:'用户反馈', ch:5, path:[11,8,2],      names:['用户反馈聚类','差评归因','需求池整理']},
+  {id:'W09', zh:'直播切片', ch:0, path:[9,7,10],      names:['直播切片','直播高光','回放剪辑']},
+  {id:'W10', zh:'知识库',   ch:5, path:[1,12],        names:['知识库更新','竞品资料检索','行业报告收集']},
+  {id:'W11', zh:'封面图',   ch:1, path:[4,7],         names:['封面图六版','海报设计','详情页主图']}
+];
+const CH = [{zh:'视频', col:'#ff4458'}, {zh:'图文', col:'#ffd23f'}, {zh:'官网', col:'#3b7cff'}, {zh:'私域', col:'#2fd27a'}, {zh:'广告', col:'#ff5cae'}, {zh:'知识', col:'#9aa6ff'}];
+const CHECKS = ['需求覆盖', '事实核验', '品牌口径', '合规敏感词', '重复率'];
+// 总工程：每单造一台载具，拆成 8 个子板块 = 8 份交付物；vs 缩放、h 高度、hr 全息环半径
+const VEH = {
+  rocket:  {zh:'火箭',     vs:2.2,  h:5.6, hr:2.4, parts:[['ENGINE','发动机'],['TANK1','一级燃料舱'],['BOOST_L','左助推器'],['BOOST_R','右助推器'],['INTER','级间段'],['TANK2','二级舱'],['FINS','尾翼'],['FAIRING','整流罩']]},
+  mech:    {zh:'机甲',     vs:2.4,  h:3.6, hr:2.9, parts:[['LEG_L','左腿'],['LEG_R','右腿'],['PELVIS','腰胯'],['TORSO','胸甲'],['ARM_L','左臂'],['ARM_R','右臂'],['HEAD','头部'],['JET','喷射背包']]},
+  shuttle: {zh:'航天飞机', vs:2.0,  h:6.1, hr:3.0, parts:[['ET','外储箱'],['SRB_L','左助推器'],['SRB_R','右助推器'],['BODY','轨道器机身'],['WINGS','三角翼'],['TAIL','垂尾'],['SSME','主发动机'],['NOSE','机鼻舱']]},
+  fighter: {zh:'战斗机',   vs:1.8,  h:1.9, hr:4.4, parts:[['FUSE','机身'],['NOSE','雷达罩'],['COCKPIT','座舱'],['WING_L','左翼'],['WING_R','右翼'],['TAILS','双垂尾'],['ENGINE','发动机'],['PYLONS','挂弹']]}
+};
+// 总工程：每个拆成 8 个子板块；子板块 i 走工作流 wf[i]，做完后并入载具的第 i 个部位（载具只是总工程的可视化）
+const PROJECTS = [
+  {name:'双11 大促战役', type:'rocket',  code:'PHOENIX', wf:[6, 0, 4, 8, 5, 1, 10, 9], subs:['活动页发版', '种草短视频', '信息流投放', '直播切片', '私域召回话术', '大促落地页', '主图与海报', '竞品情报库']},
+  {name:'智能投标交付',  type:'mech',    code:'TITAN',   wf:[7, 9, 3, 2, 1, 6, 10, 0], subs:['甲方需求梳理', '资质库检索', '报价测算', '技术方案标书', '项目展示页', '演示环境部署', '标书封面排版', '讲标视频']},
+  {name:'新品发布会',    type:'shuttle', code:'ODYSSEY', wf:[2, 5, 8, 1, 4, 10, 6, 0], subs:['发布会讲稿', '媒体邀约话术', '直播推流切片', '新品官网', '预热投放', 'KV 主视觉', '下单系统上线', '发布会短片']},
+  {name:'品牌出海计划',  type:'fighter', code:'VIPER',   wf:[1, 10, 4, 7, 6, 0, 5, 3], subs:['海外独立站', '品牌视觉本地化', '海外广告投放', '海外评论聚类', '多语言版本发布', 'TikTok 短视频', '海外社群运营', '市场数据周报']}
+];
+const PRICE = {inMiss: 2, inHit: .5, out: 8};                                   // ¥ / 百万 token（示例单价）
+const TOKR = [25, 140, 90, 150, 110, 160, 30, 80, 60, 50, 40, 90, 25];         // 干活时每秒 token
+const INR  = [.8, .92, .7, .55, .6, .62, .75, .88, .8, .7, .75, .7, .85];
+const DAY_TARGET = 20000, PER_MIN = 14;
+const AGC = AG.map(a => hex3(a.col));
+
+/* ================= 2. 车间布局 ================= */
+// 圆角矩形参数化：s = 沿中线的弧长，o = 向外偏移
+function RRect(hx, hz, rc){
+  const sx = hx - rc, sz = hz - rc;
+  const arc = (cx, cz, a0) => (u, o, r) => { const a = a0 + HP * u; r.nx = Math.cos(a); r.nz = Math.sin(a); r.x = cx + r.nx * (rc + o); r.z = cz + r.nz * (rc + o); r.tx = -r.nz; r.tz = r.nx; };
+  const segs = [
+    {l: 2 * sx, f: (u, o, r) => { r.x = -sx + 2 * sx * u; r.z = -hz - o; r.nx = 0; r.nz = -1; r.tx = 1; r.tz = 0; }},
+    {l: HP * rc, f: arc(sx, -sz, -HP)},
+    {l: 2 * sz, f: (u, o, r) => { r.x = hx + o; r.z = -sz + 2 * sz * u; r.nx = 1; r.nz = 0; r.tx = 0; r.tz = 1; }},
+    {l: HP * rc, f: arc(sx, sz, 0)},
+    {l: 2 * sx, f: (u, o, r) => { r.x = sx - 2 * sx * u; r.z = hz + o; r.nx = 0; r.nz = 1; r.tx = -1; r.tz = 0; }},
+    {l: HP * rc, f: arc(-sx, sz, HP)},
+    {l: 2 * sz, f: (u, o, r) => { r.x = -hx - o; r.z = sz - 2 * sz * u; r.nx = -1; r.nz = 0; r.tx = 0; r.tz = -1; }},
+    {l: HP * rc, f: arc(-sx, -sz, Math.PI)}
+  ];
+  const L = segs.reduce((p, s) => p + s.l, 0);
+  const rr = {L,
+    at(s, o = 0, r = {}){ s = ((s % L) + L) % L; for (const g of segs) { if (s <= g.l) { g.f(g.l ? s / g.l : 0, o, r); return r; } s -= g.l; } segs[0].f(0, o, r); return r; },
+    near(x, z){ let best = 0, bd = 1e9; const p = {}; for (let i = 0; i < 1600; i++) { const s = i / 1600 * L; rr.at(s, 0, p); const d = (p.x - x) ** 2 + (p.z - z) ** 2; if (d < bd) { bd = d; best = s; } } return best; }};
+  return rr;
+}
+const LOOP = RRect(13.6, 6.9, 2.4);               // 主传送带
+const ROAD = RRect(22.6, 15.0, 2.2);              // 外圈 AGV 车道
+const LANE_O = .3, LANE_W = .46, BELT_Y = .3, CRATE_H = .3, CRATE_W = .38, YB = BELT_Y + CRATE_H / 2;
+const WS_W = 5.3, WS_D = 4.8, BENCH_Z = 1.35, BENCH_Y = .55;
+// 工区：k → 中心 + 朝向（本地 +z 朝向总装区）。上排 4 个、右 2、下排 4 个、左 2，顺时针；CHIEF 控制室在上排正中，进料口在下排正中
+const WS = [];
+const slot = (x, z, ry) => ({x, z, ry, c: Math.cos(ry), s: Math.sin(ry)});
+WS[0] = slot(0, -11.2, 0);
+[[1, -11], [2, -5.5], [3, 5.5], [4, 11]].forEach(([k, x]) => WS[k] = slot(x, -11.2, 0));
+WS[5] = slot(18.6, -2.9, -HP); WS[6] = slot(18.6, 2.9, -HP);
+[[7, 11], [8, 5.5], [9, -5.5], [10, -11]].forEach(([k, x]) => WS[k] = slot(x, 11.2, Math.PI));
+WS[11] = slot(-18.6, 2.9, HP); WS[12] = slot(-18.6, -2.9, HP);
+const DOCK = slot(0, 11.2, Math.PI);
+function wsP(w, x, y, z){ return {x: w.x + x * w.c + z * w.s, y, z: w.z - x * w.s + z * w.c}; }
+const SPORT = WS.map((w, k) => k === 0 ? 0 : (p => LOOP.near(p.x, p.z))(wsP(w, 0, 0, WS_D / 2)));
+const SDOCK = (p => LOOP.near(p.x, p.z))(wsP(DOCK, 0, 0, WS_D / 2));
+const sPort = k => k < 0 ? SDOCK : SPORT[k];
+const benchPt = (k, q) => wsP(WS[k], q ? (q % 2 ? 1 : -1) * .95 : 0, BENCH_Y + CRATE_H / 2 + (q ? Math.floor((q - 1) / 2) * CRATE_H : 0), BENCH_Z);
+const PAD_R = 4.6;
+const RSC = {gantry: 1, commander: 1.5};          // 机器人整体缩放（其余 2.05）
+const RZ = {rover: .3, crab: .5, typist: .45, painter: .5, dual: .4, tester: .45, eye: .4, cart: .45, gantry: BENCH_Z, herald: .45, ball: .45, welder: .45, commander: -.4};
+// 每个工区主机器的位置（工区本地 x, z）：机器人会转身走过去操作它
+const MPT = {rover: [-1.7, -1.4], crab: [-.2, -1.1], typist: [-1.2, -1.25], painter: [1.1, -1.15], dual: [-.1, -.75], tester: [-1.3, -1.1], eye: [0, -1.05], cart: [-1.5, -1.4], herald: [1.3, -1.2], ball: [-1.5, -1.4], welder: [0, -1.3]};
+
+/* ================= 3. 模拟（接真实数据时替换这一段） ================= */
+let simT = 0, animT = 0;
+let tid = 40, chiefT = .8, passN = 388, failN = 30, lastDispatch = 'T-040';
+const midnight = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d.getTime(); };
+const minsToday = () => (Date.now() - midnight()) / 60000;
+let total = Math.round(minsToday() * PER_MIN) + 160;
+let launches = Math.floor(minsToday() / 9) + 3;
+let tokDay = Math.round(minsToday() * 52000) + 4e5, tokIn = tokDay * .7, tokOut = tokDay - tokIn, cacheHit = .62;
+const costDay = () => (tokIn * (1 - cacheHit) * PRICE.inMiss + tokIn * cacheHit * PRICE.inHit + tokOut * PRICE.out) / 1e6;
+const tokWin = new Array(24).fill(0); let tokWinAcc = 0, tokWinCur = 0;
+const sumTOKR = TOKR.reduce((p, v) => p + v, 0);
+for (let i = 0; i < 24; i++) tokWin[i] = sumTOKR * .5 * 2.5 * rnd(.8, 1.2);
+AG.forEach((a, i) => Object.assign(a, {i, inbox: [], cur: null, prog: 0, dur: 1, outs: (i > 0 && i < 13) ? 20 + ((Math.random() * 40) | 0) : 0,
+  tok: tokDay * (TOKR[i] || 0) / sumTOKR * rnd(.85, 1.15), flash: 0, bad: 0, hitT: 0}));
+const workers = AG.slice(1, 13);
+const tasks = [], feed = [], crates = [], jobs = [], drones = [], agvs = [];
+const cycles = [64, 71, 58];
+const thr = Array.from({length: 40}, () => 1.6 + Math.random() * 2.2); let thrCur = 0, thrAcc = 0;   // 每 3 秒一桶：工位交接次数
+let feedDirty = true, capDirty = true, sheetDirty = true, execDirty = true;
+let caption = {a: 0, verb: '派单', text: '—', kind: ''};
+let proj = null, projIdx = 0, projNo = 6;
+const crawl = {patrols: 6, read: 1836, bugs: 3, target: 5};
+
+// 执行代码：每条动作同时写成一行"代码"，滚进 EXEC 终端
+const VERB_FN = {'立项': 'open_master', '并入': 'merge', '派单': 'dispatch', '接手': 'run', '交接': 'handoff', '打回': 'reject', '完工': 'done', '吊装': 'assemble', '起吊': 'lift', '巡检': 'scan', '抓 bug': 'flag', '开新单': 'open_project', '点火': 'ignite', '发射': 'launch'};
+const execLines = []; let opsN = 0, opsWin = [], execSeq = 1200;
+const esc = t => String(t).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+function pushExec(agent, fn, arg, res){
+  execLines.push({t: hms(new Date()), agent, fn, arg, res}); execSeq++;
+  if (execLines.length > 30) execLines.shift();
+  opsN++; execDirty = true;
+}
+function log(ai, verb, text, kind){
+  feed.unshift({t: hms(new Date()), a: ai, verb, text, kind: kind || ''});
+  if (feed.length > 40) feed.pop();
+  pushExec(ai, VERB_FN[verb] || 'emit', text, kind === 'bad' ? 'er' : kind === 'ship' ? 'ok' : kind === 'fire' ? 'lw' : 'ms');
+  caption = {a: ai, verb, text, kind: kind || ''};
+  AG[ai].hitT = 1.2;
+  feedDirty = capDirty = sheetDirty = true;
+}
+const liveN = () => workers.filter(a => a.cur).length;
+
+/* ---------- 项目 ---------- */
+function startProject(){
+  const P = PROJECTS[projIdx % PROJECTS.length]; projIdx++;
+  projNo++;
+  proj = {def: P, no: projNo, name: P.name, type: P.type, code: `${P.code}-${pad(projNo)}`, t0: simT, phase: 'build', tc: 0, tl: 0, td: 0,
+    parts: VEH[P.type].parts.map(([key, hw], i) => ({i, key, zh: P.subs[i], hw, wf: P.wf[i], name: WF[P.wf[i]].zh, state: 'wait', task: null, at: -1, rework: 0}))};
+  if (glOK) buildVehicle(P.type);
+  log(0, '立项', `总工程 #${pad(projNo)} ${P.name} · 拆成 8 个子板块 · ${proj.code}`, 'fire');
+  chiefT = .6; sheetDirty = true;
+}
+function dispatch(){
+  const part = proj.parts.find(p => p.state === 'wait');
+  if (!part) return;
+  const t = {id: 'T-' + pad(++tid, 3), wf: part.wf, name: part.name, part: part.i, stage: 0, rework: 0, fail: false, failIdx: 0, crate: null};
+  tasks.push(t);
+  const b = AG[WF[part.wf].path[0]];
+  part.state = 'move'; part.task = t; part.at = b.i;
+  lastDispatch = t.id;
+  log(0, '派单', `${t.id} ${part.zh} · ${t.name} → ${b.k}`);
+  AG[0].flash = 1;
+  sendCrate(-1, b.i, t, () => arrive(b, t));
+}
+function arrive(b, t){
+  b.inbox.push(t); b.flash = 1;
+  const p = proj.parts[t.part]; if (p.task === t) { p.state = 'queue'; p.at = b.i; }
+  if (t.crate) t.crate.state = 'wait';
+  sheetDirty = true;
+}
+function startWork(a){
+  const t = a.inbox.shift();
+  a.cur = t; a.prog = 0; a.dur = rnd(4, 6.5) * a.sp * (t.rework ? .75 : 1);
+  if (a.i === PROOF) { t.fail = Math.random() < .12 && t.rework < 2; t.failIdx = (Math.random() * CHECKS.length) | 0; }
+  const p = proj.parts[t.part]; if (p.task === t) { p.state = 'work'; p.at = a.i; }
+  if (t.crate) t.crate.state = 'work';
+  log(a.i, '接手', `${t.id} ${p.zh} · ${t.name}`);
+}
+function finishStage(a){
+  const t = a.cur, path = WF[t.wf].path, p = proj.parts[t.part];
+  a.cur = null; a.prog = 0; a.outs++; thrCur++;
+  if (a.i === PROOF && t.fail) {
+    t.rework++; t.stage--; t.fail = false; failN++; p.rework++;
+    const b = AG[path[t.stage]], item = CHECKS[t.failIdx];
+    log(a.i, '打回', `${t.id} ${p.zh} ${item}不过 → ${b.k} 返工`, 'bad');
+    a.bad = 1; p.state = 'bad'; p.at = b.i;
+    sendCrate(a.i, b.i, t, () => arrive(b, t), true);
+    return;
+  }
+  if (a.i === PROOF) passN++;
+  if (t.stage < path.length - 1) {
+    t.stage++;
+    const b = AG[path[t.stage]];
+    log(a.i, '交接', `${t.id} ${p.zh} → ${b.k}`);
+    p.state = 'move'; p.at = b.i;
+    sendCrate(a.i, b.i, t, () => arrive(b, t));
+  } else {
+    p.state = 'ready'; p.at = a.i;
+    if (t.crate) t.crate.state = 'ready';
+    log(a.i, '完工', `${t.id} ${p.zh} 待吊装`);
+    jobs.push({t, k: a.i});
+  }
+  sheetDirty = true;
+}
+function installPart(t){
+  const p = proj.parts[t.part];
+  p.state = 'done'; p.at = -1;
+  total++;
+  tasks.splice(tasks.indexOf(t), 1);
+  log(0, '并入', `${p.zh} 并入总工程 ${proj.code} · ${p.hw}`, 'ship');
+  if (glOK && veh) installVisual(t.part);
+  sheetDirty = true;
+}
+
+/* ---------- 货箱：工位台 → 支线 → 主传送带（顺时针走外道，逆时针走内道）→ 支线 → 下一个工位台 ---------- */
+function mkPath(pts){
+  const segs = []; let L = 0, prev = null;
+  const pt = q => q.loop ? (p => ({x: p.x, y: q.y, z: p.z}))(LOOP.at(q.s0, q.o)) : q;
+  for (const q of pts) {
+    const start = pt(q);
+    if (prev) { const len = Math.hypot(start.x - prev.x, start.y - prev.y, start.z - prev.z); if (len > 1e-4) { segs.push({t: 'l', a: prev, b: start, len}); L += len; } }
+    if (q.loop) { const len = Math.abs(q.s1 - q.s0); segs.push({t: 'r', s0: q.s0, s1: q.s1, o: q.o, y: q.y, len}); L += len; prev = (p => ({x: p.x, y: q.y, z: p.z}))(LOOP.at(q.s1, q.o)); }
+    else prev = q;
+  }
+  return {segs, len: Math.max(L, .01), end: prev};
+}
+const tmpP = {};
+function pathAt(path, d, o){
+  for (const s of path.segs) {
+    if (d <= s.len) { const u = s.len ? d / s.len : 1;
+      if (s.t === 'l') { o.x = s.a.x + (s.b.x - s.a.x) * u; o.y = s.a.y + (s.b.y - s.a.y) * u; o.z = s.a.z + (s.b.z - s.a.z) * u; }
+      else { LOOP.at(s.s0 + (s.s1 - s.s0) * u, s.o, tmpP); o.x = tmpP.x; o.y = s.y; o.z = tmpP.z; }
+      return o; }
+    d -= s.len;
+  }
+  o.x = path.end.x; o.y = path.end.y; o.z = path.end.z; return o;
+}
+function sendCrate(fromK, toK, t, cb, bad){
+  let c = t.crate;
+  if (!c) { c = {mesh: null, t, state: 'move', pos: {x: 0, y: 0, z: 0}, path: null, d: 0, cb: null, bad: false, k: toK}; t.crate = c; crates.push(c); if (glOK) c.mesh = crateMesh(WF[t.wf].ch); }
+  const s0 = sPort(fromK), s1 = sPort(toK);
+  let ds = ((s1 - s0) % LOOP.L + LOOP.L) % LOOP.L; if (ds > LOOP.L / 2) ds -= LOOP.L;
+  const o = ds >= 0 ? LANE_O : -LANE_O;
+  const pts = [];
+  if (fromK < 0) pts.push(wsP(DOCK, 0, YB + .1, .4), wsP(DOCK, 0, YB, 1.9));
+  else pts.push(benchPt(fromK, 0), wsP(WS[fromK], 0, YB, 1.95));
+  pts.push({loop: true, s0, s1: s0 + ds, o, y: YB}, wsP(WS[toK], 0, YB, 1.95), benchPt(toK, 1 + Math.min(4, AG[toK].inbox.length)));
+  c.path = mkPath(pts); c.d = 0; c.cb = cb; c.state = 'move'; c.bad = !!bad; c.k = toK; c.speed = 5.2;
+}
+function crateStep(dt){
+  for (const c of crates) {
+    if (c.state !== 'move') continue;
+    c.d += c.speed * dt;
+    pathAt(c.path, Math.min(c.d, c.path.len), c.pos);
+    if (c.d >= c.path.len) { c.state = 'wait'; const f = c.cb; c.cb = null; f && f(); }
+  }
+}
+
+/* ---------- 无人机：把完工的部件吊到总装区 ---------- */
+const FLY_Y = 3.6;
+function droneStep(dt){
+  for (const d of drones) {
+    if (!d.job && jobs.length) {
+      const j = jobs.shift(); d.job = j;
+      const b = benchPt(j.k, 0);
+      d.legs = [
+        {to: {x: b.x, y: FLY_Y, z: b.z}, v: 6},
+        {to: {x: b.x, y: b.y + .78, z: b.z}, v: 2.2, end: () => { if (j.t.crate) j.t.crate.state = 'lift'; d.carry = j.t.crate; log(j.k, '起吊', `${proj.parts[j.t.part].zh} 交给无人机 ${d.name}`); proj.parts[j.t.part].state = 'fly'; sheetDirty = true; }},
+        {to: {x: b.x, y: FLY_Y, z: b.z}, v: 2.4},
+        {to: null, v: 5.5, target: () => installPt(j.t.part)},
+        {wait: .55, end: () => { if (d.carry) { d.carry.state = 'gone'; d.carry = null; } installPart(j.t); }},
+        {to: {x: d.home.x, y: 2.2, z: d.home.z}, v: 6},
+        {to: d.home, v: 1.8, end: () => { d.job = null; }}
+      ];
+      d.leg = null;
+    }
+    if (!d.legs || !d.legs.length) { if (!d.job) { const k = Math.min(1, dt * 2); d.p.x += (d.home.x - d.p.x) * k; d.p.y += (d.home.y - d.p.y) * k; d.p.z += (d.home.z - d.p.z) * k; } continue; }
+    if (!d.leg) {
+      const L = d.legs[0];
+      if (L.wait != null) d.leg = {wait: L.wait, t: 0, end: L.end};
+      else { const to = L.to || L.target(), from = {x: d.p.x, y: d.p.y, z: d.p.z}; const len = Math.hypot(to.x - from.x, to.y - from.y, to.z - from.z); d.leg = {from, to, t: 0, dur: Math.max(.25, len / L.v), end: L.end}; }
+    }
+    const g = d.leg; g.t += dt;
+    if (g.wait != null) { if (g.t >= g.wait) { d.legs.shift(); d.leg = null; g.end && g.end(); } continue; }
+    const u = Math.min(1, g.t / g.dur), e = ease2(u);
+    const px = d.p.x, pz = d.p.z;
+    d.p.x = lerp(g.from.x, g.to.x, e); d.p.y = lerp(g.from.y, g.to.y, e) + Math.sin(u * Math.PI) * (g.dur > 1.2 ? .6 : 0); d.p.z = lerp(g.from.z, g.to.z, e);
+    d.vx = (d.p.x - px) / Math.max(dt, 1e-3); d.vz = (d.p.z - pz) / Math.max(dt, 1e-3);
+    if (u >= 1) { d.legs.shift(); d.leg = null; g.end && g.end(); }
+  }
+}
+
+/* ---------- 巡检蛛：沿传送带外侧的走道巡逻，在各工区门口停下扫描 ---------- */
+const SPIDER_O = 1.3;
+const spider = {s: SPORT[5], target: 5, dwell: 1.5, moving: false, from: 0, to: 0, t: 0, dur: 1, step: 0};
+function spiderStep(dt){
+  if (spider.moving) {
+    spider.t += dt; const u = Math.min(1, spider.t / spider.dur);
+    spider.s = spider.from + (spider.to - spider.from) * ease2(u); spider.step += dt * 9;
+    if (u >= 1) { spider.moving = false; spider.dwell = rnd(1.8, 3.2); crawl.patrols++; crawl.read += 1 + ((Math.random() * 6) | 0);
+      const a = AG[spider.target];
+      if (a.cur && Math.random() < .08) { crawl.bugs++; log(CRAWLER, '抓 bug', `${a.cur.id} ${proj.parts[a.cur.part].zh} · 提醒 ${a.k}`, 'bad'); a.bad = .7; }
+      else if (Math.random() < .2) log(CRAWLER, '巡检', `${a.k} · ${a.cur ? a.cur.id + ' 先读再派' : '待命中'}`);
+    }
+  } else if ((spider.dwell -= dt) <= 0) {
+    const busy = workers.filter(a => a.cur && a.i !== spider.target);
+    const k = busy.length && Math.random() < .8 ? pick(busy).i : 1 + ((Math.random() * 12) | 0);
+    spider.target = k; crawl.target = k;
+    let ds = ((SPORT[k] + .9 - spider.s) % LOOP.L + LOOP.L) % LOOP.L; if (ds > LOOP.L / 2) ds -= LOOP.L;
+    spider.from = spider.s; spider.to = spider.s + ds;
+    spider.t = 0; spider.dur = clamp(Math.abs(ds) / 2.6, .8, 9); spider.moving = true;
+  }
+}
+
+/* ---------- 每帧推进 ---------- */
+function simStep(dt){
+  simT += dt;
+  if (!proj) startProject();
+  if (proj.phase === 'build') {
+    chiefT -= dt;
+    if (chiefT <= 0) { chiefT = rnd(1.1, 2.0); dispatch(); }
+    for (const a of workers) {
+      if (!a.cur && a.inbox.length) startWork(a);
+      if (a.cur) { a.prog += dt / a.dur; if (a.prog >= 1) finishStage(a); }
+    }
+    if (proj.parts.every(p => p.state === 'done')) { proj.phase = 'count'; proj.tc = 3.4; log(0, '点火', `${proj.code} 8 个子板块全部并入 · 倒计时`, 'fire'); }
+  } else if (proj.phase === 'count') {
+    proj.tc -= dt;
+    if (proj.tc <= 0) { proj.phase = 'launch'; proj.tl = 0; if (glOK) ignite(); log(0, '发射', `总工程 ${proj.name} 交付 · ${proj.code} 发射`, 'fire'); }
+  } else if (proj.phase === 'launch') {
+    proj.tl += dt;
+    if (proj.tl > 5.6) {
+      proj.phase = 'done'; proj.td = 3; launches++;
+      const cyc = simT - proj.t0; cycles.push(cyc); if (cycles.length > 12) cycles.shift();
+      showBanner(cyc);
+    }
+  } else if (proj.phase === 'done') {
+    proj.td -= dt; proj.tl += dt;
+    if (proj.td <= 0) startProject();
+  }
+  crateStep(dt);
+  droneStep(dt);
+  spiderStep(dt);
+  for (let i = 0; i < 13; i++) {
+    const a = AG[i];
+    if (!(i === 0 || a.cur)) continue;
+    const amt = TOKR[i] * dt * rnd(.6, 1.4) * (i === 0 && proj.phase !== 'build' ? .3 : 1);
+    a.tok += amt; tokDay += amt; tokIn += amt * INR[i]; tokOut += amt * (1 - INR[i]); tokWinCur += amt;
+  }
+  cacheHit = clamp(cacheHit + (Math.random() - .5) * .01 * dt, .55, .7);
+  if ((tokWinAcc += dt) >= 2.5) { tokWin.push(tokWinCur); tokWin.shift(); tokWinCur = 0; tokWinAcc = 0; }
+  if ((thrAcc += dt) >= 3) { thr.push(thrCur); thr.shift(); thrCur = 0; thrAcc = 0; }
+  if ((sysT -= dt) <= 0) { sysT = rnd(.9, 2.2); const L = SYS_LINES[(Math.random() * SYS_LINES.length) | 0](); pushExec(-1, L[0], L[1], 'sys'); }
+  if ((opsAcc += dt) >= 5) { opsWin.push(opsN); opsN = 0; opsAcc = 0; if (opsWin.length > 12) opsWin.shift(); }
+}
+let sysT = 1, opsAcc = 0;
+const SYS_LINES = [
+  () => ['belt.sync', `lanes=2, v=5.2, load=${crates.filter(c => c.state === 'move').length}`],
+  () => { const d = drones[(Math.random() * drones.length) | 0]; return [`drone.${d ? d.name : 'D1'}.telemetry`, `alt=${d ? d.p.y.toFixed(1) : '0.4'}, bat=${(78 + Math.random() * 20).toFixed(0)}%`]; },
+  () => ['tokens.flush', `+${fmtTok(tokWin[tokWin.length - 1] || 0)}, cache=${Math.round(cacheHit * 100)}%`],
+  () => ['agv.route', `fleet=${agvs.length}, lane=outer, eta=${(2 + Math.random() * 4).toFixed(1)}s`],
+  () => ['qc.metrics', `pass=${(passN / (passN + failN) * 100).toFixed(1)}%, rework=${failN}`],
+  () => ['crawler.heartbeat', `read=${crawl.read}, bugs=${crawl.bugs}`],
+  () => ['scheduler.tick', `active=${liveN()}/12, queue=${workers.reduce((n, a) => n + a.inbox.length, 0)}`]
+];
+
+/* ================= 4. 3D 车间 ================= */
+const THREE = window.THREE;
+const cv = $('#gl');
+let renderer = null, scene, camera, composer = null, world, glOK = false;
+let holo, launchLight, veh = null;
+const jibs = [];
+const stations = [], smoke = [], towerArms = [], padLights = [], beltMats = [];
+let sparkGeo, sparkPts, SPRITE = null, SMOKE_TEX = null, spiderObj = null, dockAgv = null;
+let pr = 1;
+const MAT = {};
+
+function canvasTex(w, h, draw){ const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h); const t = new THREE.CanvasTexture(c); t.anisotropy = 4; return t; }
+const M = (col, o) => new THREE.MeshStandardMaterial(Object.assign({color: col, roughness: .62, metalness: .18}, o || {}));
+const MB = (col, o) => new THREE.MeshBasicMaterial(Object.assign({color: col}, o || {}));
+const ADD = (col, op) => MB(col, {transparent: true, opacity: op == null ? 1 : op, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide});
+function mesh(geo, mat, cast = false){ const m = new THREE.Mesh(geo, mat); m.castShadow = cast; m.receiveShadow = true; return m; }
+const box = (w, h, d, mat, cast) => mesh(new THREE.BoxGeometry(w, h, d), mat, cast);
+const cyl = (rt, rb, h, mat, seg = 16, cast) => mesh(new THREE.CylinderGeometry(rt, rb, h, seg), mat, cast);
+const sph = (r, mat, ws = 16, hs = 12, cast) => mesh(new THREE.SphereGeometry(r, ws, hs), mat, cast);
+const at = (o, x, y, z) => { o.position.set(x, y, z); return o; };
+const put = (p, o, x = 0, y = 0, z = 0) => { o.position.set(x, y, z); p.add(o); return o; };
+const grp = (p, x = 0, y = 0, z = 0) => { const g = new THREE.Group(); g.position.set(x, y, z); if (p) p.add(g); return g; };
+const dyn = o => { o.userData.dyn = true; return o; };
+const rotX = (o, a) => { o.rotation.x = a; return o; };
+const rotZ = (o, a) => { o.rotation.z = a; return o; };
+
+function mats(){
+  MAT.steel = M(0x56606c, {roughness: .55, metalness: .5});
+  MAT.bench = M(0x3f4751, {roughness: .75, metalness: .3});
+  MAT.steelD = M(0x2d343d, {roughness: .55, metalness: .5});
+  MAT.dark = M(0x1f242b, {roughness: .5, metalness: .5});
+  MAT.rubber = M(0x13171c, {roughness: .9, metalness: 0});
+  MAT.hz = M(0xffc21a, {roughness: .5, metalness: .1});
+  MAT.white = M(0xb4bac3, {roughness: .5, metalness: .15});
+  MAT.whiteD = M(0x8c939d, {roughness: .55, metalness: .25});
+  MAT.vwhite = M(0x9da4ae, {roughness: .6, metalness: .2});   // 大项目机身白：再暗一点，免得辉光把它吃成一团白
+  MAT.wood = M(0x8a6a3a, {roughness: .85, metalness: 0});
+  MAT.wood2 = M(0x6b5130, {roughness: .85, metalness: 0});
+  MAT.paper = M(0xa8a59e, {roughness: .9, metalness: 0});
+  MAT.glass = new THREE.MeshStandardMaterial({color: 0x9fd8ff, roughness: .1, metalness: .2, transparent: true, opacity: .16, depthWrite: false, side: THREE.DoubleSide});
+  MAT.ghost = new THREE.MeshBasicMaterial({color: 0x45e6f5, transparent: true, opacity: .07, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide});
+  MAT.edge = new THREE.LineBasicMaterial({color: 0x45e6f5, transparent: true, opacity: .6, blending: THREE.AdditiveBlending, depthWrite: false});
+  MAT.cyanL = MB(0x45e6f5); MAT.warmL = MB(0xffd59a); MAT.redL = MB(0xff4d5e);
+}
+function spriteTexture(){ return canvasTex(64, 64, x => { const g = x.createRadialGradient(32, 32, 0, 32, 32, 32); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(.25, 'rgba(255,255,255,.8)'); g.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = g; x.fillRect(0, 0, 64, 64); }); }
+function smokeTexture(){ return canvasTex(128, 128, x => { for (let k = 0; k < 18; k++) { const cx = 64 + rnd(-22, 22), cy = 64 + rnd(-22, 22), r = rnd(18, 40); const g = x.createRadialGradient(cx, cy, 0, cx, cy, r); g.addColorStop(0, 'rgba(220,222,228,.22)'); g.addColorStop(1, 'rgba(220,222,228,0)'); x.fillStyle = g; x.fillRect(0, 0, 128, 128); } }); }
+// 平铺地面：uv 按世界单位缩放
+function flatPlane(w, d, mat, tile, y = 0){ const g = new THREE.PlaneGeometry(w, d); g.rotateX(-HP); const uv = g.attributes.uv; for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) * w / tile, uv.getY(i) * d / tile); const m = mesh(g, mat); m.position.y = y; return m; }
+// 沿圆角矩形的带子（传送带、车道、标线）
+function ribbon(rr, o, w, y, mat, tile, n = 520){
+  const pos = [], uv = [], nor = [], idx = [], p = {};
+  for (let i = 0; i <= n; i++) { const s = i / n * rr.L; rr.at(s, o - w / 2, p); pos.push(p.x, y, p.z); rr.at(s, o + w / 2, p); pos.push(p.x, y, p.z); const u = s / tile; uv.push(u, 0, u, 1); nor.push(0, 1, 0, 0, 1, 0); }
+  for (let i = 0; i < n; i++) { const a = i * 2; idx.push(a, a + 2, a + 1, a + 1, a + 2, a + 3); }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3)); g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); g.setIndex(idx);
+  return mesh(g, mat);
+}
+// 两点之间的平带（支线传送带）
+function strip(p0, p1, w, y, mat, tile){
+  const dx = p1.x - p0.x, dz = p1.z - p0.z, L = Math.hypot(dx, dz), nx = -dz / L * w / 2, nz = dx / L * w / 2;
+  const v = [p0.x - nx, y, p0.z - nz, p0.x + nx, y, p0.z + nz, p1.x - nx, y, p1.z - nz, p1.x + nx, y, p1.z + nz];
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(v, 3)); g.setAttribute('normal', new THREE.Float32BufferAttribute([0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0], 3)); g.setAttribute('uv', new THREE.Float32BufferAttribute([0, 0, 1, 0, 0, L / tile, 1, L / tile], 2));
+  const cr = (v[3] - v[0]) * (v[8] - v[2]) - (v[5] - v[2]) * (v[6] - v[0]);   // 保证法线朝上
+  g.setIndex(cr < 0 ? [0, 1, 2, 1, 3, 2] : [0, 2, 1, 1, 2, 3]);
+  return mesh(g, mat);
+}
+const hazardTex = (rep) => { const t = canvasTex(256, 32, (x, w, h) => { x.fillStyle = '#191304'; x.fillRect(0, 0, w, h); x.fillStyle = '#ffc21a'; for (let i = -2; i < 12; i++) { x.beginPath(); x.moveTo(i * 24, h); x.lineTo(i * 24 + 12, h); x.lineTo(i * 24 + 12 + h, 0); x.lineTo(i * 24 + h, 0); x.closePath(); x.fill(); } }); t.wrapS = THREE.RepeatWrapping; t.repeat.set(rep, 1); return t; };
+
+/* ---------- 地面、围墙、外围仓储 ---------- */
+function buildEnv(){
+  const base = canvasTex(512, 512, (x, N) => { x.fillStyle = '#12161c'; x.fillRect(0, 0, N, N); for (let i = 0; i < 500; i++) { x.fillStyle = `rgba(255,255,255,${(Math.random() * .02).toFixed(3)})`; x.beginPath(); x.arc(Math.random() * N, Math.random() * N, 3 + Math.random() * 26, 0, TAU); x.fill(); } x.strokeStyle = 'rgba(0,0,0,.5)'; x.lineWidth = 4; x.strokeRect(0, 0, N, N); x.strokeStyle = 'rgba(255,255,255,.035)'; x.lineWidth = 2; x.strokeRect(4, 4, N - 8, N - 8); });
+  base.wrapS = base.wrapT = THREE.RepeatWrapping;
+  world.add(flatPlane(96, 64, M(0xffffff, {map: base, roughness: .9, metalness: .05}), 4, 0));
+  // 车间主地面：钢板 + 电路纹（参考 Desynced 的地板）
+  const plate = canvasTex(512, 512, (x, N) => {
+    x.fillStyle = '#1b2129'; x.fillRect(0, 0, N, N);
+    for (let i = 0; i < 300; i++) { x.fillStyle = `rgba(255,255,255,${(Math.random() * .018).toFixed(3)})`; x.fillRect(Math.random() * N, Math.random() * N, 2 + Math.random() * 40, 1 + Math.random() * 3); }
+    x.strokeStyle = 'rgba(0,0,0,.55)'; x.lineWidth = 3; x.strokeRect(1, 1, N - 2, N - 2); x.beginPath(); x.moveTo(N / 2, 0); x.lineTo(N / 2, N); x.moveTo(0, N / 2); x.lineTo(N, N / 2); x.stroke();
+    x.strokeStyle = 'rgba(160,190,220,.07)'; x.lineWidth = 3;
+    const r = mulberry32(7);
+    for (let k = 0; k < 14; k++) { let px = ((r() * 8) | 0) * 64 + 32, py = ((r() * 8) | 0) * 64 + 32; x.beginPath(); x.moveTo(px, py); for (let j = 0; j < 4; j++) { if (r() < .5) px += (r() < .5 ? -1 : 1) * 64; else py += (r() < .5 ? -1 : 1) * 64; x.lineTo(px, py); } x.stroke(); x.fillStyle = 'rgba(160,190,220,.12)'; x.beginPath(); x.arc(px, py, 6, 0, TAU); x.fill(); }
+    x.fillStyle = 'rgba(255,255,255,.07)'; [[10, 10], [N - 10, 10], [10, N - 10], [N - 10, N - 10], [N / 2 - 10, 10], [N / 2 + 10, N - 10]].forEach(([a, b]) => { x.beginPath(); x.arc(a, b, 3, 0, TAU); x.fill(); });
+  });
+  plate.wrapS = plate.wrapT = THREE.RepeatWrapping;
+  world.add(flatPlane(43.4, 28.2, M(0xffffff, {map: plate, roughness: .78, metalness: .2}), 6, .02));
+  // 外圈车道
+  const road = canvasTex(256, 128, (x, w, h) => { x.fillStyle = '#0f1216'; x.fillRect(0, 0, w, h); x.fillStyle = '#ffc21a'; x.fillRect(0, 4, w, 6); x.fillRect(0, h - 10, w, 6); x.fillStyle = 'rgba(255,255,255,.35)'; x.fillRect(20, h / 2 - 2, 90, 4); x.fillRect(148, h / 2 - 2, 90, 4); });
+  road.wrapS = THREE.RepeatWrapping;
+  world.add(ribbon(ROAD, 0, 1.8, .035, M(0xffffff, {map: road, roughness: .9}), 3.2));
+  // 围墙
+  [[0, -26, 78, 0], [0, 26, 78, Math.PI], [-38, 0, 52, HP], [38, 0, 52, -HP]].forEach(([x, z, len, ry]) => {
+    const wl = box(len, 3.2, .4, M(0x1a1f26, {roughness: .8})); at(wl, x, 1.6, z); wl.rotation.y = ry; world.add(wl);
+    const bd = box(len, .18, .42, M(0xffffff, {map: hazardTex(len / 2), roughness: .6})); at(bd, x, 1.0, z); bd.rotation.y = ry; world.add(bd);
+    for (let i = -len / 2 + 3; i < len / 2; i += 6) { const lp = new THREE.Mesh(new THREE.BoxGeometry(.5, .1, .1), MAT.warmL); const ox = Math.cos(ry) * i, oz = -Math.sin(ry) * i; const nx = Math.sin(ry) * .3, nz = Math.cos(ry) * .3; at(lp, x + ox + nx, 2.9, z + oz + nz); lp.rotation.y = ry; world.add(lp); }
+  });
+  // 外围：货架排、储罐、配电柜、地面货堆（填满屏幕边缘，像一整座厂房）
+  const rackRow = (cx, cz, len, ry) => {
+    const g = grp(world, cx, 0, cz); g.rotation.y = ry;
+    for (let i = 0; i <= len; i += 2) { [-.45, .45].forEach(z => put(g, box(.08, 2.6, .08, MAT.hz), -len / 2 + i, 1.3, z)); }
+    [.08, .9, 1.7, 2.5].forEach(y => put(g, box(len + .1, .05, 1.0, MAT.steelD), 0, y, 0));
+    for (let i = 0; i < len * 1.5; i++) { if (rng() < .25) continue; const lv = (rng() * 3) | 0, w = .55 + rng() * .35; put(g, box(w, .5 + rng() * .2, .7, rng() < .5 ? MAT.wood : MAT.wood2, true), -len / 2 + .4 + i * .66, [.08, .9, 1.7][lv] + .33, 0); }
+  };
+  [-28, -14, 0, 14, 28].forEach(x => { rackRow(x, -18.0, 10, 0); rackRow(x, -20.8, 10, 0); });
+  [-30, -18, 18, 30].forEach(x => rackRow(x, 18.2, 8, 0));
+  [-6, 6].forEach(x => rackRow(x, 20.6, 8, 0));
+  const tankM = M(0x6f7782, {roughness: .72, metalness: .2});
+  [-1, 1].forEach(sx => {
+    for (let i = 0; i < 3; i++) { const z = -8 + i * 8, x = sx * 29; put(world, cyl(1.7, 1.7, 4.2, tankM, 28, true), x, 2.1, z); put(world, cyl(1.72, 1.72, .14, MAT.hz, 28), x, 3.2, z); put(world, sph(1.7, tankM, 24, 8), x, 4.2, z).scale.y = .35; put(world, box(.1, 4.6, .4, MAT.steelD), x - sx * 1.75, 2.3, z); }
+    put(world, box(.5, .5, 18, MAT.steelD), sx * 26.8, 4.6, 0); put(world, box(.3, .3, 18, MAT.steel), sx * 26.2, 4.2, 0);
+    for (let i = 0; i < 5; i++) { put(world, box(.9, 2.0, 1.4, M(0x39424d, {roughness: .6}), true), sx * 25.4, 1.0, -12 + i * 6); put(world, box(.02, .12, .9, i % 2 ? MAT.cyanL : MB(0x3ce69a)), sx * 25.4 - sx * .46, 1.6, -12 + i * 6); }
+  });
+  for (let i = 0; i < 26; i++) { const x = (rng() * 2 - 1) * 33, z = rng() < .5 ? 16.4 + rng() * .8 : -16.9 + rng() * .6; if (Math.abs(x) < 4) continue; const n = 1 + ((rng() * 3) | 0); for (let j = 0; j < n; j++) put(world, box(.7, .55, .7, j % 2 ? MAT.wood2 : MAT.wood, true), x + j * .2, .28 + j * .55, z); }
+}
+
+/* ---------- 主传送带 + 支线 ---------- */
+function slatTex(dir){
+  const t = canvasTex(256, 64, (x, w, h) => { x.fillStyle = '#10141a'; x.fillRect(0, 0, w, h); for (let i = 0; i < 8; i++) { x.fillStyle = '#212831'; x.fillRect(i * 32 + 2, 3, 26, h - 6); x.fillStyle = 'rgba(255,255,255,.06)'; x.fillRect(i * 32 + 2, 3, 26, 4); }
+    if (dir) { x.fillStyle = 'rgba(255,194,26,.6)'; for (let i = 0; i < 4; i++) { const cx = i * 64 + 32; x.beginPath(); if (dir > 0) { x.moveTo(cx - 8, 20); x.lineTo(cx + 8, 32); x.lineTo(cx - 8, 44); } else { x.moveTo(cx + 8, 20); x.lineTo(cx - 8, 32); x.lineTo(cx + 8, 44); } x.closePath(); x.fill(); } } });
+  t.wrapS = t.wrapT = THREE.RepeatWrapping; return t;
+}
+function buildLoop(){
+  const out = M(0xffffff, {map: slatTex(1), roughness: .8}), inn = M(0xffffff, {map: slatTex(-1), roughness: .8});
+  beltMats.push(out, inn);
+  world.add(ribbon(LOOP, LANE_O, LANE_W, BELT_Y, out, 2.6), ribbon(LOOP, -LANE_O, LANE_W, BELT_Y, inn, 2.6));
+  world.add(ribbon(LOOP, 0, 1.25, BELT_Y - .03, MAT.steelD, 4));
+  [-.64, .64].forEach(o => world.add(ribbon(LOOP, o, .07, BELT_Y + .05, MAT.hz, 4)));
+  const p = {};
+  for (let s = 0; s < LOOP.L; s += 2.4) { LOOP.at(s, 0, p); const leg = box(.12, BELT_Y - .04, 1.1, MAT.steelD); at(leg, p.x, (BELT_Y - .04) / 2, p.z); leg.rotation.y = Math.atan2(p.tx, p.tz) + HP; world.add(leg); }
+  // 支线：每个工区一条，进料口一条
+  const roll = M(0xffffff, {map: slatTex(0), roughness: .8});
+  const spur = (w, s) => { const a = wsP(w, 0, 0, 1.68); LOOP.at(s, LANE_O + LANE_W / 2 + .1, p); const b = {x: p.x, z: p.z}; world.add(strip(a, b, .52, BELT_Y, roll, 1.0)); world.add(strip(a, b, .7, BELT_Y - .04, MAT.steelD, 4)); };
+  for (let k = 1; k <= 12; k++) spur(WS[k], SPORT[k]);
+  spur(DOCK, SDOCK);
+}
+
+/* ---------- 机器人通用零件：两节臂 + 逆解 ---------- */
+function makeLimb(parent, sx, sy, sz, a, b, matA, matB, w = .08, flip = false){
+  const yaw = grp(parent, sx, sy, sz);
+  yaw.add(sph(w * .8, MAT.steelD, 10, 8));
+  const s = grp(yaw); put(s, box(w, a, w, matA), 0, a / 2, 0);
+  const e = grp(s, 0, a, 0); e.add(sph(w * .7, MAT.dark, 10, 8)); put(e, box(w * .85, b, w * .85, matB), 0, b / 2, 0);
+  const end = grp(e, 0, b, 0);
+  return {yaw, s, e, end, a, b, sx, sy, sz, flip};
+}
+function reach(L, tx, ty, tz, k){
+  const dx = tx - L.sx, dz = tz - L.sz, dy = ty - L.sy;
+  const yaw = Math.atan2(dx, dz), h = Math.hypot(dx, dz);
+  const d = clamp(Math.hypot(h, dy), .05, L.a + L.b - .002), ph = Math.atan2(h, dy);
+  const al = Math.acos(clamp((L.a * L.a + d * d - L.b * L.b) / (2 * L.a * d), -1, 1));
+  const ga = Math.acos(clamp((L.a * L.a + L.b * L.b - d * d) / (2 * L.a * L.b), -1, 1));
+  const t1 = L.flip ? ph + al : ph - al, t2 = L.flip ? -(Math.PI - ga) : Math.PI - ga;
+  L.yaw.rotation.y += (yaw - L.yaw.rotation.y) * k; L.s.rotation.x += (t1 - L.s.rotation.x) * k; L.e.rotation.x += (t2 - L.e.rotation.x) * k;
+}
+const lens = (p, r, col, x, y, z) => rotX(put(p, cyl(r, r * 1.1, .04, MB(col), 14), x, y, z), HP);
+// 每种机器人：g 根节点、tip 工具尖、H 进度卡挂点高度、rz 站位、beam 扫描光束、anim(t, w 干活程度, dt, T 货箱顶面中心(机器人本地), cheer 发射欢呼)
+const ROBO = {
+  /* 检索：履带侦察车，背着旋转雷达，镜头盯着货箱扫 */
+  rover(C, col){
+    const g = new THREE.Group();
+    [-1, 1].forEach(sx => { put(g, box(.17, .22, .8, MAT.rubber, true), sx * .27, .11, 0); for (let i = -1; i <= 1; i++) put(g, rotZ(cyl(.075, .075, .18, MAT.steelD, 10), HP), sx * .27, .11, i * .27); });
+    const hull = grp(g);
+    put(hull, box(.4, .2, .62, C, true), 0, .32, 0); put(hull, box(.34, .05, .5, MAT.steelD), 0, .445, -.02); put(hull, box(.3, .06, .02, MB(col)), 0, .32, .315);
+    put(hull, cyl(.02, .02, .6, MAT.dark, 6), -.12, .74, -.2);
+    const radar = grp(hull, -.12, 1.04, -.2); put(radar, rotX(cyl(.22, .07, .05, MAT.whiteD, 16), -.9), 0, 0, 0); put(radar, cyl(.012, .012, .2, MAT.dark, 5), 0, .08, .06); put(radar, sph(.028, MB(col), 8, 6), 0, .19, .12);
+    const head = grp(hull, .06, .52, .14); put(head, box(.24, .14, .22, MAT.white, true), 0, .07, 0); lens(head, .05, 0xb8ffe0, 0, .07, .12);
+    const tip = grp(head, 0, .07, .15);
+    return {g, tip, H: 1.25, rz: .3, beam: true, anim(t, w, dt, T, cheer){
+      radar.rotation.y += dt * (1 + 3 * w);
+      hull.position.z = Math.sin(t * 1.1) * .05 * w; g.position.y = cheer ? Math.abs(Math.sin(t * 6)) * .07 : 0;
+      const k = Math.min(1, dt * 5), yaw = w > .1 ? Math.sin(t * 1.7) * .22 : Math.sin(t * .5) * .7;
+      head.rotation.y += (yaw - head.rotation.y) * k;
+      const pit = w > .1 ? -Math.atan2(T.y - .6, T.z - .14) : -.1;
+      head.rotation.x += (pit - head.rotation.x) * k;
+    }};
+  },
+  /* 文案：小人形打字员，双手在货箱上的键盘敲字 */
+  typist(C, col){
+    const g = new THREE.Group();
+    [-1, 1].forEach(sx => { put(g, box(.12, .36, .14, MAT.dark, true), sx * .1, .18, 0); put(g, box(.14, .05, .22, MAT.steelD), sx * .1, .025, .03); });
+    put(g, box(.32, .08, .18, MAT.steelD), 0, .4, 0);
+    const torso = grp(g, 0, .44, 0); put(torso, box(.36, .34, .24, C, true), 0, .17, 0); put(torso, new THREE.Mesh(new THREE.PlaneGeometry(.2, .12), MB(col)), 0, .2, .121);
+    const head = grp(torso, 0, .36, 0); put(head, sph(.15, MAT.white, 16, 12, true), 0, .14, 0); put(head, box(.22, .055, .03, MB(0x9ff0ff)), 0, .15, .135);
+    [-1, 1].forEach(sx => { put(head, rotZ(cyl(.008, .008, .16, MAT.dark, 5), -sx * .3), sx * .08, .33, 0); put(head, sph(.026, MB(col), 8, 6), sx * .115, .41, 0); });
+    const La = makeLimb(g, -.23, .76, 0, .3, .31, C, MAT.dark, .07, true), Ra = makeLimb(g, .23, .76, 0, .3, .31, C, MAT.dark, .07, true);
+    [La, Ra].forEach(Lm => put(Lm.end, sph(.045, MAT.whiteD, 10, 8), 0, .02, 0));
+    const tip = grp(Ra.end, 0, .04, 0);
+    return {g, tip, H: 1.35, rz: .62, anim(t, w, dt, T, cheer){
+      const k = Math.min(1, dt * 9);
+      if (cheer) { reach(La, -.32, 1.38, .1, k); reach(Ra, .32, 1.38, .1, k); g.position.y = Math.abs(Math.sin(t * 6)) * .06; }
+      else if (w > .1) { reach(La, -.09, T.y + .03 + Math.max(0, Math.sin(t * 15)) * .07, T.z - .17, k); reach(Ra, .09, T.y + .03 + Math.max(0, Math.sin(t * 15 + Math.PI)) * .07, T.z - .17, k); g.position.y = 0; }
+      else { reach(La, -.26, .36, .08, k * .4); reach(Ra, .26, .36, .08, k * .4); g.position.y = 0; }
+      head.rotation.x = w > .1 ? .3 + Math.sin(t * 15) * .02 : Math.sin(t * .4) * .1; head.rotation.y = w > .1 ? 0 : Math.sin(t * .3) * .5;
+    }};
+  },
+  /* 代码：双臂装配机器人，两只手交替往货箱里装零件 */
+  dual(C, col){
+    const g = new THREE.Group();
+    put(g, cyl(.26, .3, .14, MAT.rubber, 18, true), 0, .07, 0); put(g, cyl(.09, .11, .3, MAT.steelD, 12), 0, .29, 0);
+    const torso = grp(g, 0, .44, 0); put(torso, box(.5, .28, .3, C, true), 0, .14, 0); put(torso, box(.52, .05, .32, MAT.steelD), 0, .02, 0);
+    const head = grp(torso, 0, .3, 0); put(head, box(.24, .14, .18, MAT.white, true), 0, .07, 0); [-1, 1].forEach(sx => put(head, sph(.03, MB(col), 8, 6), sx * .06, .08, .09)); put(head, box(.04, .1, .04, MAT.dark), 0, .18, -.03);
+    const La = makeLimb(g, -.3, .66, .02, .33, .33, C, MAT.dark, .08, true), Ra = makeLimb(g, .3, .66, .02, .33, .33, C, MAT.dark, .08, true);
+    [La, Ra].forEach(Lm => { put(Lm.end, box(.1, .04, .06, MAT.steel), 0, .02, 0); put(Lm.end, box(.02, .07, .05, MAT.steel), -.04, .07, 0); put(Lm.end, box(.02, .07, .05, MAT.steel), .04, .07, 0); });
+    const tip = grp(Ra.end, 0, .1, 0);
+    return {g, tip, H: 1.15, rz: .6, anim(t, w, dt, T, cheer){
+      const k = Math.min(1, dt * 7);
+      if (cheer) { reach(La, -.4, 1.3, .1, k); reach(Ra, .4, 1.3, .1, k); g.position.y = Math.abs(Math.sin(t * 6)) * .06; }
+      else if (w > .1) { reach(La, -.09 + Math.sin(t * 3) * .04, T.y + .03 + Math.max(0, Math.sin(t * 6)) * .06, T.z - .16, k); reach(Ra, .09 + Math.cos(t * 3) * .04, T.y + .03 + Math.max(0, Math.sin(t * 6 + Math.PI)) * .06, T.z - .16, k); g.position.y = 0; }
+      else { reach(La, -.34, .38, .12, k * .4); reach(Ra, .34, .38, .12, k * .4); g.position.y = 0; }
+      head.rotation.y = w > .1 ? Math.sin(t * .8) * .2 : Math.sin(t * .35) * .6;
+    }};
+  },
+  /* 审校：悬浮检测眼，大镜头来回扫货箱，外环旋转 */
+  eye(C, col){
+    const g = new THREE.Group();
+    put(g, rotX(new THREE.Mesh(new THREE.RingGeometry(.2, .3, 28), ADD(col, .45)), -HP), 0, .035, 0);
+    const fl = grp(g, 0, 1.08, 0); fl.rotation.order = 'YXZ';
+    put(fl, sph(.25, C, 20, 14, true)); put(fl, rotX(new THREE.Mesh(new THREE.TorusGeometry(.255, .03, 6, 32), MAT.dark), HP));
+    put(fl, rotX(cyl(.12, .13, .08, MAT.dark, 20), HP), 0, 0, .22); lens(fl, .09, 0xdffbff, 0, 0, .265);
+    const ring = grp(fl); ring.add(rotX(new THREE.Mesh(new THREE.TorusGeometry(.38, .016, 6, 40), MB(col)), HP));
+    [-1, 1].forEach(sx => put(fl, box(.04, .18, .12, MAT.whiteD), sx * .27, 0, -.05));
+    put(fl, cyl(.06, .09, .08, MAT.steelD, 10), 0, -.27, 0); put(fl, sph(.05, MAT.cyanL, 8, 6), 0, -.32, 0);
+    const tip = grp(fl, 0, 0, .29);
+    return {g, tip, H: 1.55, rz: .45, beam: true, anim(t, w, dt, T, cheer){
+      const k = Math.min(1, dt * 4);
+      fl.position.y = (cheer ? 1.3 + Math.sin(t * 6) * .12 : 1.08) + Math.sin(t * 1.6) * .06;
+      let yaw, pit;
+      if (w > .1) { const x = Math.sin(t * 2) * .13, dy = T.y - fl.position.y; yaw = Math.atan2(x, T.z); pit = Math.atan2(-dy, Math.hypot(x, T.z)); }
+      else { yaw = Math.sin(t * .4) * .9; pit = .15; }
+      if (cheer) fl.rotation.y += dt * 5; else fl.rotation.y += (yaw - fl.rotation.y) * k;
+      fl.rotation.x += (pit - fl.rotation.x) * k;
+      ring.rotation.z += dt * (1 + 3 * w);
+    }};
+  },
+  /* 数据：屏幕小车，脸是一块数据屏，探针戳货箱校准 */
+  cart(C, col){
+    const g = new THREE.Group();
+    [[-1, 1], [1, 1], [-1, -1], [1, -1]].forEach(([sx, sz]) => put(g, rotZ(cyl(.08, .08, .06, MAT.rubber, 12), HP), sx * .22, .08, sz * .17));
+    put(g, box(.42, .12, .48, MAT.steelD, true), 0, .2, 0); put(g, box(.36, .3, .38, C, true), 0, .41, 0);
+    put(g, cyl(.03, .03, .16, MAT.dark, 6), 0, .64, 0);
+    const head = grp(g, 0, .8, 0); put(head, box(.38, .26, .06, MAT.dark, true));
+    const scr = canvasTex(128, 96, (x, w, h) => { x.fillStyle = '#04080c'; x.fillRect(0, 0, w, h); x.strokeStyle = col; x.lineWidth = 3; x.beginPath(); for (let i = 0; i <= 10; i++) { const px = 8 + i * 11, py = 70 - Math.sin(i * .9) * 18 - i * 3; i ? x.lineTo(px, py) : x.moveTo(px, py); } x.stroke(); x.fillStyle = col; for (let i = 0; i < 5; i++) x.fillRect(10 + i * 22, 84 - (8 + i * 2), 12, 8 + i * 2); });
+    const sm = MB(0xffffff, {map: scr}); put(head, new THREE.Mesh(new THREE.PlaneGeometry(.32, .2), sm), 0, 0, .031);
+    const L = makeLimb(g, .22, .5, .06, .34, .34, MAT.whiteD, MAT.dark, .06, true);
+    put(L.end, cyl(.012, .012, .12, MAT.steel, 6), 0, .06, 0); put(L.end, sph(.024, MB(col), 8, 6), 0, .13, 0);
+    const tip = grp(L.end, 0, .13, 0);
+    return {g, tip, H: 1.15, rz: .55, anim(t, w, dt, T, cheer){
+      const k = Math.min(1, dt * 6);
+      if (cheer) { reach(L, .3, 1.25, .1, k); g.position.y = Math.abs(Math.sin(t * 6)) * .06; }
+      else if (w > .1) { reach(L, Math.sin(t * 1.3) * .1, T.y + .02 + Math.max(0, Math.sin(t * 3.2)) * .06, T.z - .13, k); g.position.y = 0; }
+      else { reach(L, .34, .42, .16, k * .4); g.position.y = 0; }
+      head.rotation.x = w > .1 ? .25 : 0; head.rotation.y = Math.sin(t * .5) * .2;
+      sm.color.setScalar(.75 + .25 * Math.sin(t * 9) * w + .25 * (1 - w));
+    }};
+  },
+  /* 剪辑：龙门切削机器人，横梁上的小车带一张"脸"，锯片落下切货箱 */
+  gantry(C, col){
+    const g = new THREE.Group();
+    [-1, 1].forEach(sx => { put(g, box(.12, 1.7, .12, MAT.hz, true), sx * 1.72, .85, 0); put(g, box(.3, .06, .3, MAT.steelD), sx * 1.72, .03, 0); });
+    put(g, box(3.6, .14, .16, MAT.steel, true), 0, 1.72, 0);
+    const car = grp(g, 0, 1.72, 0); put(car, box(.38, .32, .32, C, true)); put(car, box(.28, .07, .02, MB(0x9ff0ff)), 0, .04, .17); [-1, 1].forEach(sx => put(car, sph(.026, MB(col), 8, 6), sx * .085, .04, .18));
+    const sp = grp(car, 0, -.16, 0); put(sp, cyl(.04, .04, .5, MAT.steelD, 8), 0, -.25, 0);
+    const head = grp(sp, 0, -.5, 0); put(head, box(.12, .1, .12, MAT.dark)); const blade = grp(head, 0, -.12, 0); blade.add(rotZ(cyl(.16, .16, .02, MAT.steel, 20), HP));
+    const tip = grp(head, 0, -.28, 0);
+    return {g, tip, H: 2.05, rz: BENCH_Z, anim(t, w, dt, T, cheer){
+      const k = Math.min(1, dt * 4);
+      const cx = cheer ? Math.sin(t * 3) * 1.2 : w > .1 ? Math.sin(t * 1.2) * .16 : Math.sin(t * .3) * 1.1;
+      car.position.x += (cx - car.position.x) * k;
+      const sy = w > .1 && !cheer ? .1 + Math.sin(t * 2.4) * .03 : .55;
+      sp.position.y += (sy - sp.position.y) * k;
+      blade.rotation.x += dt * (4 + 30 * w);
+    }};
+  },
+  /* 拆解：激光螃蟹 —— 六条腿左右挪步，左钳按住货箱，右钳的激光头沿切割线走，眼柄四处张望 */
+  crab(C, col){
+    const g = new THREE.Group();
+    const body = grp(g, 0, .44, 0);
+    put(body, box(.62, .2, .44, C, true));
+    put(body, mesh(new THREE.SphereGeometry(.2, 16, 8, 0, TAU, 0, HP), C, true), 0, .1, -.02).scale.set(1.35, .75, 1);
+    put(body, box(.66, .05, .48, MAT.steelD), 0, -.1, 0);
+    put(body, box(.46, .045, .02, MB(col)), 0, -.01, .225);
+    [-1, 1].forEach(sx => put(body, box(.08, .05, .02, MAT.hz), sx * .26, .05, .222));
+    const eyes = [-1, 1].map(sx => { const e = grp(body, sx * .1, .15, .13); put(e, cyl(.018, .018, .16, MAT.dark, 6), 0, .08, 0); put(e, sph(.05, MAT.white, 12, 10, true), 0, .18, 0); put(e, sph(.024, MB(0x0b0f14), 8, 6), 0, .18, .04); return e; });
+    const legs = [];
+    for (const sx of [-1, 1]) for (let j = 0; j < 3; j++) {
+      const hip = grp(body, sx * .3, -.04, -.15 + j * .15); hip.rotation.y = sx * (j - 1) * -.4;
+      const th = grp(hip); th.rotation.z = -sx * 1.0; put(th, box(.075, .25, .075, C), 0, .125, 0); put(th, sph(.035, MAT.dark, 8, 6), 0, .25, 0);
+      const lo = grp(hip, sx * .21, .135, 0); lo.rotation.z = sx * .3; put(lo, box(.055, .58, .055, MAT.steelD), 0, -.29, 0); put(lo, sph(.03, MAT.steelD, 8, 6), 0, -.58, 0);
+      legs.push({hip, sx, ph: (j + (sx > 0 ? 1 : 0)) % 2 ? Math.PI : 0, ry: hip.rotation.y});
+    }
+    const claw = (sx, laser) => {
+      const L = makeLimb(body, sx * .22, .02, .2, .27, .25, C, C, .09);
+      const cl = grp(L.end); put(cl, box(.11, .07, .09, MAT.steelD), 0, .02, 0);
+      const ja = grp(cl, -.035, .05, 0), jb = grp(cl, .035, .05, 0); put(ja, box(.04, .16, .06, MAT.whiteD), 0, .08, 0); put(jb, box(.04, .16, .06, MAT.whiteD), 0, .08, 0);
+      let tip = null; if (laser) { put(cl, cyl(.02, .014, .1, MAT.steel, 8), 0, .1, 0); put(cl, sph(.022, MB(0xff3344), 8, 6), 0, .16, 0); tip = grp(cl, 0, .17, 0); }
+      return {L, ja, jb, tip};
+    };
+    const Lc = claw(-1, false), Rc = claw(1, true);
+    const B = (L, x, y, z, k) => reach(L, x, y - body.position.y, z, k);
+    return {g, tip: Rc.tip, H: .98, beam: 'laser', anim(t, w, dt, T, cheer){
+      const k = Math.min(1, dt * 7), work = w > .1;
+      const f = work || cheer ? 7 : 0;
+      legs.forEach(L => { const s = Math.sin(t * f + L.ph); L.hip.rotation.z = (f ? -L.sx * Math.max(0, s) * .22 : 0); L.hip.rotation.y = L.ry + (f ? s * .12 : 0); });
+      body.position.x = work ? Math.sin(t * 1.4) * .05 : 0; body.position.y = .44 + (cheer ? Math.abs(Math.sin(t * 6)) * .1 : work ? Math.abs(Math.sin(t * 7)) * .012 : Math.sin(t * 1.2) * .01);
+      body.rotation.z = work ? Math.sin(t * 1.4) * .04 : 0;
+      if (cheer) { B(Lc.L, -.32, 1.0, .25, k); B(Rc.L, .32, 1.0, .25, k); }
+      else if (work) { B(Lc.L, -.14, T.y + .03, T.z - .17, k); B(Rc.L, Math.sin(t * 2.1) * .13, T.y + .17, T.z - .02 + Math.cos(t * 1.6) * .06, k); }
+      else { B(Lc.L, -.28, .5, .32, k * .4); B(Rc.L, .28, .5 + Math.sin(t * .8) * .04, .32, k * .4); }
+      const snip = work ? .35 + .25 * Math.sin(t * 9) : .15 + .15 * Math.max(0, Math.sin(t * 2.3));
+      [Lc, Rc].forEach((c, i) => { const o = i ? (work ? .1 : snip) : snip; c.ja.rotation.z = o; c.jb.rotation.z = -o; });
+      eyes.forEach((e, i) => { e.rotation.x = Math.sin(t * (1.3 + i * .4)) * .25; e.rotation.z = Math.sin(t * (.9 + i * .7) + i) * .3; });
+    }};
+  },
+  /* 设计：画家机器人 —— 戴贝雷帽，背着两罐颜料，右手喷枪走"之"字线，左手托调色盘，歪头端详 */
+  painter(C, col){
+    const g = new THREE.Group();
+    [-1, 1].forEach(sx => { put(g, cyl(.06, .07, .3, MAT.dark, 10, true), sx * .1, .15, 0); put(g, box(.14, .06, .22, MAT.steelD), sx * .1, .03, .03); });
+    const torso = grp(g, 0, .3, 0);
+    put(torso, cyl(.19, .21, .36, C, 18, true), 0, .18, 0); put(torso, cyl(.215, .215, .05, MAT.white, 18), 0, .04, 0);
+    put(torso, box(.24, .22, .02, MAT.white), 0, .2, .2);
+    [['#ff4458', -.06, .26], ['#3b7cff', .05, .2], ['#ffd23f', -.02, .13], ['#3ce69a', .07, .29]].forEach(([c2, x, y]) => put(torso, box(.04, .04, .01, MB(c2)), x, y, .212));
+    put(torso, cyl(.075, .075, .3, MAT.hz, 12, true), -.085, .22, -.21); put(torso, cyl(.075, .075, .3, M(0x3b7cff), 12, true), .085, .22, -.21);
+    [-.085, .085].forEach(x => put(torso, cyl(.03, .03, .05, MAT.dark, 8), x, .39, -.21));
+    const head = grp(torso, 0, .38, 0); head.rotation.order = 'YXZ';
+    put(head, sph(.15, MAT.white, 16, 12, true), 0, .13, 0); put(head, box(.19, .05, .03, MB(0x9ff0ff)), 0, .14, .135);
+    put(head, rotZ(cyl(.15, .17, .05, C, 18), .25), .03, .26, 0); put(head, sph(.03, C, 8, 6), .07, .3, 0);
+    const Ra = makeLimb(g, .26, .66, 0, .3, .3, C, MAT.dark, .07, true), La = makeLimb(g, -.26, .66, 0, .3, .3, C, MAT.dark, .07, true);
+    put(Ra.end, box(.07, .1, .12, MAT.dark), 0, .04, .03); put(Ra.end, cyl(.016, .022, .12, MAT.steel, 8), 0, .13, 0);
+    const tip = grp(Ra.end, 0, .2, 0);
+    const pal = grp(La.end, 0, .03, 0); put(pal, cyl(.12, .12, .015, M(0xb89058, {roughness: .7}), 18));
+    ['#ff4458', '#3b7cff', '#ffd23f', '#3ce69a', '#a774ff'].forEach((c2, i) => { const a = i / 5 * TAU; put(pal, cyl(.02, .02, .012, MB(c2), 8), Math.cos(a) * .075, .012, Math.sin(a) * .075); });
+    return {g, tip, H: 1.2, anim(t, w, dt, T, cheer){
+      const k = Math.min(1, dt * 7), work = w > .1;
+      if (cheer) { reach(Ra, .34, 1.3, .1, k); reach(La, -.34, 1.3, .1, k); g.position.y = Math.abs(Math.sin(t * 6)) * .07; }
+      else if (work) {
+        reach(Ra, Math.sin(t * 2.2) * .17, T.y + .22 + Math.sin(t * 4.4) * .05, T.z - .16, k);
+        reach(La, -.2 + Math.sin(t * 1.1) * .03, .6 + Math.sin(t * 1.7) * .03, .22, k);
+        g.position.y = 0;
+      } else { reach(Ra, .3, .4, .1, k * .4); reach(La, -.22, .58, .2, k * .4); g.position.y = 0; }
+      torso.rotation.y = work ? Math.sin(t * 2.2) * .18 : Math.sin(t * .4) * .2;
+      head.rotation.z = work ? Math.sin(t * .7) * .22 : Math.sin(t * .5) * .1; head.rotation.x = work ? .25 : 0; head.rotation.y = work ? -torso.rotation.y * .6 : Math.sin(t * .3) * .5;
+    }};
+  },
+  /* 测试：示波器头机器人 —— 履带底盘，头是一台滚波形的显示器，右手小锤敲货箱、左手探针贴着测，胸口表针乱跳 */
+  tester(C, col){
+    const g = new THREE.Group();
+    [-1, 1].forEach(sx => { put(g, box(.14, .18, .62, MAT.rubber, true), sx * .22, .09, 0); for (let i = -1; i <= 1; i++) put(g, rotZ(cyl(.065, .065, .15, MAT.steelD, 10), HP), sx * .22, .09, i * .22); });
+    put(g, box(.36, .1, .5, MAT.steelD, true), 0, .21, 0);
+    const torso = grp(g, 0, .26, 0); put(torso, box(.38, .3, .3, C, true), 0, .15, 0); put(torso, box(.4, .04, .32, MAT.steelD), 0, .02, 0);
+    put(torso, rotX(cyl(.07, .07, .02, MAT.white, 18), HP), 0, .17, .155); const needle = grp(torso, 0, .17, .168); put(needle, box(.008, .06, .004, MB(0xff4d5e)), 0, .03, 0);
+    put(torso, cyl(.035, .035, .1, MAT.dark, 8), 0, .34, 0);
+    const head = grp(torso, 0, .4, 0); put(head, box(.38, .27, .24, MAT.whiteD, true), 0, .13, 0); put(head, box(.4, .04, .26, MAT.steelD), 0, .27, 0);
+    const wave = canvasTex(256, 64, (x, W2, H2) => { x.fillStyle = '#02110b'; x.fillRect(0, 0, W2, H2); x.strokeStyle = 'rgba(60,230,154,.25)'; x.lineWidth = 1; for (let i = 0; i < W2; i += 32) { x.beginPath(); x.moveTo(i, 0); x.lineTo(i, H2); x.stroke(); } x.strokeStyle = '#3ce69a'; x.lineWidth = 3; x.beginPath(); for (let i = 0; i <= W2; i += 2) { const y = H2 / 2 + Math.sin(i / W2 * TAU * 3) * 14 + Math.sin(i / W2 * TAU * 11) * 5; i ? x.lineTo(i, y) : x.moveTo(i, y); } x.stroke(); });
+    wave.wrapS = THREE.RepeatWrapping; const sm = MB(0xffffff, {map: wave});
+    put(head, new THREE.Mesh(new THREE.PlaneGeometry(.32, .2), sm), 0, .13, .121);
+    put(head, cyl(.008, .008, .16, MAT.dark, 5), .13, .36, -.05); put(head, sph(.025, MB(col), 8, 6), .13, .45, -.05);
+    const Ra = makeLimb(g, .25, .5, .02, .3, .3, C, MAT.dark, .07, true), La = makeLimb(g, -.25, .5, .02, .3, .3, C, MAT.dark, .07, true);
+    put(Ra.end, cyl(.014, .014, .2, MAT.steel, 6), 0, .1, 0); put(Ra.end, rotZ(cyl(.04, .04, .12, MAT.hz, 10), HP), 0, .2, 0);
+    const tip = grp(Ra.end, 0, .22, 0);
+    put(La.end, cyl(.012, .012, .14, MAT.dark, 6), 0, .07, 0); put(La.end, sph(.022, MB(col), 8, 6), 0, .15, 0);
+    let lastP = 0;
+    const R = {g, tip, H: 1.08, anim(t, w, dt, T, cheer){
+      const k = Math.min(1, dt * 10), work = w > .1;
+      if (cheer) { reach(Ra, .32, 1.15, .1, k); reach(La, -.32, 1.15, .1, k); g.position.y = Math.abs(Math.sin(t * 6)) * .06; }
+      else if (work) {
+        const p = (t * 1.6) % 1, up = p < .78 ? p / .78 : 1 - (p - .78) / .22;
+        reach(Ra, .1, T.y + .04 + up * .2, T.z - .14, k);
+        if (p < lastP) R.hit = true; lastP = p;
+        reach(La, -.12, T.y - .03, T.z - .2, k * .6);
+        torso.position.y = .26 + (p > .95 || p < .05 ? -.01 : 0); g.position.y = 0;
+      } else { reach(Ra, .3, .3, .12, k * .3); reach(La, -.3, .3, .12, k * .3); g.position.y = 0; }
+      wave.offset.x += dt * (.1 + .9 * w);
+      needle.rotation.z = Math.sin(t * (work ? 11 : 1.5)) * (work ? .9 : .3);
+      head.rotation.y = work ? Math.sin(t * .9) * .15 : Math.sin(t * .4) * .6; head.rotation.x = work ? .18 : 0;
+      sm.color.setScalar(.7 + .3 * w);
+    }};
+    return R;
+  },
+  /* 投放：喇叭贴标机器人 —— 圆桶身、胸前一卷标签，左手扯标签、右手拍到货箱上，头顶喇叭一圈圈往外放广播 */
+  herald(C, col){
+    const g = new THREE.Group();
+    put(g, cyl(.22, .25, .08, MAT.steelD, 20, true), 0, .06, 0); [0, 1, 2].forEach(i => { const a = i / 3 * TAU; put(g, sph(.05, MAT.rubber, 8, 6), Math.cos(a) * .17, .04, Math.sin(a) * .17); });
+    const body = grp(g, 0, .1, 0);
+    put(body, cyl(.22, .22, .44, C, 22, true), 0, .24, 0); put(body, cyl(.225, .225, .04, MAT.white, 22), 0, .04, 0); put(body, cyl(.225, .225, .04, MAT.white, 22), 0, .44, 0);
+    const roll = grp(body, 0, .26, .21); put(roll, rotZ(cyl(.09, .09, .18, MAT.paper, 16, true), HP)); put(roll, rotZ(cyl(.035, .035, .2, MB(col), 8), HP));
+    put(body, box(.15, .14, .004, MAT.paper), 0, .14, .3);
+    const head = grp(body, 0, .48, 0); put(head, mesh(new THREE.SphereGeometry(.18, 16, 8, 0, TAU, 0, HP), MAT.white, true)); put(head, box(.22, .05, .03, MB(col)), 0, .08, .16);
+    const horn = grp(head, .07, .17, .02); horn.rotation.x = -.7; put(horn, cyl(.03, .03, .1, MAT.dark, 8), 0, .02, 0); put(horn, mesh(new THREE.CylinderGeometry(.11, .035, .16, 16, 1, true), MAT.hz), 0, .14, 0);
+    const rings = [0, 1, 2].map(() => { const r = new THREE.Mesh(new THREE.TorusGeometry(.12, .008, 4, 24), ADD(col, 0)); r.rotation.x = HP; horn.add(r); return r; });
+    const La = makeLimb(g, -.26, .5, 0, .29, .28, C, MAT.dark, .065, true), Ra = makeLimb(g, .26, .5, 0, .3, .3, C, MAT.dark, .065, true);
+    [La, Ra].forEach(L => put(L.end, box(.09, .03, .09, MAT.white), 0, .02, 0));
+    const tip = grp(Ra.end, 0, .04, 0);
+    let lastC = 0;
+    const R = {g, tip, H: 1.12, anim(t, w, dt, T, cheer){
+      const k = Math.min(1, dt * 9), work = w > .1;
+      if (cheer) { reach(La, -.34, 1.2, .1, k); reach(Ra, .34, 1.2, .1, k); g.position.y = Math.abs(Math.sin(t * 6)) * .06; }
+      else if (work) {
+        const c = (t * .9) % 1;
+        if (c < .4) { reach(La, -.04, .36, .34, k); reach(Ra, .14, .55, .3, k); roll.rotation.x += dt * 6; }
+        else if (c < .6) { reach(La, -.02, .5, .42, k); reach(Ra, .04, .52, .44, k); }
+        else { reach(La, -.22, .5, .3, k); reach(Ra, Math.sin(t * .7) * .1, T.y + .03 + (c > .78 && c < .9 ? 0 : .14), T.z - .14, k); }
+        if (lastC < .8 && c >= .8) R.hit = true; lastC = c;
+        body.rotation.y = Math.sin(t * 1.3) * .12; g.position.y = 0;
+      } else { reach(La, -.3, .32, .1, k * .4); reach(Ra, .3, .32, .1, k * .4); body.rotation.y = Math.sin(t * .4) * .3; g.position.y = 0; }
+      rings.forEach((r, i) => { const u = ((t * (.5 + w)) + i / 3) % 1; r.position.y = .2 + u * .3; r.scale.setScalar(1 + u * 1.8); r.material.opacity = (1 - u) * (.25 + .55 * w); });
+      head.rotation.y = Math.sin(t * .6) * .25;
+    }};
+    return R;
+  },
+  /* 客服：球形服务机器人（球身滚、头不动），手上的抛光盘打磨货箱 */
+  ball(C, col){
+    const g = new THREE.Group();
+    const ball = grp(g, 0, .27, 0); put(ball, sph(.27, C, 20, 14, true)); put(ball, new THREE.Mesh(new THREE.TorusGeometry(.272, .02, 6, 32), MAT.white)).rotation.y = HP; put(ball, rotX(new THREE.Mesh(new THREE.TorusGeometry(.272, .02, 6, 32), MAT.white), HP));
+    const head = grp(g, 0, .53, 0); put(head, mesh(new THREE.SphereGeometry(.17, 16, 8, 0, TAU, 0, HP), MAT.white, true)); put(head, rotX(cyl(.05, .05, .03, MB(col), 12), 1.2), 0, .08, .14); put(head, cyl(.008, .008, .14, MAT.dark, 5), .06, .2, -.04); put(head, sph(.02, MB(col), 6, 5), .06, .28, -.04);
+    const L = makeLimb(g, .17, .56, .05, .34, .33, MAT.whiteD, MAT.dark, .06, true);
+    const disc = grp(L.end, 0, .04, 0); put(disc, cyl(.1, .1, .035, MAT.steel, 16)); put(disc, box(.16, .04, .02, MAT.dark), 0, .02, 0);
+    const tip = grp(L.end, 0, .07, 0);
+    return {g, tip, H: 1.05, rz: .55, anim(t, w, dt, T, cheer){
+      const k = Math.min(1, dt * 6);
+      ball.position.z = (w > .1 ? Math.sin(t * 1.2) * .05 : 0); ball.rotation.x = ball.position.z / .27 * 3;
+      if (cheer) { reach(L, .3, 1.2, .1, k); head.rotation.y += dt * 6; g.position.y = Math.abs(Math.sin(t * 6)) * .06; }
+      else if (w > .1) { reach(L, Math.sin(t * 2.4) * .12, T.y + .04, T.z - .12, k); head.rotation.y = Math.sin(t * .7) * .3; g.position.y = 0; }
+      else { reach(L, .3, .4, .14, k * .4); head.rotation.y = Math.sin(t * .3) * .8; g.position.y = 0; }
+      disc.rotation.y += dt * (2 + 30 * w);
+    }};
+  },
+  /* 归档：焊接小车，焊枪左右摆着封箱，火花最多 */
+  welder(C, col){
+    const g = new THREE.Group();
+    [[-1, 1], [1, 1], [-1, -1], [1, -1]].forEach(([sx, sz]) => put(g, rotZ(cyl(.09, .09, .07, MAT.rubber, 12), HP), sx * .24, .09, sz * .18));
+    put(g, box(.44, .14, .52, MAT.steelD, true), 0, .17, 0); put(g, box(.36, .26, .36, C, true), 0, .37, 0);
+    [-1, 1].forEach(sx => put(g, cyl(.05, .05, .3, MAT.hz, 10), sx * .09, .45, -.23));
+    const head = grp(g, 0, .5, .02); put(head, box(.24, .18, .18, MAT.dark, true), 0, .09, 0); put(head, box(.18, .05, .02, MB(0xffb35c)), 0, .1, .091);
+    const L = makeLimb(g, .2, .52, .08, .34, .33, C, MAT.dark, .07);
+    put(L.end, cyl(.02, .025, .14, MAT.steel, 6), 0, .07, 0);
+    const tip = grp(L.end, 0, .15, 0);
+    return {g, tip, H: 1.0, rz: .5, anim(t, w, dt, T, cheer){
+      const k = Math.min(1, dt * 7);
+      if (cheer) { reach(L, .2, 1.25, .2, k); g.position.y = Math.abs(Math.sin(t * 6)) * .06; }
+      else if (w > .1) { reach(L, Math.sin(t * 3) * .13, T.y + .05, T.z - .1 + Math.cos(t * 1.5) * .04, k); g.position.y = 0; }
+      else { reach(L, .3, .62, .3, k * .4); g.position.y = 0; }
+      head.rotation.x = w > .1 ? .35 : 0; head.rotation.y = w > .1 ? Math.sin(t * 3) * .1 : Math.sin(t * .4) * .5;
+    }};
+  },
+  /* 总调度：控制室里的指挥官人形，指挥手势 */
+  commander(C, col){
+    const g = new THREE.Group();
+    [-1, 1].forEach(sx => { put(g, box(.16, .6, .18, MAT.dark, true), sx * .13, .3, 0); put(g, box(.18, .08, .26, MAT.steelD), sx * .13, .04, .03); });
+    put(g, box(.4, .12, .24, MAT.steelD), 0, .66, 0);
+    const torso = grp(g, 0, .7, 0); put(torso, box(.5, .5, .3, MAT.white, true), 0, .25, 0); put(torso, box(.3, .16, .02, MAT.hz), 0, .34, .151); put(torso, rotX(cyl(.05, .05, .02, MAT.cyanL, 14), HP), 0, .2, .152);
+    [-1, 1].forEach(sx => put(torso, box(.18, .1, .26, MAT.hz, true), sx * .33, .5, 0));
+    const head = grp(torso, 0, .55, 0); put(head, box(.26, .26, .24, MAT.white, true), 0, .13, 0); put(head, box(.2, .06, .02, MAT.cyanL), 0, .15, .121); put(head, box(.04, .1, .2, MAT.hz), 0, .3, -.02);
+    const arms = [-1, 1].map(sx => { const s = grp(torso, sx * .33, .44, 0); put(s, box(.1, .36, .1, MAT.white), 0, -.18, 0); const e = grp(s, 0, -.36, 0); put(e, box(.09, .32, .09, MAT.dark), 0, -.16, 0); put(e, sph(.05, MAT.whiteD, 8, 6), 0, -.34, 0); return {s, e, sx}; });
+    const tip = grp(head, 0, .13, .15);
+    return {g, tip, H: 2.0, rz: -.4, anim(t, w, dt, T, cheer){
+      const k = Math.min(1, dt * 4), [La, Ra] = arms;
+      if (cheer) { La.s.rotation.z = -2.6 + Math.sin(t * 8) * .2; Ra.s.rotation.z = 2.6 + Math.cos(t * 8) * .2; La.s.rotation.x = Ra.s.rotation.x = 0; La.e.rotation.x = Ra.e.rotation.x = 0; }
+      else {
+        Ra.s.rotation.z += (.15 - Ra.s.rotation.z) * k; Ra.s.rotation.x += ((-1.35 + Math.sin(t * .7) * .3 * w) - Ra.s.rotation.x) * k; Ra.e.rotation.x += (-.2 - Ra.e.rotation.x) * k;
+        La.s.rotation.z += (-.15 - La.s.rotation.z) * k; La.s.rotation.x += (-.5 - La.s.rotation.x) * k; La.e.rotation.x += (-.9 + Math.sin(t * 2.2) * .1 - La.e.rotation.x) * k;
+        torso.rotation.y = Math.sin(t * .45) * .35;
+      }
+      head.rotation.y = Math.sin(t * .6) * .4;
+    }};
+  }
+};
+
+/* ---------- 工区机器：每个工区背后的设备，各自在转、在闪、在动 ---------- */
+const MACH = {
+  // 检索：雷达塔 + 服务器柜
+  rover(G, a, C){
+    put(G, box(.6, .12, .6, MAT.steelD, true), -1.9, .06, -1.7);
+    [[-.15, -.15], [.15, -.15], [-.15, .15], [.15, .15]].forEach(([x, z]) => put(G, box(.045, 2.2, .045, MAT.steel, true), -1.9 + x, 1.22, -1.7 + z));
+    for (let y = .5; y < 2.2; y += .55) { put(G, box(.34, .03, .03, MAT.steel), -1.9, y, -1.55); put(G, box(.34, .03, .03, MAT.steel), -1.9, y, -1.85); }
+    put(G, box(.42, .05, .42, MAT.steelD), -1.9, 2.33, -1.7);
+    const dish = dyn(grp(G, -1.9, 2.4, -1.7)); put(dish, rotX(cyl(.5, .14, .08, MAT.whiteD, 20, true), -1.0), 0, .25, 0); put(dish, cyl(.015, .015, .45, MAT.dark, 5), 0, .35, .12); put(dish, sph(.04, MB(a.col), 8, 6), 0, .56, .2);
+    put(G, box(.72, 1.3, .46, MAT.dark, true), 1.75, .65, -1.85);
+    const leds = [MB(a.col), MB(0x3ce69a)];
+    for (let i = 0; i < 7; i++) put(G, new THREE.Mesh(new THREE.BoxGeometry(.5, .03, .01), leds[i % 2]), 1.75, .25 + i * .15, -1.615);
+    put(G, box(.5, .25, .5, MAT.steelD), .6, .125, -2.0); put(G, rotX(cyl(.3, .06, .05, MAT.whiteD, 16), -.7), .6, .42, -2.0);
+    return (t, w, dt) => { dish.rotation.y += dt * (.5 + 1.8 * w); const on = Math.sin(t * (4 + 8 * w)) > 0; leds[0].color.set(a.col).multiplyScalar(on ? 1 : .25); leds[1].color.setRGB(.24 * (on ? .25 : 1), .9 * (on ? .25 : 1), .6 * (on ? .25 : 1)); };
+  },
+  // 拆解：激光切割床，龙门在床上来回走，红光点
+  crab(G, a, C){
+    put(G, box(2.6, .5, 1.1, MAT.dark, true), -.2, .25, -1.7);
+    const grid = canvasTex(256, 128, (x, w, h) => { x.fillStyle = '#0c0f13'; x.fillRect(0, 0, w, h); x.strokeStyle = 'rgba(255,255,255,.12)'; x.lineWidth = 2; for (let i = 0; i < w; i += 12) { x.beginPath(); x.moveTo(i, 0); x.lineTo(i, h); x.stroke(); } x.fillStyle = '#5f6975'; x.fillRect(30, 30, 120, 70); x.strokeStyle = '#ff4466'; x.lineWidth = 3; x.strokeRect(50, 45, 60, 40); });
+    put(G, flatPlane(2.4, 1.0, MB(0xffffff, {map: grid}), 2.4, 0), -.2, .505, -1.7);
+    [-.56, .56].forEach(z => put(G, box(2.6, .06, .06, MAT.hz), -.2, .53, -1.7 + z));
+    const br = dyn(grp(G, -.2, 0, -1.7)); [-.58, .58].forEach(z => put(br, box(.1, .5, .1, C, true), 0, .78, z)); put(br, box(.12, .1, 1.3, C, true), 0, 1.05, 0);
+    const hd = grp(br, 0, .95, 0); put(hd, box(.16, .2, .16, MAT.dark)); put(hd, cyl(.03, .02, .1, MAT.steel, 8), 0, -.14, 0);
+    const beam = put(hd, new THREE.Mesh(new THREE.CylinderGeometry(.012, .012, .4, 6), ADD(0xff3355, .9)), 0, -.38, 0);
+    put(G, box(.7, .3, .9, MAT.steel, true), -2.3, .15, -.5); put(G, box(.66, .04, .86, MAT.whiteD), -2.3, .32, -.5);
+    const p = new THREE.Vector3();
+    return (t, w, dt) => { br.position.x = -.2 + Math.sin(t * .8) * 1.0 * (.3 + .7 * w); hd.position.z = Math.sin(t * 2.3) * .4; beam.visible = w > .1; if (w > .1 && Math.random() < dt * 20) { hd.getWorldPosition(p); emit(p.x, .52, p.z, 2, [1, .35, .35], 1.4, 6, .35, .06); } };
+  },
+  // 文案：大打印机吐纸，纸张一张张滑出来叠起来
+  typist(G, a, C){
+    put(G, box(1.5, .75, .8, MAT.whiteD, true), -1.2, .375, -1.75); put(G, box(1.5, .08, .82, MAT.dark), -1.2, .79, -1.75); put(G, box(1.1, .04, .04, MAT.dark), -1.2, .5, -1.34);
+    put(G, box(.3, .14, .02, MB(a.col)), -.7, .66, -1.34); put(G, box(1.1, .04, .55, MAT.steelD), -1.2, .34, -1.05);
+    const sheets = [0, 1, 2].map(() => dyn(put(G, box(.5, .006, .36, MAT.paper), -1.2, .5, -1.4)));
+    [[1.4, -1.85, .32], [1.95, -1.85, .5], [1.6, -1.25, .2]].forEach(([x, z, h]) => put(G, box(.5, h, .36, MAT.paper, true), x, h / 2, z));
+    const reel = dyn(grp(G, 1.75, .55, -.6)); put(reel, rotZ(cyl(.28, .28, .6, MAT.paper, 20, true), HP)); put(reel, rotZ(cyl(.08, .08, .66, MAT.dark, 10), HP));
+    put(G, box(.12, .5, .5, MAT.steelD), 1.38, .25, -.6); put(G, box(.12, .5, .5, MAT.steelD), 2.12, .25, -.6);
+    return (t, w, dt) => { sheets.forEach((s, i) => { const u = ((t * (.25 + .5 * w) + i / 3) % 1); s.position.z = -1.42 + u * .55; s.position.y = .5 - u * .14; s.visible = w > .1 || u < .05; }); reel.rotation.x += dt * (.3 + 2 * w); };
+  },
+  // 设计：喷漆房，转台上的零件不停变色，排风扇转
+  painter(G, a, C){
+    put(G, box(1.9, 1.5, .06, MAT.steelD, true), 1.3, .75, -2.35); [.35, 2.25].forEach(x => put(G, box(.06, 1.5, 1.4, MAT.steelD, true), x, .75, -1.7));
+    put(G, box(1.8, .04, .1, MB(0xfff1d6)), 1.3, 1.46, -2.28);
+    const tt = dyn(grp(G, 1.3, .1, -1.65)); put(tt, cyl(.45, .45, .1, MAT.steel, 24, true)); const pm = M(0xff5cae, {roughness: .35}); put(tt, box(.4, .5, .4, pm, true), 0, .3, 0); put(tt, sph(.16, pm, 12, 8), 0, .65, 0);
+    const fan = dyn(grp(G, 1.3, 1.05, -2.31)); for (let i = 0; i < 4; i++) { const b = box(.08, .4, .015, MAT.dark); b.rotation.z = i * HP; fan.add(b); } put(G, rotX(cyl(.25, .25, .03, MAT.steel, 20), HP), 1.3, 1.05, -2.33);
+    [['#ff4458', -1.9, -1.9], ['#3b7cff', -1.6, -2.05], ['#ffd23f', -2.2, -2.1], ['#3ce69a', -1.75, -1.6]].forEach(([c, x, z]) => { put(G, cyl(.13, .13, .3, M(c, {roughness: .5}), 14, true), x, .15, z); put(G, cyl(.135, .135, .04, MAT.steel, 14), x, .32, z); });
+    const p = new THREE.Vector3(), cc = [1, 1, 1];
+    return (t, w, dt) => { tt.rotation.y += dt * (.4 + 1.6 * w); pm.color.setHSL((t * .05) % 1, .75, .55); fan.rotation.z += dt * (3 + 10 * w); if (w > .1 && Math.random() < dt * 25) { tt.getWorldPosition(p); cc[0] = pm.color.r; cc[1] = pm.color.g; cc[2] = pm.color.b; emit(p.x + rnd(-.3, .3), .9, p.z + rnd(-.3, .3), 1, cc.slice(), .4, -.2, .9, .1); } };
+  },
+  // 代码：两块全息代码屏在滚动 + 小装配线
+  dual(G, a, C){
+    const mk = (x, ry) => { const t = canvasTex(256, 512, (c, w, h) => { c.clearRect(0, 0, w, h); for (let i = 0; i < 40; i++) { const y = i * 12.8 + 4; let xx = 10 + ((rng() * 4) | 0) * 14; const n = 1 + ((rng() * 4) | 0); for (let j = 0; j < n; j++) { const ww = 12 + rng() * 50; c.fillStyle = j === 0 ? a.col : (rng() < .3 ? '#ffd23f' : '#cfe6ff'); c.globalAlpha = .55 + rng() * .4; c.fillRect(xx, y, ww, 5); xx += ww + 8; } } }); t.wrapT = THREE.RepeatWrapping; t.repeat.set(1, .5);
+      const m = ADD(0xffffff, .85); m.map = t; const s = put(G, new THREE.Mesh(new THREE.PlaneGeometry(1.15, .72), m), x, 1.25, -2.15); s.rotation.y = ry; put(G, box(.05, .9, .05, MAT.steelD), x, .45, -2.2); put(G, box(1.2, .03, .03, MB(a.col)), x, .87, -2.14).rotation.y = ry; return t; };
+    const tx = [mk(-1.35, .25), mk(1.15, -.25)];
+    put(G, box(3.4, .3, .42, MAT.steelD, true), -.1, .15, -1.15); put(G, box(3.4, .02, .3, M(0x10141a)), -.1, .31, -1.15);
+    const press = dyn(grp(G, -.1, 0, -1.15)); put(G, box(.08, .9, .08, MAT.hz), -.45, .45, -1.15); put(G, box(.08, .9, .08, MAT.hz), .25, .45, -1.15); put(G, box(.8, .1, .3, MAT.hz), -.1, .9, -1.15); const pis = put(press, box(.3, .2, .24, C, true), 0, .6, 0);
+    const blocks = [0, 1, 2, 3, 4].map(i => dyn(put(G, box(.18, .14, .18, i % 2 ? C : MAT.white, true), 0, .39, -1.15)));
+    return (t, w, dt) => { tx.forEach(q => q.offset.y -= dt * (.02 + .12 * w)); const sp = .25 + .6 * w; blocks.forEach((b, i) => { b.position.x = -1.7 + (((t * sp) + i * .2) % 1) * 3.2; }); pis.position.y = .62 - Math.max(0, Math.sin(t * (2 + 5 * w))) * .16; };
+  },
+  // 测试：振动台在抖 + 龙门测量架上的灯来回扫
+  tester(G, a, C){
+    put(G, box(1.1, .25, 1.1, MAT.steelD, true), -1.5, .125, -1.6);
+    const pl = dyn(grp(G, -1.5, .3, -1.6)); put(pl, box(.9, .08, .9, MAT.steel, true)); put(pl, box(.42, .42, .42, M(0x2a3140), true), 0, .25, 0); put(pl, box(.44, .04, .44, MB(a.col)), 0, .3, 0);
+    [.85, 2.25].forEach(x => put(G, box(.08, 1.5, .08, MAT.steel, true), x, .75, -1.95)); put(G, box(1.5, .12, .12, MAT.steelD), 1.55, 1.5, -1.95);
+    const lm = [0, 1, 2, 3, 4].map(i => { const m = MB(0x203038); put(G, new THREE.Mesh(new THREE.BoxGeometry(.18, .05, .02), m), 1.07 + i * .24, 1.5, -1.88); return m; });
+    put(G, box(.6, .4, .05, MAT.dark, true), 1.55, .95, -1.9); const osc = MB(0x0d2a20); put(G, new THREE.Mesh(new THREE.PlaneGeometry(.52, .32), osc), 1.55, .95, -1.874);
+    const on = new THREE.Color(a.col), off = new THREE.Color(0x203038);
+    return (t, w, dt) => { pl.position.x = -1.5 + Math.sin(t * 37) * .012 * w; pl.position.z = -1.6 + Math.cos(t * 41) * .012 * w; pl.position.y = .3 + Math.sin(t * 53) * .006 * w; const s = Math.round((Math.sin(t * (1.5 + 3 * w)) + 1) * 2); lm.forEach((m, i) => m.color.copy(i === s ? on : off)); osc.color.setRGB(.05, .2 + .2 * w * (Math.sin(t * 13) * .5 + .5), .15); };
+  },
+  // 审校：X 光隧道，样品穿过去，顶灯绿/红
+  eye(G, a, C){
+    put(G, box(3.0, .3, .6, MAT.steelD, true), 0, .15, -1.6); put(G, box(3.0, .02, .46, M(0x10141a)), 0, .31, -1.6);
+    [-1.25, -1.95].forEach(z => put(G, box(1.3, .95, .1, MAT.steel, true), 0, .62, z)); put(G, box(1.3, .12, .8, MAT.steelD, true), 0, 1.12, -1.6); put(G, box(1.32, .04, .82, C), 0, 1.19, -1.6);
+    put(G, box(1.3, .14, .02, MAT.hz), 0, 1.0, -1.19);
+    const lamp = MB(0x3ce69a); put(G, sph(.08, lamp, 10, 8), .5, 1.24, -1.6); put(G, cyl(.05, .05, .06, MAT.dark, 8), .5, 1.18, -1.6);
+    const sc = dyn(put(G, new THREE.Mesh(new THREE.PlaneGeometry(.04, .7), ADD(a.col, .7)), 0, .65, -1.6)); sc.rotation.y = HP;
+    const smp = dyn(put(G, box(.3, .26, .3, MAT.wood, true), 0, .45, -1.6));
+    put(G, box(.6, .45, .05, MAT.dark, true), -1.9, 1.0, -2.2); const xr = MB(0x9fd8ff); put(G, new THREE.Mesh(new THREE.PlaneGeometry(.52, .36), xr), -1.9, 1.0, -2.174); put(G, box(.05, .8, .05, MAT.steelD), -1.9, .4, -2.22);
+    return (t, w, dt) => { const u = (t * (.15 + .3 * w)) % 1; smp.position.x = -1.5 + u * 3.0; sc.position.x = Math.sin(t * 3) * .5; sc.visible = Math.abs(smp.position.x) < .7; const bad = AG[PROOF].bad > .2; lamp.color.set(bad ? 0xff4d5e : (Math.sin(t * 4) > -.6 ? 0x3ce69a : 0x1a5c3c)); xr.color.setRGB(.4 + .3 * w, .6 + .3 * w, .8 + .2 * Math.sin(t * 6)); };
+  },
+  // 数据：机房三台机柜闪灯 + 全息桌上柱状图起伏
+  cart(G, a, C){
+    const leds = [MB(a.col), MB(0x45e6f5)];
+    [-2.2, -1.6, -1.0].forEach((x, j) => { put(G, box(.55, 1.4, .46, MAT.dark, true), x, .7, -2.0); for (let i = 0; i < 8; i++) put(G, new THREE.Mesh(new THREE.BoxGeometry(.4, .025, .01), leds[(i + j) % 2]), x, .2 + i * .15, -1.765); });
+    put(G, cyl(.5, .56, .4, MAT.steelD, 24, true), 1.35, .2, -1.6); put(G, rotX(new THREE.Mesh(new THREE.RingGeometry(.4, .48, 32), ADD(a.col, .7)), -HP), 1.35, .405, -1.6);
+    const bars = [0, 1, 2, 3, 4, 5].map(i => dyn(put(G, new THREE.Mesh(new THREE.BoxGeometry(.09, 1, .09), ADD(i % 2 ? a.col : 0x45e6f5, .75)), 1.35 + (i - 2.5) * .13, .41, -1.6)));
+    return (t, w, dt) => { const on = Math.sin(t * (5 + 7 * w)) > 0; leds[0].color.set(a.col).multiplyScalar(on ? 1 : .25); leds[1].color.set(0x45e6f5).multiplyScalar(on ? .25 : 1); bars.forEach((b, i) => { const h = .15 + (.35 + .3 * Math.sin(t * (1 + w * 2) + i * 1.3)) * (.5 + .5 * w); b.scale.y = h; b.position.y = .41 + h / 2; }); };
+  },
+  // 剪辑：数控机床（开放式，主轴在里面转）+ 车床
+  gantry(G, a, C){
+    put(G, box(1.4, .45, 1.0, MAT.steel, true), -1.5, .225, -1.8); put(G, box(1.4, .85, .12, MAT.steel, true), -1.5, .87, -2.24); put(G, box(1.4, .12, 1.0, MAT.steelD, true), -1.5, 1.3, -1.8); put(G, box(1.42, .06, .06, C), -1.5, 1.38, -1.32);
+    [-2.16, -.84].forEach(x => put(G, box(.08, .85, .08, MAT.steelD), x, .87, -1.35)); put(G, new THREE.Mesh(new THREE.PlaneGeometry(1.24, .8), MAT.glass), -1.5, .87, -1.3);
+    put(G, box(.8, .06, .5, MAT.steel), -1.5, .48, -1.8); put(G, box(.3, .2, .3, MAT.wood), -1.5, .61, -1.8);
+    const spd = dyn(grp(G, -1.5, 1.24, -1.8)); put(spd, box(.22, .2, .22, MAT.dark), 0, -.06, 0); const ch = grp(spd, 0, -.3, 0); put(ch, cyl(.05, .03, .26, MAT.steel, 8)); put(ch, box(.12, .02, .02, MAT.steel), 0, -.08, 0);
+    put(G, box(1.1, .5, .42, MAT.steelD, true), 1.4, .25, -1.95); put(G, box(.25, .3, .4, MAT.dark), .95, .65, -1.95);
+    const lt = dyn(grp(G, 1.45, .66, -1.95)); put(lt, rotZ(cyl(.11, .11, .62, MAT.steel, 14), HP)); put(lt, rotZ(cyl(.13, .13, .05, MAT.dark, 14), HP), .2, 0, 0);
+    const p = new THREE.Vector3();
+    return (t, w, dt) => { ch.rotation.y += dt * (3 + 40 * w); spd.position.x = -1.5 + Math.sin(t * 1.1) * .25 * w; lt.rotation.x += dt * (2 + 20 * w); if (w > .1 && Math.random() < dt * 14) { ch.getWorldPosition(p); emit(p.x, p.y - .15, p.z, 2, [1, .8, .5], 1.2, 7, .4, .045); } };
+  },
+  // 投放：冲压机上下砸 + 标签供料架
+  herald(G, a, C){
+    put(G, box(1.0, .3, .8, MAT.steelD, true), 1.5, .15, -1.7); [1.1, 1.9].forEach(x => put(G, box(.1, 1.45, .1, MAT.hz, true), x, .72, -1.7)); put(G, box(1.0, .2, .8, MAT.steelD, true), 1.5, 1.45, -1.7);
+    const ram = dyn(put(G, box(.66, .26, .6, C, true), 1.5, 1.0, -1.7)); put(G, box(.4, .2, .4, MAT.wood, true), 1.5, .4, -1.7);
+    put(G, box(.3, .6, .3, MAT.steelD, true), -.85, .3, .75); const roll = dyn(grp(G, -.85, .68, .75)); put(roll, rotZ(cyl(.14, .14, .14, MAT.paper, 16), HP)); put(roll, rotZ(cyl(.05, .05, .2, MB(a.col), 8), HP));
+    [[-1.9, -1.8], [-2.3, -1.8], [-2.1, -1.35]].forEach(([x, z], i) => { put(G, box(.38, .3, .38, MAT.wood, true), x, .15, z); put(G, box(.2, .1, .01, MB(a.col)), x, .18, z + .195); if (i < 2) put(G, box(.38, .3, .38, MAT.wood2, true), x, .45, z); });
+    return (t, w, dt) => { ram.position.y = .95 - Math.pow(Math.max(0, Math.sin(t * (1.5 + 4 * w))), 6) * .4; roll.rotation.x += dt * (.4 + 3 * w); };
+  },
+  // 客服：抛光轮 + 打包线（打好包的箱子在小传送带上走）
+  ball(G, a, C){
+    put(G, box(.45, .85, .35, MAT.steelD, true), -1.7, .425, -1.9); put(G, rotZ(cyl(.04, .04, .7, MAT.steel, 8), HP), -1.7, .95, -1.9);
+    const wh = [-1, 1].map(sx => { const g2 = dyn(grp(G, -1.7 + sx * .38, .95, -1.9)); put(g2, rotZ(cyl(.3, .3, .08, MAT.whiteD, 24, true), HP)); put(g2, rotZ(cyl(.31, .31, .03, MB(a.col), 24), HP)); return g2; });
+    put(G, box(2.4, .3, .4, MAT.steelD, true), .9, .15, -1.3); put(G, box(2.4, .02, .3, M(0x10141a)), .9, .31, -1.3);
+    const pk = [0, 1, 2, 3].map(() => dyn(put(G, box(.3, .24, .3, MAT.wood, true), 0, .44, -1.3)));
+    [[1.6, -2.05], [2.0, -2.05], [1.8, -2.05]].forEach(([x, z], i) => put(G, box(.38, .32, .38, MAT.wood2, true), x, .16 + (i === 2 ? .32 : 0), z));
+    put(G, box(.2, .16, .14, MAT.dark), .9, .55, -1.3);
+    return (t, w, dt) => { wh.forEach(g2 => g2.rotation.x += dt * (4 + 30 * w)); const sp = .15 + .3 * w; pk.forEach((b, i) => { b.position.x = -.25 + (((t * sp) + i * .25) % 1) * 2.3; }); };
+  },
+  // 归档：三层货架 + 堆垛机来回把箱子塞进格子
+  welder(G, a, C){
+    for (let i = 0; i <= 4; i++) [-2.4, -1.9].forEach(z => put(G, box(.06, 2.1, .06, MAT.hz), -2.4 + i * 1.2, 1.05, z));
+    [.05, .72, 1.39, 2.06].forEach(y => put(G, box(4.9, .04, .56, MAT.steelD), 0, y, -2.15));
+    const cols = [M(a.col, {roughness: .8}), MAT.wood, MAT.wood2, M(0x4d5866, {roughness: .8})];
+    for (let lv = 0; lv < 3; lv++) for (let i = 0; i < 8; i++) { if (rng() < .3) continue; put(G, box(.42, .4, .42, cols[(rng() * 4) | 0], true), -2.1 + i * .6, [.05, .72, 1.39][lv] + .22, -2.15); }
+    const mast = dyn(grp(G, 0, 0, -1.55)); put(mast, box(.4, .1, .3, MAT.steelD)); put(mast, box(.1, 2.3, .1, MAT.hz, true), 0, 1.15, 0); put(mast, box(.3, .06, .06, MAT.hz), 0, 2.3, 0);
+    const fork = grp(mast, 0, .5, 0); put(fork, box(.36, .08, .3, MAT.steel)); [-.1, .1].forEach(x => put(fork, box(.05, .03, .45, MAT.steel), x, -.02, -.25)); const cb = put(fork, box(.38, .36, .38, cols[0], true), 0, .22, -.3);
+    put(G, rotX(new THREE.Mesh(new THREE.PlaneGeometry(4.8, .3), MB(0xffffff, {map: hazardTex(12)})), -HP), 0, .065, -1.55);
+    let tgt = 0, tx = 0, ty = .5, wait = 0;
+    return (t, w, dt) => { if ((wait -= dt * (.4 + .8 * w)) <= 0) { wait = 2.5; tgt++; tx = -2.1 + ((tgt * 3) % 8) * .6; ty = [.1, .77, 1.44][tgt % 3]; } mast.position.x += (tx - mast.position.x) * Math.min(1, dt * 1.6); fork.position.y += (ty - fork.position.y) * Math.min(1, dt * 1.8); cb.visible = (tgt % 2) === 0; };
+  }
+};
+const FXCOL = {grind: [1, .85, .55], laser: [1, .3, .35]};
+
+/* ---------- 建一个工区 ---------- */
+function plateTex(a, k, flip){
+  return canvasTex(512, 456, (x, w, h) => {
+    x.fillStyle = '#161b22'; x.fillRect(0, 0, w, h);
+    for (let i = 0; i < 260; i++) { x.fillStyle = `rgba(255,255,255,${(Math.random() * .02).toFixed(3)})`; x.fillRect(Math.random() * w, Math.random() * h, 2 + Math.random() * 30, 1 + Math.random() * 2); }
+    x.strokeStyle = 'rgba(0,0,0,.5)'; x.lineWidth = 3; for (let i = 1; i < 4; i++) { x.beginPath(); x.moveTo(i * w / 4, 0); x.lineTo(i * w / 4, h); x.stroke(); } for (let j = 1; j < 3; j++) { x.beginPath(); x.moveTo(0, j * h / 3); x.lineTo(w, j * h / 3); x.stroke(); }
+    x.globalAlpha = .7; x.strokeStyle = a.col; x.lineWidth = 7; x.strokeRect(8, 8, w - 16, h - 16); x.globalAlpha = 1;
+    x.fillStyle = '#ffc21a'; [[8, 8], [w - 44, 8], [8, h - 44], [w - 44, h - 44]].forEach(([px, py]) => { x.save(); x.beginPath(); x.rect(px, py, 36, 36); x.clip(); for (let i = -2; i < 6; i++) { x.beginPath(); x.moveTo(px + i * 12, py + 36); x.lineTo(px + i * 12 + 6, py + 36); x.lineTo(px + i * 12 + 42, py); x.lineTo(px + i * 12 + 36, py); x.closePath(); x.fill(); } x.restore(); });
+    if (flip) { x.translate(w, h); x.rotate(Math.PI); }
+    x.fillStyle = a.col; x.globalAlpha = .85; x.font = '800 26px "JetBrains Mono", monospace'; x.textAlign = 'left'; x.fillText(`${pad(k)} ${a.k}`, 56, h - 22);
+    x.fillStyle = 'rgba(233,237,240,.7)'; x.font = '700 22px "Noto Sans SC", sans-serif'; x.textAlign = 'right'; x.fillText(`${a.zh} · ${a.job}`, w - 56, h - 22); x.globalAlpha = 1;
+  });
+}
+function buildStation(k){
+  const a = AG[k], w = WS[k], G = grp(world, w.x, 0, w.z); G.rotation.y = w.ry;
+  const C = M(a.col, {roughness: .42, metalness: .15});
+  put(G, flatPlane(WS_W, WS_D, M(0xffffff, {map: plateTex(a, k, Math.abs(w.ry) > 2), roughness: .75, metalness: .15}), WS_W, 0), 0, .045, 0);
+  const st = {k, G, robot: null, mach: null, glow: null, beam: null, w: 0, beacon: null, T: null, mx: 0, mpos: null};
+  // 信号灯柱
+  put(G, cyl(.03, .03, 1.6, MAT.dark, 6), -WS_W / 2 + .3, .8, WS_D / 2 - .35);
+  const bm = MB(a.col); st.beacon = bm; put(G, cyl(.08, .08, .16, bm, 12), -WS_W / 2 + .3, 1.66, WS_D / 2 - .35);
+  // 工作台
+  put(G, box(2.7, .06, .62, MAT.bench, true), 0, BENCH_Y - .03, BENCH_Z);
+  [[-1.28, 1.1], [1.28, 1.1], [-1.28, 1.6], [1.28, 1.6]].forEach(([x, z]) => put(G, box(.06, BENCH_Y - .06, .06, MAT.steelD), x, (BENCH_Y - .06) / 2, z));
+  put(G, box(2.7, .05, .04, MAT.hz), 0, BENCH_Y - .08, BENCH_Z + .32);
+  // 机器人 + 机器
+  const R = ROBO[a.design](C, a.col), S = RSC[a.design] || 2.05; R.S = S; R.rz = RZ[a.design];
+  R.g.position.set(0, 0, R.rz); R.g.scale.setScalar(S); dyn(R.g); G.add(R.g); st.robot = R;
+  st.T = new THREE.Vector3(0, (BENCH_Y + CRATE_H + .01) / S, (BENCH_Z - R.rz) / S);
+  st.TM = new THREE.Vector3(0, .95 / S, .5 / S);
+  const mp = MPT[a.design];
+  if (mp) { const dx = mp[0], dz = mp[1] - R.rz, dist = Math.hypot(dx, dz), mv = clamp(dist - 1.0, 0, .9); st.myaw = Math.atan2(dx, dz); st.mpos = {x: dx / dist * mv, z: R.rz + dz / dist * mv}; st.ph = 'bench'; st.pt = rnd(1, 5); st.mx = 0; st.lastCur = null; }
+  st.mach = MACH[a.design](G, a, C);
+  st.glow = new THREE.Sprite(new THREE.SpriteMaterial({map: SPRITE, color: a.fx === 'weld' || a.fx === 'grind' ? 0xffc890 : a.fx === 'laser' ? 0xff4466 : a.col, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false}));
+  st.glow.scale.setScalar(.5); st.glow.visible = false; world.add(st.glow);
+  if (R.beam) { const bg = new THREE.CylinderGeometry(R.beam === 'laser' ? .012 : .015, R.beam === 'laser' ? .02 : .2, 1, 12, 1, true); bg.translate(0, .5, 0); bg.rotateX(HP); st.beam = new THREE.Mesh(bg, ADD(R.beam === 'laser' ? 0xff3355 : a.col, 0)); st.beam.visible = false; world.add(st.beam); }
+  stations[k] = st;
+}
+// CHIEF 控制室：玻璃隔间、大屏、控制台、屋顶天线
+function buildChief(){
+  const a = AG[0], w = WS[0], G = grp(world, w.x, 0, w.z); G.rotation.y = w.ry;
+  put(G, flatPlane(WS_W, WS_D, M(0xffffff, {map: plateTex(a, 0), roughness: .75}), WS_W, 0), 0, .045, 0);
+  put(G, box(5.4, .12, 4.6, MAT.steelD, true), 0, .06, -.1);
+  put(G, box(5.4, 2.4, .12, MAT.dark, true), 0, 1.2, -2.35);
+  const mapT = canvasTex(512, 200, (x, W2, H2) => { x.fillStyle = '#04080d'; x.fillRect(0, 0, W2, H2); x.strokeStyle = 'rgba(69,230,245,.25)'; x.lineWidth = 1; for (let i = 0; i < W2; i += 24) { x.beginPath(); x.moveTo(i, 0); x.lineTo(i, H2); x.stroke(); } for (let j = 0; j < H2; j += 24) { x.beginPath(); x.moveTo(0, j); x.lineTo(W2, j); x.stroke(); }
+    x.strokeStyle = '#ffc21a'; x.lineWidth = 3; x.strokeRect(120, 60, 272, 80); AG.slice(1, 13).forEach((g2, i) => { const ws = WS[i + 1]; const px = 256 + ws.x * 9.5, py = 100 + ws.z * 6.2; x.fillStyle = g2.col; x.fillRect(px - 9, py - 6, 18, 12); }); x.fillStyle = '#e9edf0'; x.font = '700 18px "JetBrains Mono", monospace'; x.fillText('FACTORY OPS · LIVE', 14, 26); });
+  const scr = MB(0xffffff, {map: mapT}); put(G, new THREE.Mesh(new THREE.PlaneGeometry(3.8, 1.48), scr), 0, 1.45, -2.28);
+  put(G, box(3.0, .55, .7, MAT.dark, true), 0, .38, .55); put(G, box(3.0, .04, .72, MB(0x45e6f5, {transparent: true, opacity: .5})), 0, .66, .55);
+  [-1, 0, 1].forEach(i => { put(G, box(.7, .42, .04, MAT.dark), i * .95, .95, .75).rotation.x = -.35; put(G, new THREE.Mesh(new THREE.PlaneGeometry(.62, .34), MB(i ? 0x1d4a6a : 0x2a5a3a, {side: THREE.DoubleSide})), i * .95, .955, .727).rotation.x = -.35; });
+  put(G, new THREE.Mesh(new THREE.PlaneGeometry(5.4, 1.5), MAT.glass), 0, .9, 2.3);
+  [-2.7, 2.7].forEach(x => { put(G, new THREE.Mesh(new THREE.PlaneGeometry(4.6, 1.5), MAT.glass), x, .9, 0).rotation.y = HP; put(G, box(.08, 1.6, .08, MAT.steelD), x, .8, 2.3); put(G, box(.08, 2.4, .08, MAT.steelD), x, 1.2, -2.3); });
+  put(G, box(5.5, .08, .08, MAT.hz), 0, 1.65, 2.3);
+  const dish = dyn(grp(G, 2.0, 2.4, -2.35)); put(dish, rotX(cyl(.42, .1, .08, MAT.whiteD, 20, true), -1.0), 0, .3, .15); put(dish, cyl(.015, .015, .4, MAT.dark, 5), 0, .4, .3);
+  const bcn = [-2.6, 2.6].map(x => { const m = MB(0xff4d5e); put(G, sph(.07, m, 8, 6), x, 2.48, -2.35); return m; });
+  const C = M(a.col, {roughness: .4});
+  const R = ROBO.commander(C, a.col); R.S = RSC.commander; R.rz = RZ.commander; R.g.position.set(0, .12, R.rz); dyn(R.g); G.add(R.g); R.g.scale.setScalar(R.S);
+  stations[0] = {k: 0, mx: 0, mpos: null, G, robot: R, mach: (t, w2, dt) => { dish.rotation.y += dt * .7; bcn.forEach((m, i) => m.color.setRGB(Math.sin(t * 3 + i * Math.PI) > 0 ? 1 : .2, .3, .35)); scr.color.setScalar(.85 + .15 * Math.sin(t * 2)); }, glow: null, beam: null, w: 1, beacon: null, T: new THREE.Vector3(0, .8, 1)};
+}
+function makeAgv(){
+  const g = dyn(new THREE.Group());
+  put(g, box(.62, .18, .92, MAT.hz, true), 0, .14, 0); put(g, box(.56, .04, .86, MAT.dark), 0, .25, 0);
+  [[-1, 1], [1, 1], [-1, -1], [1, -1]].forEach(([sx, sz]) => put(g, rotZ(cyl(.07, .07, .05, MAT.rubber, 10), HP), sx * .3, .07, sz * .32));
+  const lt = MB(0x45e6f5); put(g, box(.5, .04, .02, lt), 0, .16, .47);
+  const crate = put(g, box(.44, .38, .44, rng() < .5 ? MAT.wood : MAT.wood2, true), 0, .46, 0);
+  return {g, lt, crate};
+}
+// 进料口：大门 + 货堆 + 一台来回搬货的 AGV
+function buildDock(){
+  const w = DOCK, G = grp(world, w.x, 0, w.z); G.rotation.y = w.ry;
+  const dtx = canvasTex(512, 456, (x, W2, H2) => { x.fillStyle = '#14181e'; x.fillRect(0, 0, W2, H2); x.strokeStyle = 'rgba(255,194,26,.6)'; x.lineWidth = 7; x.setLineDash([22, 14]); x.strokeRect(10, 10, W2 - 20, H2 - 20); x.setLineDash([]); x.translate(W2, H2); x.rotate(Math.PI); x.fillStyle = 'rgba(255,194,26,.8)'; x.font = '800 30px "JetBrains Mono", "Noto Sans SC", monospace'; x.textAlign = 'center'; x.fillText('INTAKE · 进料口', W2 / 2, H2 - 30); x.fillStyle = 'rgba(255,255,255,.06)'; x.font = '900 140px "JetBrains Mono", monospace'; x.fillText('IN', W2 / 2, H2 * .5); });
+  put(G, flatPlane(WS_W, WS_D, M(0xffffff, {map: dtx, roughness: .8}), WS_W, 0), 0, .045, 0);
+  [-1.7, 1.7].forEach(x => put(G, box(.22, 2.7, .22, MAT.hz, true), x, 1.35, -2.25)); put(G, box(3.6, .3, .3, MAT.hz, true), 0, 2.7, -2.25);
+  const door = canvasTex(128, 128, (x, W2, H2) => { x.fillStyle = '#2b323b'; x.fillRect(0, 0, W2, H2); x.fillStyle = 'rgba(0,0,0,.35)'; for (let i = 0; i < H2; i += 10) x.fillRect(0, i, W2, 3); });
+  put(G, box(3.2, 1.0, .06, M(0xffffff, {map: door})), 0, 2.05, -2.32);
+  put(G, box(1.5, .06, 3.0, MAT.steelD), 0, .075, -.6);
+  [[-2.1, -1.4], [-2.1, -.7], [2.1, -1.4], [2.1, -.7], [-2.1, .0]].forEach(([x, z], i) => { put(G, box(.9, .1, .9, MAT.wood2), x, .05, z); for (let j = 0; j < 1 + (i % 3); j++) put(G, box(.42, .36, .42, j % 2 ? MAT.wood2 : MAT.wood, true), x + (j % 2 ? .2 : -.2), .28 + Math.floor(j / 2) * .36, z); });
+  dockAgv = makeAgv(); G.add(dockAgv.g);
+}
+// 总装区：发射台、两座服务塔、龙门吊、全息扫描环、零件架
+function buildBay(){
+  const bayT = canvasTex(1024, 512, (x, W2, H2) => { x.fillStyle = '#151a20'; x.fillRect(0, 0, W2, H2); x.strokeStyle = 'rgba(255,255,255,.05)'; x.lineWidth = 2; for (let i = 0; i < W2; i += 36) { x.beginPath(); x.moveTo(i, 0); x.lineTo(i, H2); x.stroke(); } for (let j = 0; j < H2; j += 36) { x.beginPath(); x.moveTo(0, j); x.lineTo(W2, j); x.stroke(); }
+    x.strokeStyle = 'rgba(255,194,26,.55)'; x.lineWidth = 6; x.setLineDash([30, 20]); x.strokeRect(14, 14, W2 - 28, H2 - 28); x.setLineDash([]);
+    x.fillStyle = 'rgba(255,194,26,.26)'; x.font = '800 24px "JetBrains Mono", "Noto Sans SC", monospace'; x.fillText('ASSEMBLY BAY · 总装区', 40, H2 - 34); x.textAlign = 'right'; x.fillText('LAUNCH ZONE · 发射区', W2 - 40, 58); });
+  world.add(flatPlane(25.6, 12.2, M(0xffffff, {map: bayT, roughness: .8, metalness: .15}), 25.6, .035));
+  const top = canvasTex(1024, 1024, (x, N) => { const c = N / 2; x.fillStyle = '#2a3038'; x.fillRect(0, 0, N, N);
+    for (let r = 1; r < 6; r++) { x.strokeStyle = `rgba(255,255,255,${.04 + r * .01})`; x.lineWidth = 3; x.beginPath(); x.arc(c, c, r * 85, 0, TAU); x.stroke(); }
+    const n = 64; for (let i = 0; i < n; i++) { const a0 = i / n * TAU, a1 = (i + .5) / n * TAU; x.fillStyle = '#ffc21a'; x.beginPath(); x.arc(c, c, 500, a0, a1); x.arc(c, c, 455, a1, a0, true); x.closePath(); x.fill(); }
+    x.fillStyle = 'rgba(0,0,0,.35)'; x.beginPath(); x.arc(c, c, 160, 0, TAU); x.fill();
+    x.strokeStyle = 'rgba(255,255,255,.12)'; x.lineWidth = 4; for (let i = 0; i < 8; i++) { const a = i / 8 * TAU; x.beginPath(); x.moveTo(c + Math.cos(a) * 170, c + Math.sin(a) * 170); x.lineTo(c + Math.cos(a) * 440, c + Math.sin(a) * 440); x.stroke(); } });
+  const pad = new THREE.Mesh(new THREE.CylinderGeometry(PAD_R, PAD_R + .15, .3, 72), [M(0x262c33, {roughness: .7}), M(0xffffff, {map: top, roughness: .7}), M(0x1d2228)]);
+  pad.position.y = .15; pad.receiveShadow = true; pad.castShadow = true; world.add(pad);
+  for (let i = 0; i < 20; i++) { const a = i / 20 * TAU; const l = dyn(new THREE.Mesh(new THREE.BoxGeometry(.14, .05, .14), MB(0x45e6f5))); at(l, Math.cos(a) * (PAD_R + .05), .31, Math.sin(a) * (PAD_R + .05)); world.add(l); padLights.push(l); }
+  // 服务塔
+  [-1, 1].forEach(sx => {
+    const tw = grp(world, sx * 6.0, 0, -1.8), H = 11, w = .6;
+    [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([p, q]) => put(tw, box(.07, H, .07, MAT.hz, true), p * w / 2, H / 2, q * w / 2));
+    for (let y = .5; y < H; y += .7) { put(tw, box(w, .05, .05, MAT.steel), 0, y, w / 2); put(tw, box(w, .05, .05, MAT.steel), 0, y, -w / 2); put(tw, box(.05, .05, w, MAT.steel), w / 2, y, 0); put(tw, box(.05, .05, w, MAT.steel), -w / 2, y, 0); }
+    put(tw, sph(.07, MAT.redL, 8, 6), 0, H + .1, 0);
+    [3.6, 7.6].forEach(y => { const piv = dyn(grp(tw, 0, y, 0)); put(piv, box(2.6, .1, .2, MAT.steel), -sx * 1.3, 0, 0); put(piv, box(.12, .2, .3, MAT.hz), -sx * 2.6, 0, 0); towerArms.push({piv, sx}); });
+  });
+  // 两台旋臂吊：立柱 + 转臂 + 小车 + 吊钩，在总装区角落转来转去
+  jibs.length = 0;
+  [[-10.8, -4.0, 0], [10.8, 4.0, Math.PI]].forEach(([x, z, a0]) => {
+    put(world, box(.9, .2, .9, MAT.steelD, true), x, .1, z); put(world, cyl(.16, .2, 3.8, MAT.hz, 12, true), x, 2.0, z); put(world, box(.4, .3, .4, MAT.steelD), x, 3.95, z);
+    const arm = dyn(grp(world, x, 4.0, z)); arm.rotation.y = a0; put(arm, box(.22, .22, 4.6, MAT.steel, true), 0, .1, 2.0); put(arm, box(.06, .03, 4.6, MAT.hz), 0, .225, 2.0); put(arm, box(.5, .5, .7, MAT.dark, true), 0, .1, -.5);
+    const tr = grp(arm, 0, -.05, 2.5); put(tr, box(.32, .16, .32, MAT.dark));
+    const cable = put(tr, cyl(.012, .012, 1, MAT.dark, 4), 0, -.5, 0); const hook = grp(tr, 0, -1, 0); put(hook, box(.24, .08, .24, MAT.hz)); put(hook, box(.44, .38, .44, MAT.wood, true), 0, -.25, 0);
+    jibs.push({arm, tr, cable, hook, a: a0, ta: a0, r: 2.5, tr0: 2.5, drop: 1.4, tdrop: 1.4, wait: rnd(0, 3), a0});
+  });
+  // 全息扫描环
+  holo = dyn(new THREE.Group());
+  put(holo, rotX(new THREE.Mesh(new THREE.TorusGeometry(1, .015, 6, 96), ADD(0x45e6f5, .85)), HP));
+  holo.add(new THREE.Mesh(new THREE.CylinderGeometry(1, 1, .2, 64, 1, true), ADD(0x45e6f5, .07)));
+  world.add(holo);
+  launchLight = new THREE.PointLight(0xff8a3a, 0, 22, 1.6); launchLight.position.set(0, .8, 0); world.add(launchLight);
+  // 总装区角落：零件架、气瓶
+  [[-10.8, 4.0], [10.8, -4.0]].forEach(([x, z]) => {
+    const g = grp(world, x, 0, z);
+    put(g, box(2.0, .06, .8, MAT.steelD), 0, .03, 0); [-.95, .95].forEach(px => put(g, box(.06, 1.3, .8, MAT.hz), px, .65, 0)); [.5, 1.0].forEach(y => put(g, box(1.9, .04, .76, MAT.steelD), 0, y, 0));
+    for (let j = 0; j < 4; j++) put(g, box(.34, .3, .5, j % 2 ? MAT.white : MAT.whiteD, true), -.65 + j * .44, [.2, .67, .2, 1.17][j], 0);
+    for (let j = 0; j < 3; j++) put(g, cyl(.1, .1, .8, j % 2 ? MAT.hz : M(0x3ce69a), 10, true), 1.4 + j * .24, .4, -.2);
+  });
+}
+function buildDrones(){
+  [[-7.9, 4.9], [7.9, 4.9], [-7.9, -4.9], [7.9, -4.9]].forEach(([x, z], i) => {
+    const g = dyn(new THREE.Group());
+    put(g, box(.36, .08, .36, MAT.dark, true)); put(g, box(.14, .03, .14, MAT.cyanL), 0, .055, 0);
+    const rotors = [];
+    [[1, 1], [1, -1], [-1, 1], [-1, -1]].forEach(([sx, sz]) => { const arm = box(.32, .03, .04, MAT.steelD); arm.position.set(sx * .14, .02, sz * .14); arm.rotation.y = -Math.atan2(sz, sx); g.add(arm); const rt = new THREE.Mesh(new THREE.CircleGeometry(.12, 16), MB(0xcfd6df, {transparent: true, opacity: .28, side: THREE.DoubleSide, depthWrite: false})); rt.rotation.x = -HP; rt.position.set(sx * .25, .05, sz * .25); g.add(rt); rotors.push(rt); });
+    put(g, box(.02, .3, .02, MAT.dark), 0, -.18, 0); put(g, box(.14, .03, .14, MAT.hz), 0, -.33, 0);
+    put(g, rotX(new THREE.Mesh(new THREE.RingGeometry(.1, .16, 20), MB(0x45e6f5, {side: THREE.DoubleSide})), HP), 0, -.045, 0);
+    g.scale.setScalar(1.6);
+    put(world, rotX(new THREE.Mesh(new THREE.RingGeometry(.5, .6, 32), ADD(0x45e6f5, .35)), -HP), x, .06, z);
+    g.position.set(x, .4, z); world.add(g);
+    drones.push({g, rotors, home: {x, y: .4, z}, p: {x, y: .4, z}, vx: 0, vz: 0, job: null, legs: null, leg: null, carry: null, name: 'D' + (i + 1)});
+  });
+}
+function buildAgvs(){ for (let i = 0; i < 5; i++) { const A = makeAgv(); world.add(A.g); agvs.push(Object.assign(A, {s: i / 5 * ROAD.L, o: i % 2 ? .45 : -.45, v: (i % 2 ? -1 : 1) * rnd(2.2, 3.2)})); } }
+function buildSpider(){
+  const g = dyn(new THREE.Group()), body = M(0x0d1a22, {roughness: .4, metalness: .5}), glass = MB(0x7fe9ff);
+  put(g, box(.34, .12, .42, body, true), 0, .32, 0); put(g, box(.2, .02, .26, MAT.cyanL), 0, .39, 0); put(g, box(.18, .1, .14, body), 0, .32, .27);
+  put(g, sph(.03, MB(0xff3f8e), 8, 6), -.05, .34, .35); put(g, sph(.03, MB(0xff3f8e), 8, 6), .05, .34, .35);
+  const legs = [];
+  for (const sx of [-1, 1]) for (let j = 0; j < 4; j++) {
+    const hip = grp(g, sx * .17, .32, -.15 + j * .1);
+    put(hip, rotZ(box(.32, .025, .025, glass), sx * .45), sx * .16, .06, 0);
+    const kn = grp(hip, sx * .3, .13, 0); put(kn, rotZ(box(.025, .4, .025, glass), -sx * .25), sx * .06, -.2, 0); kn.add(sph(.025, MB(0xff3f8e), 6, 5));
+    legs.push({hip, sx, j});
+  }
+  const cone = new THREE.Mesh(new THREE.ConeGeometry(.55, 1.2, 24, 1, true), ADD(0x45e6f5, 0)); cone.position.set(0, .9, .55); cone.rotation.x = Math.PI; g.add(cone);
+  g.scale.setScalar(1.3); world.add(g);
+  spiderObj = {g, legs, cone};
+}
+function crateMesh(ch){
+  const g = new THREE.Group(), col = CH[ch].col;
+  g.add(box(CRATE_W, CRATE_H, CRATE_W, MAT.wood, true));
+  const band = new THREE.Mesh(new THREE.BoxGeometry(CRATE_W + .012, .07, CRATE_W + .012), MB(col)); g.add(band);
+  put(g, box(CRATE_W + .02, .03, CRATE_W + .02, MAT.wood2), 0, CRATE_H / 2, 0);
+  g.userData = {band};
+  world.add(g);
+  return g;
+}
+
+/* ---------- 载具：火箭 / 机甲 / 航天飞机 / 战斗机（全息线框 + 实体部件） ---------- */
+const V3 = (x, y, z) => new THREE.Vector3(x, y, z);
+function partGroup(fn){ const g = new THREE.Group(); fn(g); g.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; if (o.material === MAT.white) o.material = MAT.vwhite; } }); return g; }
+function makeGhost(solid){
+  const g = new THREE.Group(); solid.updateMatrixWorld(true);
+  const inv = new THREE.Matrix4().copy(solid.matrixWorld).invert();
+  solid.traverse(o => { if (!o.isMesh) return; const mw = o.matrixWorld.clone().premultiply(inv); const m = new THREE.Mesh(o.geometry, MAT.ghost); const e = new THREE.LineSegments(new THREE.EdgesGeometry(o.geometry, 28), MAT.edge); m.applyMatrix4(mw); e.applyMatrix4(mw); g.add(m, e); });
+  return g;
+}
+const NOZ = () => M(0x3a3f47, {metalness: .7, roughness: .35});
+function rocketParts(acc){
+  const W = MAT.white, D = MAT.dark, A = M(acc, {roughness: .45}), win = MB(0xbfefff);
+  return {
+    ENGINE: [V3(0, .45, 0), g => { g.add(at(cyl(.56, .56, .14, D, 28), 0, .8, 0)); [[0, 0], [.25, .15], [-.25, .15]].forEach(([x, z]) => { g.add(at(cyl(.12, .24, .5, NOZ(), 18), x, .48, z)); g.add(at(cyl(.1, .1, .04, MB(0xff9a4a), 14), x, .22, z)); }); }],
+    TANK1: [V3(0, 1.62, 0), g => { g.add(at(cyl(.58, .58, 1.6, W, 32), 0, 1.67, 0)); g.add(at(cyl(.585, .585, .2, A, 32), 0, 1.25, 0)); g.add(at(cyl(.586, .586, .05, D, 32), 0, 2.2, 0)); }],
+    BOOST_L: [V3(-.82, 1.4, 0), g => { g.add(at(cyl(.2, .2, 1.8, W, 18), -.82, 1.35, 0)); g.add(at(mesh(new THREE.ConeGeometry(.2, .42, 18), A), -.82, 2.46, 0)); g.add(at(cyl(.12, .2, .3, D, 14), -.82, .3, 0)); g.add(at(box(.2, .06, .1, D), -.6, 2.0, 0)); }],
+    BOOST_R: [V3(.82, 1.4, 0), g => { g.add(at(cyl(.2, .2, 1.8, W, 18), .82, 1.35, 0)); g.add(at(mesh(new THREE.ConeGeometry(.2, .42, 18), A), .82, 2.46, 0)); g.add(at(cyl(.12, .2, .3, D, 14), .82, .3, 0)); g.add(at(box(.2, .06, .1, D), .6, 2.0, 0)); }],
+    INTER: [V3(0, 2.66, 0), g => { g.add(at(cyl(.5, .58, .36, D, 32), 0, 2.65, 0)); g.add(at(cyl(.505, .505, .04, A, 32), 0, 2.84, 0)); }],
+    TANK2: [V3(0, 3.5, 0), g => { g.add(at(cyl(.5, .5, 1.3, W, 32), 0, 3.5, 0)); for (let i = 0; i < 5; i++) { const a = -HP + (i - 2) * .32; const w = new THREE.Mesh(new THREE.BoxGeometry(.1, .1, .02), win); w.position.set(Math.cos(a) * .505, 3.75, -Math.sin(a) * .505); w.rotation.y = a + HP; g.add(w); } g.add(at(cyl(.505, .505, .12, A, 32), 0, 3.15, 0)); }],
+    FINS: [V3(0, .9, .6), g => { for (let i = 0; i < 4; i++) { const a = i / 4 * TAU + Math.PI / 4; const f = box(.04, .7, .5, A); f.position.set(Math.cos(a) * .72, .78, Math.sin(a) * .72); f.rotation.y = -a; g.add(f); } }],
+    FAIRING: [V3(0, 4.6, 0), g => { const pts = []; for (let i = 0; i <= 12; i++) { const u = i / 12; pts.push(new THREE.Vector2(.5 * Math.sqrt(1 - u * u * .98), u * 1.25)); } g.add(at(mesh(new THREE.LatheGeometry(pts, 32), W), 0, 4.15, 0)); g.add(at(cyl(.02, .02, .3, D, 6), 0, 5.5, 0)); g.add(at(cyl(.505, .505, .06, A, 32), 0, 4.17, 0)); }]
+  };
+}
+function mechParts(acc){
+  const W = MAT.white, D = MAT.dark, A = M(acc, {roughness: .45}), core = MB(0x45e6f5);
+  const leg = sx => g => { g.add(at(box(.36, .9, .4, W), sx * .42, 1.15, 0)); g.add(at(rotZ(cyl(.15, .15, .3, D, 14), HP), sx * .42, .66, 0)); g.add(at(box(.32, .78, .36, A), sx * .42, .35, .04)); g.add(at(box(.42, .14, .6, D), sx * .42, .12, .1)); };
+  const arm = sx => g => { g.add(at(sph(.26, A, 18, 12), sx * .92, 3.02, 0)); g.add(at(box(.26, .62, .28, W), sx * 1.0, 2.6, 0)); g.add(at(box(.24, .56, .26, D), sx * 1.04, 2.02, .06)); g.add(at(box(.3, .26, .3, A), sx * 1.06, 1.62, .08)); };
+  return {
+    LEG_L: [V3(-.42, .9, 0), leg(-1)], LEG_R: [V3(.42, .9, 0), leg(1)],
+    PELVIS: [V3(0, 1.75, 0), g => { g.add(at(box(1.0, .34, .52, D), 0, 1.75, 0)); g.add(at(box(.42, .24, .56, A), 0, 1.72, .02)); }],
+    TORSO: [V3(0, 2.5, 0), g => { g.add(at(box(1.3, .9, .74, W), 0, 2.45, 0)); g.add(at(box(.9, .5, .76, A), 0, 2.62, .02)); g.add(at(rotX(cyl(.16, .16, .05, core, 20), HP), 0, 2.5, .4)); g.add(at(box(1.0, .2, .6, D), 0, 1.98, 0)); }],
+    ARM_L: [V3(-1.0, 2.4, 0), arm(-1)], ARM_R: [V3(1.0, 2.4, 0), arm(1)],
+    HEAD: [V3(0, 3.2, 0), g => { g.add(at(box(.46, .4, .44, W), 0, 3.15, 0)); g.add(at(new THREE.Mesh(new THREE.BoxGeometry(.36, .1, .02), core), 0, 3.18, .23)); g.add(at(box(.08, .3, .08, A), .2, 3.45, -.1)); g.add(at(box(.5, .08, .48, D), 0, 2.94, 0)); }],
+    JET: [V3(0, 2.4, -.55), g => { g.add(at(box(.7, .7, .3, D), 0, 2.45, -.5)); [-.22, .22].forEach(x => { g.add(at(cyl(.13, .13, .6, A, 16), x, 2.35, -.68)); g.add(at(cyl(.1, .16, .2, MAT.steelD, 14), x, 1.96, -.68)); }); }]
+  };
+}
+function shuttleParts(acc){
+  const W = MAT.white, D = MAT.dark, O = M(0xd9773a, {roughness: .7}), A = M(acc, {roughness: .45});
+  const srb = sx => g => { g.add(at(cyl(.2, .2, 4.6, W, 18), sx * .85, 2.6, -.3)); g.add(at(mesh(new THREE.ConeGeometry(.2, .5, 18), W), sx * .85, 5.15, -.3)); g.add(at(cyl(.14, .24, .32, D, 14), sx * .85, .16, -.3)); g.add(at(cyl(.205, .205, .1, D, 18), sx * .85, 1.2, -.3)); g.add(at(cyl(.205, .205, .08, A, 18), sx * .85, 4.4, -.3)); g.add(at(box(.3, .08, .1, D), sx * .6, 4.6, -.3)); };
+  const wingShape = new THREE.Shape(); wingShape.moveTo(-1.45, 0); wingShape.lineTo(1.45, 0); wingShape.lineTo(.34, 1.9); wingShape.lineTo(-.34, 1.9); wingShape.closePath();
+  const finShape = new THREE.Shape(); finShape.moveTo(0, 0); finShape.lineTo(.72, 0); finShape.lineTo(.72, .3); finShape.lineTo(.08, 1.15); finShape.lineTo(0, 1.15); finShape.closePath();
+  return {
+    ET: [V3(0, 2.9, -.3), g => { g.add(at(cyl(.55, .55, 5.0, O, 28), 0, 2.8, -.3)); g.add(at(mesh(new THREE.ConeGeometry(.55, .8, 28), O), 0, 5.7, -.3)); g.add(at(cyl(.56, .56, .06, D, 28), 0, 1.4, -.3)); g.add(at(cyl(.56, .56, .06, D, 28), 0, 4.2, -.3)); }],
+    SRB_L: [V3(-.85, 2.6, -.3), srb(-1)], SRB_R: [V3(.85, 2.6, -.3), srb(1)],
+    BODY: [V3(0, 2.3, .6), g => { g.add(at(box(.64, 3.0, .62, W), 0, 2.3, .6)); g.add(at(box(.66, 3.0, .1, D), 0, 2.3, .28)); g.add(at(box(.5, 1.7, .03, M(0xdfe3e8)), 0, 2.5, .92)); g.add(at(box(.66, .08, .64, A), 0, 3.2, .6)); }],
+    NOSE: [V3(0, 4.2, .6), g => { g.add(at(mesh(new THREE.ConeGeometry(.33, .9, 20), W), 0, 4.25, .6)); g.add(at(mesh(new THREE.ConeGeometry(.12, .24, 16), D), 0, 4.64, .6)); g.add(at(box(.34, .12, .04, MB(0x0d1a24)), 0, 3.95, .9)); }],
+    WINGS: [V3(0, 1.6, .6), g => { const m = mesh(new THREE.ExtrudeGeometry(wingShape, {depth: .08, bevelEnabled: false}), W); m.position.set(0, .85, .56); g.add(m); const m2 = mesh(new THREE.ExtrudeGeometry(wingShape, {depth: .02, bevelEnabled: false}), D); m2.scale.set(1.02, .22, 1); m2.position.set(0, .82, .555); g.add(m2); }],
+    TAIL: [V3(0, 1.4, 1.2), g => { const geo = new THREE.ExtrudeGeometry(finShape, {depth: .06, bevelEnabled: false}); geo.rotateY(-HP); const m = mesh(geo, W); m.position.set(.03, .8, .9); g.add(m); }],
+    SSME: [V3(0, .75, .6), g => { [[0, .78], [-.17, .52], [.17, .52]].forEach(([x, z]) => { g.add(at(cyl(.08, .16, .32, NOZ(), 14), x, .66, z)); g.add(at(cyl(.07, .07, .02, MB(0xff9a4a), 12), x, .5, z)); }); g.add(at(box(.62, .14, .5, D), 0, .87, .6)); }]
+  };
+}
+function fighterParts(acc){
+  const G = M(0x7d8794, {roughness: .5, metalness: .35}), D = MAT.dark, A = M(acc, {roughness: .45});
+  const wing = sx => g => { const pts = [[0, .5], [0, -1.6], [2.1, -1.5], [2.1, -1.0]].map(([x, y]) => [x * sx, y]); if (sx < 0) pts.reverse(); const sh = new THREE.Shape(); sh.moveTo(pts[0][0], pts[0][1]); pts.slice(1).forEach(p => sh.lineTo(p[0], p[1])); sh.closePath(); const geo = new THREE.ExtrudeGeometry(sh, {depth: .06, bevelEnabled: false}); geo.rotateX(-HP); const m = mesh(geo, G); m.position.set(sx * .36, .9, 0); g.add(m); g.add(at(box(.1, .02, .5, A), sx * 2.3, .97, 1.25)); };
+  const finShape = new THREE.Shape(); finShape.moveTo(1.0, 0); finShape.lineTo(1.9, 0); finShape.lineTo(1.95, .85); finShape.lineTo(1.55, .85); finShape.closePath();
+  return {
+    FUSE: [V3(0, .95, .3), g => { g.add(at(box(.78, .5, 3.3, G), 0, .95, .35)); g.add(at(box(.5, .36, 1.0, G), 0, .93, -1.5)); [-1, 1].forEach(sx => g.add(at(box(.28, .42, 1.5, G), sx * .5, .88, .15))); g.add(at(box(.8, .06, 1.2, A), 0, 1.21, .6)); [[0, -1.3], [-.45, .7], [.45, .7]].forEach(([x, z]) => { g.add(at(cyl(.025, .025, .5, D, 6), x, .45, z)); g.add(at(rotZ(cyl(.09, .09, .07, MAT.rubber, 12), HP), x, .12, z)); }); }],
+    NOSE: [V3(0, .95, -2.4), g => { g.add(at(rotX(mesh(new THREE.ConeGeometry(.25, 1.1, 18), G), -HP), 0, .93, -2.55)); g.add(at(rotX(cyl(.012, .012, .3, D, 5), HP), 0, .93, -3.2)); }],
+    COCKPIT: [V3(0, 1.3, -1.1), g => { const s = sph(.3, M(0x1c3d5a, {roughness: .1, metalness: .6, emissive: 0x0a2a40}), 18, 12); s.scale.set(.85, .7, 2.1); g.add(at(s, 0, 1.18, -1.15)); g.add(at(box(.5, .08, .9, G), 0, 1.12, -.55)); }],
+    WING_L: [V3(-1.3, .9, .6), wing(-1)], WING_R: [V3(1.3, .9, .6), wing(1)],
+    TAILS: [V3(0, 1.5, 1.5), g => { [-1, 1].forEach(sx => { const geo = new THREE.ExtrudeGeometry(finShape, {depth: .05, bevelEnabled: false}); geo.rotateY(-HP); const m = mesh(geo, G); m.position.set(sx * .34 + .025, 1.15, 0); m.rotation.z = -sx * .22; g.add(m); }); }],
+    ENGINE: [V3(0, .92, 2.1), g => { [-.22, .22].forEach(x => { g.add(at(rotX(cyl(.17, .2, .5, NOZ(), 16), HP), x, .92, 2.2)); g.add(at(rotX(cyl(.14, .14, .02, MB(0xff9a4a), 14), HP), x, .92, 2.46)); }); g.add(at(box(.78, .42, .4, G), 0, .92, 1.95)); }],
+    PYLONS: [V3(0, .7, .6), g => { [-1.45, -.95, .95, 1.45].forEach(x => { g.add(at(rotX(cyl(.05, .05, 1.1, MAT.white, 10), HP), x, .72, .55)); g.add(at(rotX(mesh(new THREE.ConeGeometry(.05, .18, 10), A), -HP), x, .72, -.09)); g.add(at(box(.03, .14, .25, D), x, .82, .55)); }); }]
+  };
+}
+const ACC = {rocket: 0xff6a3a, mech: 0xffc21a, shuttle: 0x3b7cff, fighter: 0xff4458};
+const PARTS = {rocket: rocketParts, mech: mechParts, shuttle: shuttleParts, fighter: fighterParts};
+function flameAt(parent, x, y, z, s){
+  const o = grp(parent, x, y, z);
+  const outer = new THREE.Mesh(new THREE.ConeGeometry(.2 * s, 1.4 * s, 16, 1, true), ADD(0xff7a2a, .85)); outer.rotation.x = Math.PI; outer.position.y = -.7 * s;
+  const inner = new THREE.Mesh(new THREE.ConeGeometry(.1 * s, .8 * s, 12), ADD(0xfff2c8, .95)); inner.rotation.x = Math.PI; inner.position.y = -.4 * s;
+  o.add(outer, inner); return o;
+}
+function buildVehicle(type){
+  if (veh) { world.remove(veh.group); veh = null; }
+  const V = VEH[type], group = dyn(new THREE.Group()); group.position.set(0, .3, 0); group.scale.setScalar(V.vs); world.add(group);
+  const defs = PARTS[type](ACC[type]);
+  const parts = V.parts.map(([key]) => { const [center, fn] = defs[key]; const solid = partGroup(fn); group.add(solid); const ghost = makeGhost(solid); group.add(ghost); solid.visible = false; return {key, solid, ghost, center, t: -1}; });
+  const fl = grp(group); fl.visible = false;
+  const F = {
+    rocket: [[0, .2, 0, 1.4], [.25, .2, .15, 1.1], [-.25, .2, .15, 1.1], [-.82, .14, 0, 1], [.82, .14, 0, 1]],
+    mech: [[-.42, .02, .1, 1], [.42, .02, .1, 1], [-.22, 1.86, -.68, .9], [.22, 1.86, -.68, .9]],
+    shuttle: [[-.85, 0, -.3, 1.3], [.85, 0, -.3, 1.3], [0, .48, .78, .7], [-.17, .48, .52, .7], [.17, .48, .52, .7]],
+    fighter: [[-.22, .92, 2.5, .8], [.22, .92, 2.5, .8]]
+  }[type];
+  const fls = F.map(([x, y, z, s]) => flameAt(fl, x, y, z, s));
+  veh = {type, group, parts, flames: fl, fls, v: 0, h: V.h * V.vs, vs: V.vs};
+  holo.visible = true; holo.scale.set(V.hr, 1, V.hr);
+}
+function installPt(i){
+  const p = veh.parts[i], c = p.center, r = Math.hypot(c.x, c.z), vs = veh.vs;
+  const dir = r > .3 ? {x: c.x / r, z: c.z / r} : {x: .35, z: .94};
+  const off = .75 * vs + .7;
+  return {x: c.x * vs + dir.x * off, y: c.y * vs + .3 + .9, z: c.z * vs + dir.z * off};
+}
+function installVisual(i){ const p = veh.parts[i]; p.solid.visible = true; p.t = 0; const c = p.center, vs = veh.vs; burst(c.x * vs, c.y * vs + .3, c.z * vs, 40, [1, .75, .35], 2.6); }
+
+/* ---------- 粒子：火花 / 喷雾 / 尾焰 / 烟 ---------- */
+const SPN = 1600, sparks = [];
+function buildFx(){
+  sparkGeo = new THREE.BufferGeometry();
+  ['position', 'col'].forEach(k => sparkGeo.setAttribute(k, new THREE.BufferAttribute(new Float32Array(SPN * 3), 3).setUsage(THREE.DynamicDrawUsage)));
+  ['sz', 'al'].forEach(k => sparkGeo.setAttribute(k, new THREE.BufferAttribute(new Float32Array(SPN), 1).setUsage(THREE.DynamicDrawUsage)));
+  const mat = new THREE.ShaderMaterial({uniforms: {map: {value: SPRITE}, uPx: {value: 800}},
+    vertexShader: 'attribute vec3 col; attribute float sz; attribute float al; uniform float uPx; varying vec3 vC; varying float vA; void main(){ vec4 mv = modelViewMatrix * vec4(position, 1.0); vC = col; vA = al; gl_PointSize = sz <= 0.0 ? 0.0 : max(1.5, sz * uPx / -mv.z); gl_Position = projectionMatrix * mv; }',
+    fragmentShader: 'uniform sampler2D map; varying vec3 vC; varying float vA; void main(){ vec4 t = texture2D(map, gl_PointCoord); gl_FragColor = vec4(vC, t.a * vA); }',
+    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending});
+  sparkPts = new THREE.Points(sparkGeo, mat); sparkPts.frustumCulled = false; world.add(sparkPts);
+  for (let i = 0; i < 220; i++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({map: SMOKE_TEX, color: 0xb9bec6, transparent: true, opacity: 0, depthWrite: false})); s.visible = false; world.add(s); smoke.push({s, life: 0, max: 1, vx: 0, vy: 0, vz: 0, grow: 1}); }
+}
+function emit(x, y, z, n, col, spd, grav, life, size){
+  if (!sparkGeo) return;
+  for (let k = 0; k < n; k++) { if (sparks.length >= SPN) sparks.shift(); const a = Math.random() * TAU, e = Math.random() * .9 + .2; sparks.push({x, y, z, vx: Math.cos(a) * Math.cos(e) * spd * rnd(.3, 1), vy: Math.sin(e) * spd * rnd(.4, 1.2), vz: Math.sin(a) * Math.cos(e) * spd * rnd(.3, 1), life: life * rnd(.5, 1), max: life, col, g: grav, sz: size}); }
+}
+const burst = (x, y, z, n, col, spd) => emit(x, y, z, n, col, spd, 4, .9, .08);
+function emitDir(x, y, z, n, col, vx, vy, vz, spread, life, size){
+  for (let k = 0; k < n; k++) { if (sparks.length >= SPN) sparks.shift(); sparks.push({x: x + rnd(-.08, .08), y, z: z + rnd(-.08, .08), vx: vx + rnd(-spread, spread), vy: vy * rnd(.7, 1.1), vz: vz * rnd(.7, 1.1) + rnd(-spread, spread) * (vz ? 0 : 1), life: life * rnd(.5, 1), max: life, col, g: -1.5, sz: size}); }
+}
+function emitSmoke(x, y, z, spread){
+  const s = smoke.find(q => q.life <= 0); if (!s) return;
+  s.life = s.max = rnd(2.6, 4.2); s.s.visible = true; s.s.position.set(x + rnd(-.2, .2), y, z + rnd(-.2, .2));
+  const a = Math.random() * TAU; s.vx = Math.cos(a) * spread * rnd(.4, 1); s.vz = Math.sin(a) * spread * rnd(.4, 1); s.vy = rnd(.2, .9); s.grow = rnd(.9, 1.6);
+}
+function ignite(){ if (!veh) return; veh.flames.visible = true; veh.v = 0; holo.visible = false; for (let k = 0; k < 50; k++) emitSmoke(0, .5, 0, 4.8); }
+
+/* ---------- 静态网格合并：同材质的不动零件拼成一个网格，省绘制调用 ---------- */
+function mergeStatic(){
+  world.updateMatrixWorld(true);
+  const groups = new Map();
+  (function walk(o){
+    if (o.userData.dyn) return;
+    if (o.isMesh && !Array.isArray(o.material) && o.geometry.attributes.normal && o.geometry.attributes.uv) { const k = o.material.uuid + (o.castShadow ? 's' : ''); if (!groups.has(k)) groups.set(k, []); groups.get(k).push(o); }
+    o.children.slice().forEach(walk);
+  })(world);
+  groups.forEach(list => {
+    if (list.length < 2) return;
+    const parts = list.map(m => { const g = m.geometry.index ? m.geometry.toNonIndexed() : m.geometry.clone(); g.applyMatrix4(m.matrixWorld); return g; });
+    let n = 0; parts.forEach(g => n += g.attributes.position.count);
+    const P = new Float32Array(n * 3), N = new Float32Array(n * 3), U = new Float32Array(n * 2); let o = 0;
+    parts.forEach(g => { P.set(g.attributes.position.array, o * 3); N.set(g.attributes.normal.array, o * 3); U.set(g.attributes.uv.array, o * 2); o += g.attributes.position.count; g.dispose(); });
+    const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(P, 3)); geo.setAttribute('normal', new THREE.BufferAttribute(N, 3)); geo.setAttribute('uv', new THREE.BufferAttribute(U, 2)); geo.computeBoundingSphere();
+    const mm = new THREE.Mesh(geo, list[0].material); mm.castShadow = list[0].castShadow; mm.receiveShadow = true;
+    list.forEach(m => m.parent.remove(m));
+    world.add(mm);
+  });
+}
+
+/* ---------- 镜头 ---------- */
+const MODES = [{id: 'over', zh: '俯瞰'}, {id: 'tilt', zh: '斜看'}, {id: 'orbit', zh: '环绕'}, {id: 'close', zh: '特写'}];
+const EL_OVER = 1.1;
+let modeI = 0, baseAz = 0;
+const cam = {pos: null, tgt: null, want: null, wantT: null, yaw: 0, pitch: 0, zoom: 1, userT: 0, focus: -1};
+let PRC = [], fitD = 50, offY = 0, W = 1, H = 1, narrow = false, bs = .5, BW = 1920, BH = 1080;
+function camWant(t){
+  const m = MODES[modeI].id; let az = baseAz, el = EL_OVER, r = fitD * cam.zoom, tx = 0, ty = 0, tz = 0;
+  if (cam.focus >= 0) { const w = WS[cam.focus]; tx = w.x; ty = .8; tz = w.z; r = fitD * .27 * cam.zoom; el = .78; az = w.ry + .22; }   // 从工区正面看机器人
+  else switch (m) {
+    case 'over':  az += .05 * Math.sin(t * .05); break;
+    case 'tilt':  az += .4 + .06 * Math.sin(t * .04); el = .6; r *= .8; ty = .5; break;
+    case 'orbit': az += t * .045; el = .76; r *= .9; break;
+    case 'close': az += .55 + .22 * Math.sin(t * .06); el = .34; r *= .46; ty = veh ? Math.min(veh.h * .42, 6) : 2; break;
+  }
+  if (proj && proj.phase === 'launch' && veh && cam.focus < 0) { const gp = veh.group.position, fy = Math.min(gp.y, 28); ty += fy * .8; tz += clamp(gp.z, -30, 30) * .6; el = Math.min(el, .6) - Math.min(.25, fy * .018); r *= 1 + Math.min(.4, (fy + Math.abs(gp.z) * .4) * .02); }
+  az += cam.yaw; el = clamp(el + cam.pitch, .1, 1.42);
+  cam.want.set(r * Math.sin(az) * Math.cos(el) + tx, r * Math.sin(el) + ty, r * Math.cos(az) * Math.cos(el) + tz);
+  cam.wantT.set(tx, ty, tz);
+}
+// 自适应取景的测试点：每个工区底板四角（后排再加上机器顶部高度），车间要完整落在框体之间的空当里
+const FIT_PTS = [];
+WS.concat([DOCK]).forEach((w, i) => { [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([a, b]) => { const p = wsP(w, a * WS_W / 2, 0, b * WS_D / 2); FIT_PTS.push([p.x, 0, p.z]); if (b < 0) FIT_PTS.push([p.x, 2.2, p.z]); }); });
+function panelRects(){
+  const hr = host.getBoundingClientRect(), out = [];
+  SR.querySelectorAll('.board .dp, .board .hd .eb, .board .hd h1 > span, .board .hd .sub, .board .hd .sub2, .board .cap-l, .board .cap-b, .board .tools, .board .sb').forEach(el => { const r = el.getBoundingClientRect(); if (r.width > 2) out.push([r.left - hr.left - 10, r.top - hr.top - 10, r.right - hr.left + 10, r.bottom - hr.top + 10]); });
+  return out;
+}
+function fitCamera(){
+  const rects = narrow ? [] : panelRects(), mg = narrow ? 6 : 8; PRC = rects.map(r => [r[0] + 6, r[1] + 6, r[2] - 6, r[3] - 6]);
+  const v = new THREE.Vector3(), az = baseAz, el = EL_OVER;
+  const offs = narrow ? [H / 2 - (64 + H - 150) / 2] : Array.from({length: 25}, (_, i) => (i - 12) * H * .016);
+  let best = null;
+  for (const oy of offs) {
+    camera.setViewOffset(W, H, 0, oy, W, H); camera.updateProjectionMatrix();
+    let lo = 8, hi = 400;
+    for (let it = 0; it < 26; it++) {
+      const D = (lo + hi) / 2;
+      camera.position.set(D * Math.sin(az) * Math.cos(el), D * Math.sin(el), D * Math.cos(az) * Math.cos(el)); camera.lookAt(0, 0, 0); camera.updateMatrixWorld();
+      let ok = true;
+      for (const p of FIT_PTS) {
+        v.set(p[0], p[1], p[2]).project(camera); const sx = (v.x + 1) / 2 * W, sy = (1 - v.y) / 2 * H;
+        if (sx < mg || sx > W - mg || sy < (narrow ? 64 : mg) || sy > H - (narrow ? 150 : mg)) { ok = false; break; }
+        for (const r of rects) if (sx > r[0] && sx < r[2] && sy > r[1] && sy < r[3]) { ok = false; break; }
+        if (!ok) break;
+      }
+      if (ok) hi = D; else lo = D;
+    }
+    if (!best || hi < best.D - .01) best = {D: hi, oy};
+  }
+  offY = best.oy; fitD = best.D;
+  camera.setViewOffset(W, H, 0, offY, W, H); camera.updateProjectionMatrix();
+}
+
+/* ---------- 建场景（WebGL 不可用时只跑面板） ---------- */
+try {
+  if (!THREE) throw new Error('three.js 没加载');
+  renderer = new THREE.WebGLRenderer({canvas: cv, antialias: true, powerPreference: 'high-performance'});
+  renderer.setClearColor(0x07090d, 1);
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  pr = Math.min(window.devicePixelRatio || 1, 1.75); renderer.setPixelRatio(pr);
+  scene = new THREE.Scene(); scene.fog = new THREE.Fog(0x07090d, 60, 160);
+  camera = new THREE.PerspectiveCamera(34, 16 / 9, .5, 420);
+  world = new THREE.Group(); scene.add(world);
+  scene.add(new THREE.HemisphereLight(0xb4c8e8, 0x241a10, .7));
+  const key = new THREE.DirectionalLight(0xffe7c4, .95); key.position.set(16, 34, 20); key.castShadow = true;
+  key.shadow.mapSize.set(2048, 2048); Object.assign(key.shadow.camera, {left: -32, right: 32, top: 24, bottom: -24, near: 1, far: 90}); key.shadow.bias = -.0005; key.shadow.normalBias = .03;
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(0x7fb8ff, .35); rim.position.set(-20, 12, -18); scene.add(rim);
+  const padGlow = new THREE.PointLight(0x45e6f5, .7, 9, 2); padGlow.position.set(0, 1.0, PAD_R + 1.2); scene.add(padGlow);
+  SPRITE = spriteTexture(); SMOKE_TEX = smokeTexture();
+  mats(); buildEnv(); buildLoop(); buildBay(); buildChief(); buildDock();
+  for (let k = 1; k <= 12; k++) buildStation(k);
+  buildDrones(); buildAgvs(); buildSpider(); mergeStatic(); buildFx();
+  if (THREE.EffectComposer && THREE.UnrealBloomPass && THREE.RenderPass) {
+    composer = new THREE.EffectComposer(renderer);
+    composer.addPass(new THREE.RenderPass(scene, camera));
+    composer.addPass(new THREE.UnrealBloomPass(new THREE.Vector2(512, 512), .5, .4, .92));
+  }
+  cam.pos = new THREE.Vector3(0, 60, 40); cam.tgt = new THREE.Vector3(0, 0, 0); cam.want = new THREE.Vector3(); cam.wantT = new THREE.Vector3();
+  glOK = true;
+} catch (e) {
+  console.error(e);
+  $('#glFail').hidden = false;
+}
+
+/* ================= 5. HUD ================= */
+const nr = $('#nr'), board = $('#board'), fitIn = $('#fitIn'), lblLayer = $('#lbls'), pjv = $('#pjv');
+const termEl = $('#term'), flowEl = $('#flow'), tip = $('#tip'), pvBar = $('#pvBar'), pvList = $('#pvList');
+const cards = AG.map(a => {
+  const el = document.createElement('div'); el.className = 'ac idle'; el.style.setProperty('--c', a.col);
+  el.innerHTML = `<div class="h"><b>${a.k}</b><i>${a.zh} · ${a.job}</i><em>—</em></div><u><s></s></u><small>—</small>`;
+  lblLayer.appendChild(el);
+  return {el, pc: el.querySelector('em'), bar: el.querySelector('s'), sm: el.querySelector('small'), flip: false};
+});
+const STATE_ZH = {wait: '待派', move: '运输', queue: '排队', work: '加工', ready: '待吊', fly: '吊装', done: '已并入', bad: '返工'};
+function partWhere(p){
+  if (p.state === 'done') return '✓ 已并入';
+  if (p.state === 'wait') return '待派';
+  if (p.state === 'fly') return '无人机';
+  return `${STATE_ZH[p.state]} ${p.at >= 0 ? AG[p.at].k : ''}`;
+}
+function renderCards(){
+  AG.forEach((a, i) => {
+    const c = cards[i]; let cls = 'ac', pc = '—', w = 0, st = '';
+    if (i === 0) {
+      const left = proj ? proj.parts.filter(p => p.state === 'wait').length : 0;
+      cls += ' work'; pc = left ? 'Q' + left : '✓'; w = proj ? 1 - left / 8 : 0;
+      st = proj ? (proj.phase === 'build' ? (left ? `拆分派单 · 还剩 ${left} 个子板块` : '子板块全部派出 · 盯进度') : proj.phase === 'count' ? '倒计时 · 准备点火' : proj.phase === 'launch' ? '发射指挥中' : '准备下一单') : '—';
+    } else if (i === CRAWLER) {
+      cls += ' work'; pc = String(crawl.patrols); w = spider.moving ? Math.min(1, spider.t / spider.dur) : 1 - clamp(spider.dwell / 3, 0, 1);
+      st = `${spider.moving ? '走向' : '扫描'} ${AG[crawl.target].k} · 已读 ${fmt(crawl.read)} 页`;
+    } else if (a.cur) {
+      const p = proj.parts[a.cur.part];
+      cls += ' work'; pc = Math.round(a.prog * 100) + '%'; w = a.prog;
+      st = `${a.job} ${p.zh}${stations[i] && stations[i].mx > .5 ? ' · 调机器' : ''}${a.cur.rework ? ' · 返工' : ''}${a.inbox.length ? ' · 排队 ' + a.inbox.length : ''}`;
+    } else if (a.inbox.length) { cls += ' idle'; pc = 'Q' + a.inbox.length; st = `排队 ${a.inbox.length} · 下一个 ${proj.parts[a.inbox[0].part].zh}`; }
+    else { cls += ' idle'; st = stations[i] && stations[i].mx > .5 ? '待命 · 调试设备' : `待命 · 今日完成 ${a.outs}`; }
+    if (a.hitT > 0) cls += ' hit';
+    if (a.bad > .2) cls += ' alert';
+    if (cam.focus === i) cls += ' foc';
+    if (c.flip) cls += ' flip';
+    if (c.el.className !== cls) c.el.className = cls;
+    if (c.pc.textContent !== pc) c.pc.textContent = pc;
+    c.bar.style.width = (w * 100).toFixed(1) + '%';
+    if (c.sm.textContent !== st) c.sm.textContent = st;
+  });
+}
+function renderProj(){
+  if (!proj) return;
+  const done = proj.parts.filter(p => p.state === 'done').length;
+  $('#pvNo').textContent = '#' + pad(proj.no);
+  $('#pvName').textContent = proj.name;
+  $('#pvCode').textContent = proj.code; $('#pvType').textContent = VEH[proj.type].zh;
+  $('#pvTime').textContent = mmss(Math.max(0, simT - proj.t0));
+  $('#pvParts').textContent = `子板块 ${done} / 8 · 返工 ${proj.parts.reduce((n, p) => n + p.rework, 0)}`;
+  $('#pvPct').textContent = Math.round(done / 8 * 100) + '%';
+  const st = $('#pvState');
+  st.className = 'pv-st' + (proj.phase === 'build' ? '' : ' fire');
+  st.textContent = proj.phase === 'build' ? `子板块并行中 · ${liveN()} 个工区在干活` : proj.phase === 'count' ? `发射倒计时 T-${Math.max(1, Math.ceil(proj.tc - .4))}` : proj.phase === 'launch' ? '总工程发射中' : '总工程已交付 · 准备下一个';
+  if (sheetDirty) {
+    sheetDirty = false;
+    pvBar.innerHTML = proj.parts.map(p => `<i class="s-${p.state}"></i>`).join('');
+    pvList.innerHTML = proj.parts.map(p => `<li class="s-${p.state}"><span class="pn">${p.zh}</span><span class="ps">${partWhere(p)}</span></li>`).join('');
+  }
+}
+function renderFeed(){
+  feedDirty = false;
+}
+function renderTerm(){
+  execDirty = false;
+  const rows = execLines.slice(-13).map((e, idx, arr) => {
+    const who = e.agent < 0 ? '<span class="ag dm">sys</span>' : `<span class="ag" style="color:${AG[e.agent].col}">${AG[e.agent].k.toLowerCase()}</span>`;
+    const res = e.res === 'er' ? '<span class="er"> ✗ ERR</span>' : e.res === 'ok' ? '<span class="ok"> ✓ OK</span>' : e.res === 'lw' ? '<span class="lw"> ▲ GO</span>' : e.res === 'sys' ? '<span class="dm"> ok</span>' : `<span class="ok"> ok</span><span class="dm"> ${(40 + Math.random() * 900) | 0}ms</span>`;
+    return `<li><span class="ln">${execSeq - arr.length + idx + 1}</span><span class="tm">${e.t}</span>${who}.<span class="fn">${esc(e.fn)}</span>(<span class="sx">${e.agent < 0 ? esc(e.arg) : '"' + esc(e.arg) + '"'}</span>)${res}</li>`;
+  });
+  termEl.innerHTML = rows.join('') + '<li class="cur">&gt; </li>';
+  $('#execMeta').textContent = `${opsWin.length ? Math.round(opsWin.reduce((p, v) => p + v, 0) / opsWin.length * 12) : opsN * 6} ops/min · ${liveN()} 进程`;
+}
+const FLOW_ST = {move: '运输中', queue: '排队', work: '加工中', bad: '返工', ready: '待吊装', fly: '无人机吊装'};
+function renderFlow(){
+  if (!proj) return;
+  const liveN2 = proj.parts.filter(p => p.task && p.state !== 'done' && p.state !== 'wait').length;
+  const waitN = proj.parts.filter(p => p.state === 'wait').length, doneN = proj.parts.filter(p => p.state === 'done').length;
+  $('#flowMeta').textContent = `在途 ${liveN2} · 已并入 ${doneN}/8`;
+  // 总工程的 8 个子板块全部列出：每行是它要流转的工区（实心 = 走过，闪 = 当前），最后一格 ▲ = 并入总工程
+  flowEl.innerHTML = proj.parts.map(p => {
+    const path = WF[p.wf].path, t = p.task, done = p.state === 'done', wait = p.state === 'wait' || !t;
+    const assembling = p.state === 'ready' || p.state === 'fly';
+    const chips = path.map((ai, si) => { const cls = done || assembling || (!wait && si < t.stage) ? 'd' : (!wait && si === t.stage) ? 'c' : ''; return `<i class="${cls}" style="--c:${AG[ai].col}">${AG[ai].k.slice(0, 3)}</i>`; }).join('') + `<i class="a${done ? ' d' : assembling ? ' c' : ''}">▲</i>`;
+    const cur = !wait && !done ? AG[path[t.stage]] : null;
+    const pct = done ? '100%' : p.state === 'work' && cur && cur.cur === t ? Math.round(cur.prog * 100) + '%' : wait ? '—' : '·';
+    const stx = done ? '✓ 已并入' : wait ? '待派' : assembling ? FLOW_ST[p.state] : `${FLOW_ST[p.state] || ''} ${cur.k}`;
+    return `<li class="s-${p.state}"><span class="id">${t ? t.id.slice(2) : '—'}</span><span class="pn">${p.zh}</span><span class="pp">${chips}</span><span class="st">${stx}</span><span class="pc">${pct}</span></li>`;
+  }).join('');
+}
+function renderCap(){
+  capDirty = false;
+  const c = caption, a = AG[c.a];
+  $('#cap').className = 'cap ' + c.kind;
+  $('#capK').textContent = a.k; $('#capK').style.color = a.col;
+  $('#capV').textContent = c.verb; $('#capT').textContent = c.text;
+  $('#mCap').innerHTML = `<b style="color:${a.col}">${a.k}</b>${c.verb} · ${c.text}`;
+}
+let fps = 60, fpsN = 0, fpsT = 0, lowT = 0, autoNote = '';
+function renderBottom(){
+  const nx = PROJECTS[projIdx % PROJECTS.length];
+  $('#bLaunch').textContent = fmt(launches);
+  $('#bLaunchS').innerHTML = `下一个 <b>${nx.name}</b>`;
+  const avg = cycles.reduce((p, v) => p + v, 0) / cycles.length;
+  $('#bCycle').textContent = proj ? mmss(Math.max(0, simT - proj.t0)) : '—';
+  $('#bCycleS').innerHTML = `平均 <b>${mmss(avg)}</b> · 上一单 <b>${mmss(cycles[cycles.length - 1])}</b>`;
+  $('#bOut').textContent = fmt(total);
+  const pct = total / DAY_TARGET;
+  $('#bOutS').innerHTML = `目标 <b>${fmt(DAY_TARGET)}</b> · <b>${(pct * 100).toFixed(1)}%</b> · 在途 <b>${tasks.length}</b>`;
+  $('#bOutBar').style.width = (Math.min(1, pct) * 100).toFixed(2) + '%';
+  $('#bPass').textContent = (passN / (passN + failN) * 100).toFixed(1) + '%';
+  $('#bPassS').innerHTML = `通过 <b>${passN}</b> · 打回 <b>${failN}</b>`;
+  const perMin = tokWin.reduce((p, v) => p + v, 0);
+  $('#bTok').textContent = fmtTok(tokDay);
+  $('#bTokS').innerHTML = `<b>¥${costDay().toFixed(0)}</b> · <b>${fmtTok(perMin)}</b>/min · 缓存 <b>${Math.round(cacheHit * 100)}%</b>`;
+  $('#bFps').innerHTML = glOK ? `${fps}<small>fps</small>` : '—';
+  $('#bFpsS').innerHTML = glOK ? `${MODES[modeI].zh}${autoNote}` : 'WebGL 不可用';
+  $('#sbLive').textContent = `${liveN()} / 12`;
+  $('#sbQ').textContent = workers.reduce((n, a) => n + a.inbox.length, 0);
+  if (proj) $('#sbProj').textContent = `#${pad(proj.no)} ${proj.name} · ${Math.round(proj.parts.filter(p => p.state === 'done').length / 8 * 100)}%`;
+  $('#kpiMeta').textContent = `${hms(new Date()).slice(0, 5)} · LIVE`;
+  if (proj) { $('#mProj').textContent = proj.name; $('#mParts').textContent = `${proj.parts.filter(p => p.state === 'done').length} / 8`; }
+  $('#mLaunch').textContent = fmt(launches);
+}
+function clockTick(){ $('#clock').textContent = hms(new Date()); }
+function showBanner(cyc){
+  $('#bannerT').textContent = 'LAUNCH SUCCESS · 发射成功';
+  $('#bannerS').textContent = `#${pad(proj.no)} ${proj.name} · 8 个子板块全部完成 · ${proj.code} 已发射 · 用时 ${mmss(cyc)}`;
+  const b = $('#banner'); b.hidden = false; clearTimeout(showBanner.t); showBanner.t = setTimeout(() => { b.hidden = true; }, 3600);
+}
+
+/* ---------- 角落数据框（2D 画布，约 8 帧 / 秒刷新） ---------- */
+const eqX = $('#eqC').getContext('2d'), ringX = $('#ringC').getContext('2d'), spX = $('#sparkC').getContext('2d'), radX = $('#radC').getContext('2d');
+let oee = .6;
+function drawEq(){
+  const X = eqX, Wc = X.canvas.width, Hc = X.canvas.height, n = 12, bw = Wc / n, top = 18, hgt = Hc - 42, segs = 10, sh = hgt / segs;
+  X.clearRect(0, 0, Wc, Hc);
+  for (let i = 0; i < n; i++) {
+    const a = AG[i + 1], st = stations[i + 1], x = i * bw + 6, w = bw - 12;
+    const v = a.cur ? Math.max(.08, a.prog) : st && st.mx > .5 ? .2 : .06;
+    for (let sg = 0; sg < segs; sg++) { const lit = (sg + .5) / segs <= v; X.fillStyle = lit ? a.col : 'rgba(220,230,240,.07)'; X.globalAlpha = lit ? (a.cur ? .95 : .4) : 1; X.fillRect(x, top + hgt - (sg + 1) * sh + 1.5, w, sh - 3); }
+    X.globalAlpha = 1;
+    for (let q = 0; q < Math.min(4, a.inbox.length); q++) { X.fillStyle = '#45e6f5'; X.fillRect(x + q * (w / 4) + 1.5, 4, w / 4 - 3, 9); }
+    X.fillStyle = a.cur ? '#e9edf0' : '#6c7581'; X.font = '700 16px "JetBrains Mono", monospace'; X.textAlign = 'center'; X.fillText(a.k.slice(0, 3), x + w / 2, Hc - 6);
+  }
+}
+function drawRing(){
+  const X = ringX, S = X.canvas.width, c = S / 2, r = S / 2 - 12;
+  X.clearRect(0, 0, S, S); X.lineCap = 'butt';
+  X.lineWidth = 10; X.strokeStyle = 'rgba(220,230,240,.1)'; X.beginPath(); X.arc(c, c, r, 0, TAU); X.stroke();
+  X.strokeStyle = '#3ce69a'; X.shadowColor = '#3ce69a'; X.shadowBlur = 10; X.beginPath(); X.arc(c, c, r, -HP, -HP + TAU * oee); X.stroke(); X.shadowBlur = 0;
+  X.strokeStyle = 'rgba(69,230,245,.55)'; X.lineWidth = 2;
+  for (let i = 0; i < 24; i++) { const a = i / 24 * TAU + animT * .4; X.beginPath(); X.moveTo(c + Math.cos(a) * (r - 11), c + Math.sin(a) * (r - 11)); X.lineTo(c + Math.cos(a) * (r - 16), c + Math.sin(a) * (r - 16)); X.stroke(); }
+  X.fillStyle = '#e9edf0'; X.font = '700 24px "JetBrains Mono", monospace'; X.textAlign = 'center'; X.textBaseline = 'middle'; X.fillText(Math.round(oee * 100) + '%', c, c - 3);
+  X.font = '500 12px "JetBrains Mono", monospace'; X.fillStyle = '#6c7581'; X.fillText('OEE', c, c + 18); X.textBaseline = 'alphabetic';
+}
+function drawSpark(){
+  const X = spX, Wc = X.canvas.width, Hc = X.canvas.height, n = thr.length, mx = Math.max(5, ...thr) * 1.15;
+  X.clearRect(0, 0, Wc, Hc);
+  X.strokeStyle = 'rgba(220,230,240,.07)'; X.lineWidth = 1; for (let i = 1; i < 4; i++) { X.beginPath(); X.moveTo(0, Hc * i / 4); X.lineTo(Wc, Hc * i / 4); X.stroke(); }
+  const pts = thr.map((v, i) => [i / (n - 1) * Wc, Hc - v / mx * (Hc - 8) - 3]);
+  const gr = X.createLinearGradient(0, 0, 0, Hc); gr.addColorStop(0, 'rgba(255,194,26,.38)'); gr.addColorStop(1, 'rgba(255,194,26,0)');
+  X.beginPath(); pts.forEach(([x, y], i) => i ? X.lineTo(x, y) : X.moveTo(x, y)); X.lineTo(Wc, Hc); X.lineTo(0, Hc); X.closePath(); X.fillStyle = gr; X.fill();
+  X.beginPath(); pts.forEach(([x, y], i) => i ? X.lineTo(x, y) : X.moveTo(x, y)); X.strokeStyle = '#ffc21a'; X.lineWidth = 2.5; X.stroke();
+  const [lx, ly] = pts[n - 1]; X.fillStyle = '#ffc21a'; X.beginPath(); X.arc(lx - 4, ly, 5, 0, TAU); X.fill();
+}
+const radCv = $('#radC'), RS_ = radCv.width / 50, rX = x => radCv.width / 2 + x * RS_, rY = z => radCv.height / 2 + z * RS_;
+function rrPath(X, rr, o){ const p = {}; X.beginPath(); for (let i = 0; i <= 120; i++) { rr.at(i / 120 * rr.L, o, p); i ? X.lineTo(rX(p.x), rY(p.z)) : X.moveTo(rX(p.x), rY(p.z)); } X.closePath(); }
+function drawRadar(){
+  const X = radX, Wc = X.canvas.width, Hc = X.canvas.height;
+  X.clearRect(0, 0, Wc, Hc); X.fillStyle = 'rgba(2,8,12,.55)'; X.fillRect(0, 0, Wc, Hc);
+  X.strokeStyle = 'rgba(69,230,245,.07)'; X.lineWidth = 1;
+  for (let x = -24; x <= 24; x += 4) { X.beginPath(); X.moveTo(rX(x), 0); X.lineTo(rX(x), Hc); X.stroke(); }
+  for (let z = -16; z <= 16; z += 4) { X.beginPath(); X.moveTo(0, rY(z)); X.lineTo(Wc, rY(z)); X.stroke(); }
+  rrPath(X, ROAD, 0); X.strokeStyle = 'rgba(255,194,26,.3)'; X.lineWidth = 3; X.stroke();
+  rrPath(X, LOOP, 0); X.strokeStyle = 'rgba(69,230,245,.4)'; X.lineWidth = 6; X.stroke();
+  for (let k = 0; k <= 12; k++) {
+    const w = WS[k], side = Math.abs(Math.sin(w.ry)) > .5, ww = (side ? WS_D : WS_W) * RS_, hh = (side ? WS_W : WS_D) * RS_, a = AG[k], on = k === 0 || !!a.cur;
+    X.globalAlpha = on ? .5 : .14; X.fillStyle = a.col; X.fillRect(rX(w.x) - ww / 2, rY(w.z) - hh / 2, ww, hh);
+    X.globalAlpha = on ? .95 : .4; X.strokeStyle = a.col; X.lineWidth = 1.5; X.strokeRect(rX(w.x) - ww / 2, rY(w.z) - hh / 2, ww, hh);
+  }
+  X.globalAlpha = 1;
+  X.setLineDash([6, 5]); X.strokeStyle = 'rgba(255,194,26,.7)'; X.strokeRect(rX(DOCK.x) - WS_W * RS_ / 2, rY(DOCK.z) - WS_D * RS_ / 2, WS_W * RS_, WS_D * RS_); X.setLineDash([]);
+  const pulse = .5 + .5 * Math.sin(animT * 3);
+  X.strokeStyle = 'rgba(255,194,26,.8)'; X.lineWidth = 2; X.beginPath(); X.arc(rX(0), rY(0), PAD_R * RS_, 0, TAU); X.stroke();
+  X.fillStyle = `rgba(255,194,26,${(.25 + .35 * pulse).toFixed(2)})`; X.beginPath(); X.arc(rX(0), rY(0), PAD_R * RS_ * (.35 + .1 * pulse), 0, TAU); X.fill();
+  crates.forEach(c => { if (c.state === 'gone') return; X.fillStyle = c.bad && c.state === 'move' ? '#ff4d5e' : CH[WF[c.t.wf].ch].col; X.fillRect(rX(c.pos.x) - 3.5, rY(c.pos.z) - 3.5, 7, 7); });
+  agvs.forEach(A => { X.fillStyle = '#ffc21a'; X.fillRect(rX(A.g.position.x) - 4, rY(A.g.position.z) - 4, 8, 8); });
+  drones.forEach(d => { const x = rX(d.p.x), y = rY(d.p.z); X.fillStyle = d.job ? '#45e6f5' : 'rgba(69,230,245,.45)'; X.beginPath(); X.moveTo(x, y - 7); X.lineTo(x + 6, y + 5); X.lineTo(x - 6, y + 5); X.closePath(); X.fill(); });
+  if (spiderObj) { const x = rX(spiderObj.g.position.x), y = rY(spiderObj.g.position.z); X.fillStyle = '#ff3f8e'; X.beginPath(); X.arc(x, y, 5, 0, TAU); X.fill(); X.strokeStyle = 'rgba(255,63,142,.5)'; X.lineWidth = 1.5; X.beginPath(); X.arc(x, y, 10 + 4 * pulse, 0, TAU); X.stroke(); }
+  const ang = animT * 1.1;
+  for (let i = 0; i < 20; i++) { const a = ang - i * .04; X.strokeStyle = `rgba(69,230,245,${(.32 * (1 - i / 20)).toFixed(3)})`; X.lineWidth = 2.5; X.beginPath(); X.moveTo(rX(0), rY(0)); X.lineTo(rX(0) + Math.cos(a) * 400, rY(0) + Math.sin(a) * 400); X.stroke(); }
+  X.strokeStyle = 'rgba(69,230,245,.6)'; X.lineWidth = 2; const L = 16; [[0, 0, 1, 1], [Wc, 0, -1, 1], [0, Hc, 1, -1], [Wc, Hc, -1, -1]].forEach(([x, y, dx, dy]) => { X.beginPath(); X.moveTo(x + dx * L, y + dy * 2); X.lineTo(x + dx * 2, y + dy * 2); X.lineTo(x + dx * 2, y + dy * L); X.stroke(); });
+}
+function drawPanels(){
+  oee += (clamp(.46 + liveN() / 12 * .5 + (proj && proj.phase !== 'build' ? .06 : 0), 0, .99) - oee) * .08;
+  drawEq(); drawRing(); drawSpark(); drawRadar();
+  $('#dpOee').textContent = `OEE ${Math.round(oee * 100)}% · ${liveN()}/12`;
+  $('#dpThr').textContent = thr.slice(-20).reduce((p, v) => p + v, 0).toFixed(0);
+  $('#dpCr').textContent = crates.filter(c => c.state === 'move').length;
+  $('#dpDr').textContent = `${drones.filter(d => d.job).length} / ${drones.length}`;
+  $('#dpAg').textContent = `${agvs.length} 台`;
+  $('#dpBelt').textContent = '5.2 m/s';
+  $('#dpSp').textContent = `${spider.moving ? '→' : '◎'} ${AG[crawl.target].k}`;
+}
+
+/* ================= 6. 每帧画面 ================= */
+const paintC = glOK ? new THREE.Color() : null;
+const v3 = glOK ? new THREE.Vector3() : null, tmp = glOK ? new THREE.Vector3() : null, tmp2 = glOK ? new THREE.Vector3() : null;
+function stationFx(st, a, dt){
+  const R = st.robot, cheer = !!proj && (proj.phase === 'launch' || proj.phase === 'done') && st.k > 0;
+  const working = st.k === 0 ? !!proj && proj.phase === 'build' : !!a.cur;
+  st.w += ((working ? 1 : 0) - st.w) * Math.min(1, dt * 3);
+  const t = animT + st.k * 1.7;
+  // 工位节奏：在工作台干活 ↔ 转身走到自己的机器前操作（没活的时候也去调试设备）
+  if (st.mpos) {
+    if (a.cur !== st.lastCur) { st.lastCur = a.cur; if (a.cur) { st.ph = 'bench'; st.pt = rnd(3, 5); } }
+    if ((st.pt -= dt) <= 0) { if (st.ph === 'bench') { st.ph = 'mach'; st.pt = a.cur ? rnd(1.3, 2) : rnd(2.5, 4.5); } else { st.ph = 'bench'; st.pt = a.cur ? rnd(3.5, 6) : rnd(1.5, 3); } }
+    st.mx += ((st.ph === 'mach' && !cheer ? 1 : 0) - st.mx) * Math.min(1, dt * 2.2);
+    const e = ease2(clamp(st.mx, 0, 1));
+    R.g.position.x = st.mpos.x * e; R.g.position.z = lerp(R.rz, st.mpos.z, e); R.g.rotation.y = st.myaw * e;
+  }
+  const atMach = st.mx > .55;
+  R.anim(t, atMach ? 1 : st.w, dt, atMach ? st.TM : st.T, cheer);
+  st.mach(t, Math.max(st.w, .35 + .65 * st.mx), dt);
+  if (st.beacon) { const lit = working ? .6 + .4 * Math.sin(t * 9) : a.inbox.length ? .4 + .3 * Math.sin(t * 3) : .22; const c = a.bad > .2 ? [1, .3, .35] : AGC[a.i]; st.beacon.color.setRGB(c[0] * (lit + a.flash), c[1] * (lit + a.flash), c[2] * (lit + a.flash)); }
+  if (st.k === 0) return;
+  const on = st.w > .4 && !cheer && st.mx < .2;
+  R.tip.getWorldPosition(tmp);
+  if (R.hit) { R.hit = false; if (!cheer) emit(tmp.x, tmp.y, tmp.z, 7, a.fx === 'hammer' ? [1, .85, .5] : AGC[a.i], 1.9, 6, .4, .075); }
+  if (atMach && Math.random() < dt * 5) emit(tmp.x, tmp.y, tmp.z, 1, AGC[a.i], .7, 2, .45, .065);
+  if (on) {
+    const g = st.glow; g.visible = true; g.position.copy(tmp);
+    if (a.fx === 'paint') { paintC.setHSL((t * .12) % 1, .85, .6); g.material.color.copy(paintC); }
+    const fx = a.fx, fl = fx === 'weld' || fx === 'grind' ? .55 + Math.random() * .45 : fx === 'laser' ? .7 + Math.random() * .3 : fx === 'spray' ? .5 + .15 * Math.sin(t * 9) : .35 + .25 * Math.sin(t * 5);
+    g.material.opacity = fl * st.w; g.scale.setScalar(fx === 'weld' ? .5 + Math.random() * .35 : .45);
+    if (fx === 'weld' && Math.random() < dt * 36) emit(tmp.x, tmp.y, tmp.z, 3, [1, .72 + Math.random() * .2, .3], 2.4, 7, .55, .08);
+    if (fx === 'grind' && Math.random() < dt * 26) emit(tmp.x, tmp.y, tmp.z, 2, FXCOL.grind, 1.8, 6, .45, .065);
+    if (fx === 'paint' && Math.random() < dt * 48) emit(tmp.x, tmp.y, tmp.z, 2, [paintC.r, paintC.g, paintC.b], 1.1, .5, .8, .11);
+    if (fx === 'spray' && Math.random() < dt * 40) { const cc = AGC[a.i]; emit(tmp.x, tmp.y, tmp.z, 2, [cc[0] * .9 + .1, cc[1] * .9 + .1, cc[2] * .9 + .1], 1.0, .6, .8, .1); }
+    if (fx === 'tap' && Math.random() < dt * 5) emit(tmp.x, tmp.y, tmp.z, 2, [.9, .95, 1], 1.6, 6, .35, .06);
+    if (fx === 'stamp' && Math.random() < dt * 4) emit(tmp.x, tmp.y, tmp.z, 2, AGC[a.i], 1.2, 4, .4, .07);
+    if (fx === 'probe' && Math.random() < dt * 6) emit(tmp.x, tmp.y, tmp.z, 1, AGC[a.i], .5, 0, .6, .08);
+  } else if (st.glow) st.glow.visible = false;
+  if (st.beam) {
+    st.beam.visible = on;
+    if (on) {
+      if (R.beam === 'laser') { tmp2.set(tmp.x, BENCH_Y + CRATE_H + .01, tmp.z); if (Math.random() < dt * 30) emit(tmp2.x, tmp2.y, tmp2.z, 2, FXCOL.laser, 1.6, 6, .4, .06); }
+      else { const p = wsP(WS[st.k], Math.sin(t * 2.2) * .14, BENCH_Y + CRATE_H + .01, BENCH_Z + Math.cos(t * 1.7) * .08); tmp2.set(p.x, p.y, p.z); }
+      st.beam.position.copy(tmp); st.beam.lookAt(tmp2); st.beam.scale.z = Math.max(.01, tmp.distanceTo(tmp2));
+      st.beam.material.opacity = (R.beam === 'laser' ? .9 : .22 + .1 * Math.sin(t * 7)) * st.w;
+    }
+  }
+}
+const rp = {};
+function updateScene(dt){
+  stations.forEach((st, k) => stationFx(st, AG[k], dt));
+  beltMats[0].map.offset.x -= dt * 5.2 / 2.6; beltMats[1].map.offset.x += dt * 5.2 / 2.6;
+  // 货箱
+  for (let i = crates.length - 1; i >= 0; i--) {
+    const c = crates[i];
+    if (!c.mesh) { if (c.state === 'gone') crates.splice(i, 1); continue; }
+    if (c.state === 'gone') { world.remove(c.mesh); crates.splice(i, 1); continue; }
+    if (c.state === 'wait' || c.state === 'work' || c.state === 'ready') { const a = AG[c.k], qi = a.inbox.indexOf(c.t); const p = benchPt(c.k, c.state === 'wait' ? (qi >= 0 ? 1 + qi : 1) : 0); const k = Math.min(1, dt * 6); c.pos.x += (p.x - c.pos.x) * k; c.pos.y += (p.y - c.pos.y) * k; c.pos.z += (p.z - c.pos.z) * k; }
+    if (c.state === 'lift') { const d = drones.find(q => q.carry === c); if (d) { c.pos.x = d.p.x; c.pos.y = d.p.y - .64; c.pos.z = d.p.z; } }
+    c.mesh.position.set(c.pos.x, c.pos.y, c.pos.z);
+    const band = c.mesh.userData.band.material;
+    if (c.bad && c.state === 'move') { const f = .5 + .5 * Math.sin(animT * 14); band.color.setRGB(1, .3 * f, .35 * f); } else band.color.set(CH[WF[c.t.wf].ch].col);
+  }
+  // 无人机
+  for (const d of drones) {
+    d.g.position.set(d.p.x, d.p.y + (d.job ? 0 : Math.sin(animT * 2 + d.home.x) * .02), d.p.z);
+    d.g.rotation.z = clamp(-d.vx * .05, -.35, .35); d.g.rotation.x = clamp(d.vz * .05, -.35, .35);
+    const spin = d.job || d.p.y > d.home.y + .05 ? 1 : .15;
+    d.rotors.forEach((r, k) => { r.rotation.z += dt * 40 * spin * (k % 2 ? 1 : -1); r.material.opacity = .15 + .2 * spin; });
+  }
+  // AGV
+  agvs.forEach((A, i) => { A.s += A.v * dt * (proj && proj.phase === 'launch' ? .4 : 1); ROAD.at(A.s, A.o, rp); A.g.position.set(rp.x, 0, rp.z); const dir = Math.sign(A.v); A.g.rotation.y = Math.atan2(rp.tx * dir, rp.tz * dir); A.lt.color.setScalar(.4 + .6 * (Math.sin(animT * 6 + i) > 0)); });
+  if (dockAgv) { const u = (animT * .12) % 1, f = u < .5 ? ease2(u * 2) : 1 - ease2((u - .5) * 2); dockAgv.g.position.set(-.9, 0, -1.4 + f * 2.6); dockAgv.crate.visible = u < .5; }
+  // 巡检蛛
+  if (spiderObj) {
+    LOOP.at(spider.s, SPIDER_O, rp); spiderObj.g.position.set(rp.x, 0, rp.z);
+    const dir = Math.sign(spider.to - spider.from) || 1;
+    spiderObj.g.rotation.y = spider.moving ? Math.atan2(rp.tx * dir, rp.tz * dir) : Math.atan2(rp.nx, rp.nz);
+    spiderObj.legs.forEach(L => { const ph = spider.step + L.j * 1.6 + (L.sx > 0 ? Math.PI : 0); L.hip.rotation.y = spider.moving ? Math.sin(ph) * .35 : 0; L.hip.rotation.z = spider.moving ? Math.max(0, Math.cos(ph)) * .25 * L.sx : 0; });
+    spiderObj.g.position.y = spider.moving ? Math.abs(Math.sin(spider.step * 2)) * .03 : 0;
+    spiderObj.cone.material.opacity = !spider.moving ? .1 + .06 * Math.sin(animT * 8) : 0;
+  }
+  // 旋臂吊
+  jibs.forEach(J => {
+    const launching = proj && proj.phase !== 'build';
+    if ((J.wait -= dt) <= 0) { J.wait = rnd(2.5, 5); J.ta = J.a0 + rnd(-1.3, 1.3); J.tr0 = rnd(1.2, 4.2); J.tdrop = rnd(1.0, 3.2); }
+    if (launching) { J.ta = J.a0 + Math.PI; J.tdrop = .5; }
+    J.a += (J.ta - J.a) * Math.min(1, dt * .6); J.r += (J.tr0 - J.r) * Math.min(1, dt * .8); J.drop += (J.tdrop - J.drop) * Math.min(1, dt * .9);
+    J.arm.rotation.y = J.a; J.tr.position.z = J.r; J.cable.scale.y = J.drop; J.cable.position.y = -J.drop / 2; J.hook.position.y = -J.drop;
+  });
+  // 载具
+  if (veh) {
+    veh.parts.forEach(q => {
+      if (q.t >= 0 && q.t < 1) { q.t = Math.min(1, q.t + dt / .6); const s = .75 + .25 * easeBack(q.t); q.solid.scale.setScalar(s); q.solid.position.set(q.center.x * (1 - s), q.center.y * (1 - s), q.center.z * (1 - s)); }
+      q.ghost.visible = !q.solid.visible || q.t < 1;
+    });
+    if (proj.phase === 'build') { holo.visible = true; holo.position.y = .35 + (veh.h - .2) * (.5 + .5 * Math.sin(animT * .9)); }
+    if (proj.phase === 'count') { veh.group.position.y = .3 + Math.sin(animT * 60) * .004 * (3.4 - proj.tc); if (Math.random() < dt * 24) emitSmoke(rnd(-2, 2), .4, rnd(-2, 2), 1.6); }
+    if (proj.phase === 'launch' || proj.phase === 'done') {
+      const tl = proj.tl, gp = veh.group.position;
+      if (veh.type === 'fighter') {
+        if (tl < 1.6) { gp.y = .3 + 2.6 * veh.vs / 1.2 * easeOut(tl / 1.6); veh.fls.forEach(f => f.rotation.x = 0); }
+        else { const u = tl - 1.6; veh.fls.forEach(f => f.rotation.x = -HP * Math.min(1, u / .6)); veh.v += (u < .6 ? 2 : 9) * veh.vs / 1.2 * dt; gp.z -= veh.v * dt; gp.y += veh.v * .3 * dt; veh.group.rotation.x = Math.min(.22, u * .12); }
+      } else { const acc = (tl < 1 ? .5 : 1.7) * veh.vs / 1.3; veh.v += acc * dt; gp.y += veh.v * dt; if (veh.type === 'mech') veh.group.rotation.x = Math.min(.18, tl * .03); }
+      veh.fls.forEach(f => f.scale.set(1 + Math.random() * .15, .9 + Math.random() * .5 + Math.min(1, tl * .4), 1 + Math.random() * .15));
+      if (veh.group.visible) veh.fls.forEach(f => { f.getWorldPosition(tmp); if (tmp.y < 70) { if (veh.type === 'fighter' && tl > 2) emitDir(tmp.x, tmp.y, tmp.z + .2, 2, [1, .55 + Math.random() * .3, .2], 0, 0, 6 + veh.v, .6, .5, .12); else emitDir(tmp.x, tmp.y - .3, tmp.z, 2, [1, .55 + Math.random() * .3, .2], 0, -6 - veh.v, 0, 1.2, .6, .13); } });
+      if (proj.phase === 'launch' && gp.y < 9 && (veh.type !== 'fighter' || tl < 2.4)) for (let q = 0; q < 4; q++) if (Math.random() < dt * 40) emitSmoke(rnd(-1.6, 1.6), .5, rnd(-1.6, 1.6), 4.8);
+      launchLight.intensity = proj.phase === 'launch' ? clamp(4 - gp.y * .2, 0, 4) * (.8 + Math.random() * .4) : 0;
+      if (gp.y > 90 || gp.z < -140) veh.group.visible = false;
+    } else launchLight.intensity = 0;
+    towerArms.forEach(g => { const want = proj.phase === 'build' ? 0 : g.sx * 1.4; g.piv.rotation.y += (want - g.piv.rotation.y) * Math.min(1, dt * 1.5); });
+  }
+  padLights.forEach((l, i) => { const ph = proj ? proj.phase : 'build'; if (ph === 'count' || ph === 'launch') { const on = ((animT * 6 + i) | 0) % 2; l.material.color.setRGB(on ? 1 : .3, on ? .25 : .05, on ? .2 : .05); } else { const f = .45 + .55 * Math.max(0, Math.sin(animT * 2 - i * .4)); l.material.color.setRGB(.27 * f, .9 * f, .96 * f); } });
+  // 粒子
+  const P = sparkGeo.attributes.position.array, Cc = sparkGeo.attributes.col.array, S = sparkGeo.attributes.sz.array, A = sparkGeo.attributes.al.array;
+  let n = 0;
+  for (let i = sparks.length - 1; i >= 0; i--) {
+    const s = sparks[i]; s.life -= dt; if (s.life <= 0) { sparks.splice(i, 1); continue; }
+    s.vy -= s.g * dt; s.x += s.vx * dt; s.y += s.vy * dt; s.z += s.vz * dt; if (s.y < .02) { s.y = .02; s.vy *= -.3; s.vx *= .6; s.vz *= .6; }
+    const f = s.life / s.max;
+    P[n * 3] = s.x; P[n * 3 + 1] = s.y; P[n * 3 + 2] = s.z; Cc[n * 3] = s.col[0]; Cc[n * 3 + 1] = s.col[1]; Cc[n * 3 + 2] = s.col[2]; S[n] = s.sz; A[n] = Math.min(1, f * 1.6); n++;
+  }
+  for (let i = n; i < (updateScene.last || 0); i++) S[i] = 0;
+  updateScene.last = n;
+  for (const k of ['position', 'col', 'sz', 'al']) sparkGeo.attributes[k].needsUpdate = true;
+  for (const q of smoke) {
+    if (q.life <= 0) continue;
+    q.life -= dt; if (q.life <= 0) { q.s.visible = false; continue; }
+    const f = q.life / q.max;
+    q.s.position.x += q.vx * dt; q.s.position.y += q.vy * dt; q.s.position.z += q.vz * dt; q.vx *= .985; q.vz *= .985;
+    const sc = (2.2 + (1 - f) * 6.5) * q.grow; q.s.scale.set(sc, sc, sc);
+    const w = Math.max(0, f - .6) / .4; q.s.material.color.setRGB(.62 + .38 * w, .62 + .1 * w, .66 - .2 * w);
+    q.s.material.opacity = Math.min(.6, f * .75) * Math.min(1, (1 - f) * 6);
+  }
+}
+function decay(dt){ AG.forEach(a => { a.flash *= Math.exp(-dt * 3); a.bad *= Math.exp(-dt * 1.4); a.hitT = Math.max(0, a.hitT - dt); }); }
+// 进度卡挂点：机器人头顶；巡检蛛跟着走
+function anchorOf(i, out){
+  if (i === CRAWLER) { LOOP.at(spider.s, SPIDER_O, rp); out.set(rp.x, 1.1, rp.z); return out; }
+  const R = stations[i].robot, p = wsP(WS[i], 0, R.H * R.S + (i === 0 ? .12 : 0), R.rz); out.set(p.x, p.y, p.z); return out;
+}
+function placeOverlays(){
+  if (!glOK || narrow) return;
+  lblLayer.classList.toggle('dim', !!proj && proj.phase !== 'build');
+  const s = clamp(bs * 1.05, .62, 1.15) * (cam.focus >= 0 ? 1.5 : 1), top = 60 * bs, placed = [];
+  const bot = PRC.reduce((m, r) => r[1] > H * .5 && r[3] > H - 60 * bs ? Math.min(m, r[1]) : m, H - 30 * bs);
+  const obst = cam.focus >= 0 ? [] : PRC.slice();
+  // 竖直总工程进度条：立在发射台左侧（右侧会盖住 DESIGN 工区的机器人；先摆它，卡片再避开它）
+  const ps = clamp(bs * 1.0, .6, 1.1) * (MODES[modeI].id === 'close' ? .9 : 1);
+  v3.set(-(PAD_R + 1.9), 1.5, .4).project(camera);
+  if (cam.focus >= 0 || v3.z > 1) pjv.style.display = 'none';
+  else {
+    pjv.style.display = '';
+    let x = (v3.x + 1) / 2 * W, y = (1 - v3.y) / 2 * H;
+    const ph = pjv.offsetHeight * ps, pw = 204 * ps;
+    x = clamp(x - pw, 10, W - pw - 10); y = clamp(y, top + ph / 2, bot - ph / 2);
+    pjv.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) translateY(-50%) scale(${ps.toFixed(3)})`;
+    obst.push([x - 4, y - ph / 2 - 4, x + pw + 4, y + ph / 2 + 4]);
+  }
+  const ovl = (x0, y0, x1, y1) => { let a = (Math.max(0, -x0 + 6) + Math.max(0, x1 - W + 6)) * 60;
+    for (const r of obst) { const w = Math.min(x1, r[2]) - Math.max(x0, r[0]), h = Math.min(y1, r[3]) - Math.max(y0, r[1]); if (w > 0 && h > 0) a += w * h; } return a; };
+  for (let i = 0; i < AG.length; i++) {
+    anchorOf(i, v3).project(camera);
+    const c = cards[i];
+    if (v3.z > 1 || v3.x < -1.1 || v3.x > 1.1 || v3.y < -1.1 || v3.y > 1.1) { c.el.style.display = 'none'; continue; }
+    const x = (v3.x + 1) / 2 * W, y = (1 - v3.y) / 2 * H;
+    const fd = clamp((y - top + 16) / 40, 0, 1) * clamp((bot + 70 - y) / 40, 0, 1) * clamp(Math.min(x, W - x) / 60, 0, 1);
+    if (fd <= .01) { c.el.style.display = 'none'; continue; }
+    c.el.style.display = ''; c.el.style.setProperty('--f', fd.toFixed(2));
+    const cw = 178 * s, ch = 64 * s, xr = x + 14 * s, xl = x - 14 * s - cw;
+    // 默认放右边；右边压到面板 / 总工程条 / 屏幕边时换到左边（带滞回，避免来回跳）
+    const oR = ovl(xr, y - ch / 2, xr + cw, y + ch / 2), oL = ovl(xl, y - ch / 2, xl + cw, y + ch / 2);
+    let flip = !!c.flip;
+    if (flip ? oL > oR + cw * 6 : oR > oL + cw * 6) flip = !flip;
+    if (flip !== !!c.flip) { c.flip = flip; c.el.classList.toggle('flip', flip); }
+    placed.push({c, x: flip ? xl : xr, y, w: cw, h: ch});
+  }
+  // 卡片不压进底部框体带；互相挡住时错开（平滑过渡，避免抖动）
+  for (const q of placed) q.y = Math.min(q.y, bot - q.h / 2 - 6);
+  placed.sort((a, b) => a.y - b.y);
+  const done = [];
+  for (const q of placed) {
+    let ty = q.y;
+    for (let it = 0; it < 6; it++) {
+      const hit = done.find(o => q.x < o.x + o.w + 4 && q.x + q.w + 4 > o.x && ty - q.h / 2 < o.ty + o.h / 2 + 3 && ty + q.h / 2 + 3 > o.ty - o.h / 2);
+      if (!hit) break;
+      ty = hit.ty + hit.h / 2 + q.h / 2 + 3;
+      if (ty > bot - q.h / 2 - 6) ty = hit.ty - hit.h / 2 - q.h / 2 - 3;   // 下面没地方了就往上让
+    }
+    q.ty = ty; done.push(q);
+    const c = q.c; c.dy = c.dy == null ? ty - q.y : c.dy + (ty - q.y - c.dy) * .2;
+    c.el.style.transform = `translate(${q.x.toFixed(1)}px,${(q.y + c.dy).toFixed(1)}px) translateY(-50%) scale(${s.toFixed(3)})`;
+  }
+}
+
+/* ================= 7. 主循环 ================= */
+let uiAcc = 0, panAcc = 0, lastNow = performance.now();
+function frame(now){
+  requestAnimationFrame(frame);
+  if (host.hidden || document.hidden) { lastNow = now; return; }
+  const real = (now - lastNow) / 1000, dt = Math.min(.1, real); lastNow = now;
+  simStep(dt); decay(dt); animT += dt;
+  const cnt = $('#count');
+  if (proj && proj.phase === 'count') { cnt.hidden = false; $('#countN').textContent = Math.max(1, Math.ceil(proj.tc - .4)); $('#countT').textContent = `${proj.code} · 点火倒计时`; }
+  else if (proj && proj.phase === 'launch' && proj.tl < .9) { cnt.hidden = false; $('#countN').textContent = 'GO'; $('#countT').textContent = veh && veh.type === 'fighter' ? '垂直起飞' : '点火 · 起飞'; }
+  else cnt.hidden = true;
+  pjv.style.opacity = cnt.hidden && $('#banner').hidden ? '' : '.3';   // 倒计时 / 发射成功横幅压在画面正中时，总工程进度条先退后
+  uiAcc += dt;
+  if (uiAcc >= .25) { uiAcc = 0; renderCards(); renderProj(); renderBottom(); renderFlow(); if (execDirty) renderTerm(); if (capDirty) renderCap(); }
+  if ((panAcc += dt) >= .12 && !narrow) { panAcc = 0; drawPanels(); }
+  if (!glOK) return;
+  camStep(dt);
+  updateScene(dt);
+  placeOverlays();
+  if (composer) composer.render(); else renderer.render(scene, camera);
+  fpsN++; fpsT += Math.min(real, 2);
+  if (fpsT >= 1) {
+    fps = Math.round(fpsN / fpsT); fpsN = 0; fpsT = 0;
+    if (fps < 30) lowT++; else lowT = 0;
+    if (lowT >= 3) { lowT = 0; if (pr > 1) { pr = 1; autoNote = ' · 已降清晰度'; layout(); } else if (pr > .75) { pr = .75; autoNote = ' · 已降清晰度'; layout(); } else if (renderer.shadowMap.enabled) { renderer.shadowMap.enabled = false; autoNote = ' · 已关阴影'; scene.traverse(o => { if (o.material && !Array.isArray(o.material)) o.material.needsUpdate = true; }); } }
+  }
+  if (hover >= 0 && !tip.hidden) showTip(hover);
+}
+function camStep(dt){
+  if (cam.userT > 0) cam.userT -= dt; else { cam.yaw *= Math.exp(-dt * .6); cam.pitch *= Math.exp(-dt * .6); }
+  camWant(animT);
+  const kk = 1 - Math.exp(-dt * (proj && proj.phase === 'launch' ? 2.6 : 1.6));
+  cam.pos.lerp(cam.want, kk); cam.tgt.lerp(cam.wantT, kk);
+  camera.position.copy(cam.pos);
+  if (proj && proj.phase === 'launch' && proj.tl < 1.6) { const s = (1.6 - proj.tl) * .06; camera.position.x += rnd(-s, s); camera.position.y += rnd(-s, s); }
+  camera.lookAt(cam.tgt);
+}
+
+/* ---------- 尺寸 ---------- */
+function layout(){
+  if (host.hidden || host.clientWidth < 2) return;   // 主题被隐藏时不重排
+  const r = host.getBoundingClientRect();
+  W = Math.max(1, r.width); H = Math.max(1, r.height);
+  narrow = W < 760 || W / H < 1.05;
+  nr.classList.toggle('narrow', narrow); $('#count').style.top = $('#banner').style.top = narrow ? '46%' : ''; lblLayer.style.display = narrow ? 'none' : ''; pjv.parentNode.style.display = narrow ? 'none' : '';
+  const fr = fitIn.getBoundingClientRect();
+  bs = Math.min(fr.width / 1920, fr.height / 1080);
+  BW = fr.width / bs; BH = fr.height / bs;
+  board.style.width = BW + 'px'; board.style.height = BH + 'px';
+  board.style.setProperty('--s', bs); host.style.setProperty('--bs', bs); host.style.setProperty('--cs', narrow ? Math.min(.9, W / 760) : clamp(bs, .5, 1.2));
+  if (!glOK) return;
+  baseAz = narrow && W / H < 1 ? HP : 0;
+  renderer.setPixelRatio(pr); renderer.setSize(W, H, false);
+  if (composer) { composer.setPixelRatio(pr); composer.setSize(W, H); }
+  camera.aspect = W / H;
+  fitCamera();
+  const t = Math.tan(camera.fov * Math.PI / 360);
+  sparkPts.material.uniforms.uPx.value = H * pr / (2 * t);
+  scene.fog.near = fitD * 1.0; scene.fog.far = fitD * 2.6;
+}
+
+/* ---------- 交互 ---------- */
+let hover = -1, drag = null;
+function screenOf(i){ anchorOf(i, v3); v3.y -= i === CRAWLER ? .6 : stations[i].robot.H * stations[i].robot.S * .55; v3.project(camera); return [(v3.x + 1) / 2 * W, (1 - v3.y) / 2 * H]; }
+function pickAt(x, y){
+  if (!glOK) return -1;
+  let best = -1, bd = 46 * 46;
+  for (let i = 0; i < AG.length; i++) { const [sx, sy] = screenOf(i); const d = (sx - x) ** 2 + (sy - y) ** 2; if (d < bd) { bd = d; best = i; } }
+  return best;
+}
+function showTip(i){
+  const a = AG[i];
+  let now;
+  if (i === 0) now = proj ? `${proj.name} · 待派 ${proj.parts.filter(p => p.state === 'wait').length} 个部件` : '—';
+  else if (i === CRAWLER) now = `${spider.moving ? '走向' : '扫描'} ${AG[crawl.target].k} · 抓到 bug ${crawl.bugs}`;
+  else now = a.cur ? `${a.job} ${proj.parts[a.cur.part].zh}（${a.cur.name}）· ${Math.round(a.prog * 100)}%` : a.inbox.length ? `排队 ${a.inbox.length} 箱` : '待命';
+  tip.style.setProperty('--c', a.col);
+  tip.innerHTML = `<span><b>${a.k}</b><strong>${a.zh}</strong> · ${a.job}</span><span>${a.role}</span><span>当前：${now}</span>` + (i > 0 && i < 13 ? `<span>今日完成 ${a.outs} · token ${fmtTok(a.tok)}</span>` : '') + (i === CRAWLER ? '' : `<span class="h">${cam.focus === i ? '再点一次返回全景' : '点击拉近看这个工区'}</span>`);
+  tip.hidden = false;
+  const [sx, sy] = screenOf(i), tw = tip.offsetWidth, th = tip.offsetHeight;
+  let x = sx + 22, y = sy - th / 2; if (x + tw > W - 12) x = sx - tw - 22;
+  tip.style.left = clamp(x, 8, W - tw - 8) + 'px'; tip.style.top = clamp(y, 8, H - th - 8) + 'px';
+}
+function setFocus(i){ cam.focus = (i === CRAWLER || cam.focus === i) ? -1 : i; cam.zoom = 1; cam.yaw = cam.pitch = 0; renderCards(); }
+cv.addEventListener('pointerdown', e => { drag = {x: e.clientX, y: e.clientY, sx: e.clientX, sy: e.clientY, moved: false}; try { cv.setPointerCapture(e.pointerId); } catch (_) {} });
+cv.addEventListener('pointermove', e => {
+  const r = host.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+  if (drag) {
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y; drag.x = e.clientX; drag.y = e.clientY;
+    if (Math.abs(e.clientX - drag.sx) + Math.abs(e.clientY - drag.sy) > 5) { drag.moved = true; cv.classList.add('drag'); }
+    if (drag.moved && glOK) { cam.yaw -= dx * .005; cam.pitch += dy * .004; cam.userT = 6; tip.hidden = true; hover = -1; }
+    return;
+  }
+  const i = pickAt(x, y); hover = i; cv.classList.toggle('hov', i >= 0);
+  if (i >= 0) showTip(i); else tip.hidden = true;
+});
+cv.addEventListener('pointerup', e => {
+  const wasDrag = drag && drag.moved; drag = null; cv.classList.remove('drag');
+  if (wasDrag || !glOK) return;
+  const r = host.getBoundingClientRect(), i = pickAt(e.clientX - r.left, e.clientY - r.top);
+  if (i >= 0) setFocus(i); else if (cam.focus >= 0) setFocus(cam.focus);
+});
+cv.addEventListener('pointerleave', () => { if (!drag) { tip.hidden = true; hover = -1; } });
+cv.addEventListener('wheel', e => { if (!glOK) return; e.preventDefault(); cam.zoom = clamp(cam.zoom * Math.exp(e.deltaY * .0012), .3, 1.5); }, {passive: false});
+function syncButtons(){ $$('[data-f="mode"]').forEach(b => b.textContent = cam.focus >= 0 ? '返回' : MODES[modeI].zh); }
+function act(name){
+  if (name === 'mode') { if (cam.focus >= 0) cam.focus = -1; else modeI = (modeI + 1) % MODES.length; cam.yaw = cam.pitch = 0; cam.zoom = 1; }
+  else if (name === 'full') {
+    try {
+      if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+      else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => { const b = $('[data-f="full"]'); b.textContent = '不支持'; setTimeout(() => b.textContent = '全屏', 1500); });
+    } catch (e) { /* 部分窗口不允许全屏 */ }
+  }
+  syncButtons();
+}
+$$('[data-act]').forEach(b => b.addEventListener('click', () => act(b.dataset.act)));
+document.addEventListener('fullscreenchange', () => { const b = $('[data-f="full"]'); if (b) b.textContent = document.fullscreenElement ? '退出全屏' : '全屏'; });
+document.addEventListener('keydown', e => {
+  if (host.hidden) return;
+  const tag = (e.target && e.target.tagName) || '';
+  if (/INPUT|TEXTAREA|SELECT/.test(tag) || e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.key === 'v' || e.key === 'V') act('mode');
+  if (e.key === 'Escape' && cam.focus >= 0) { setFocus(cam.focus); syncButtons(); }
+});
+
+/* ---------- 开场 ---------- */
+startProject();
+// 开场先派出几单、装好两个部件，画面一打开就在忙
+for (let k = 0; k < 4; k++) dispatch();
+crates.forEach(c => { if (c.state === 'move') { c.d = c.path.len * rnd(.3, .8); pathAt(c.path, c.d, c.pos); } });
+[5, 6].forEach(i => { const p = proj.parts[i]; if (p.state === 'wait') { p.state = 'done'; total++; if (glOK && veh) { veh.parts[i].solid.visible = true; veh.parts[i].t = 1; } } });
+AG.forEach(a => a.hitT = 0);
+sheetDirty = true;
+new ResizeObserver(() => layout()).observe(host);
+layout();
+renderCards(); renderProj(); renderFlow(); renderTerm(); renderCap(); renderBottom(); drawPanels();
+clockTick(); setInterval(clockTick, 1000);
+syncButtons();
+// 调试用：快进模拟若干秒（控制台里 document.getElementById('host-factory').__ff(20)）
+host.__ff = sec => { for (let t = 0; t < sec; t += .05) { simStep(.05); decay(.05); animT += .05; if (glOK) { camStep(.05); updateScene(.05); } } };
+host.__st = () => ({phase: proj.phase, type: proj.type, tc: proj.tc, tl: proj.tl, done: proj.parts.filter(p => p.state === 'done').length, crates: crates.length, sparks: sparks.length, tasks: tasks.length});
+host.__mode = i => { modeI = i; syncButtons(); };
+host.__focus = i => { setFocus(i); syncButtons(); };
+host.__zoom = z => { cam.zoom = z; };
+host.__ui = () => { renderCards(); renderProj(); renderBottom(); renderFlow(); renderTerm(); renderCap(); drawPanels(); placeOverlays(); };
+host.__info = () => glOK ? (renderer.info.autoReset = false, renderer.info.reset(), renderer.render(scene, camera), renderer.info.autoReset = true, {calls: renderer.info.render.calls, tris: renderer.info.render.triangles, geos: renderer.info.memory.geometries}) : null;
+requestAnimationFrame(frame);
+}
+
 /* ================= 系列外壳：挂载主题、切换、记住选择 ================= */
 (() => {
   'use strict';
-  // 神经星环要用 three.js，切到它时才去加载，不拖慢另外两款
+  // 神经星环和机器人工厂要用 three.js，切到它们时才去加载，不拖慢 OPS / SPIDER
   const THREE_CDN = 'https://cdn.jsdelivr.net/npm/three@0.147.0/';
-  const NEURAL_DEPS = ['build/three.min.js', 'examples/js/shaders/CopyShader.js', 'examples/js/shaders/LuminosityHighPassShader.js',
+  const THREE_DEPS = ['build/three.min.js', 'examples/js/shaders/CopyShader.js', 'examples/js/shaders/LuminosityHighPassShader.js',
     'examples/js/postprocessing/EffectComposer.js', 'examples/js/postprocessing/RenderPass.js', 'examples/js/postprocessing/ShaderPass.js',
     'examples/js/postprocessing/UnrealBloomPass.js'].map(p => THREE_CDN + p);
   const THEMES = {
     ops:    {host: 'host-ops',    tpl: 'tpl-ops',    mount: mountOps},
     spider: {host: 'host-spider', tpl: 'tpl-spider', mount: mountSpider},
-    neural: {host: 'host-neural', tpl: 'tpl-neural', mount: mountNeural, deps: NEURAL_DEPS}
+    neural: {host: 'host-neural', tpl: 'tpl-neural', mount: mountNeural, deps: THREE_DEPS},
+    factory: {host: 'host-factory', tpl: 'tpl-factory', mount: mountFactory, deps: THREE_DEPS}
   };
-  const ORDER = ['ops', 'spider', 'neural'], KEY = 'agent-series-theme';
+  const ORDER = ['ops', 'spider', 'neural', 'factory'], KEY = 'agent-series-theme';
   function loadScripts(list){
     return list.reduce((p, src) => p.then(() => new Promise(res => { const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = res; document.head.appendChild(s); })), Promise.resolve());
   }
