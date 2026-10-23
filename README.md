@@ -1,10 +1,10 @@
-# Agent 战术大屏 · v4.0
+# Agent 战术大屏 · v5.0
 
-一个纯前端的 **AI 智能体调度可视化大屏**。v4.0 新增 WebGL 主题 FACTORY 机器人工厂，用 3D 车间展示总工程拆解、工区接力与总装发射。在同一个 HTML 页面里切换 OPS、SPIDER、NEURAL、FACTORY 四款主题，展示任务流、智能体协作、质检、交付与模拟指标。
+一个纯前端的 **AI 智能体调度可视化大屏**。v5.0 新增 WebGL 主题 NEBULA 星核蜘蛛，以星云蛛逐字审查需求、追问模糊要求、评分后派单的流程展示智能体协作。在同一个 HTML 页面里切换 OPS、SPIDER、NEURAL、FACTORY、NEBULA 五款主题，展示任务流、质检、交付与模拟指标。
 
-单文件，无需构建、无需后端，双击即可打开，适合展厅、办公室电视或直播背景。
+单文件，无需构建、无需后端，双击即可打开。自 v5.0 起源码公开，采用 PolyForm Noncommercial License 1.0.0：非商业用途免费，商业用途需授权，详见文末「授权 License」。
 
-> 页面中的任务、指标、token 与成本全部是**模拟示例数据**，由内置模拟器生成，并未连接真实 agent、账单或业务接口。真实数据接入需要自行改造，见「配置」一节。SPIDER、NEURAL、FACTORY 的 token 成本使用示例单价：输入 ¥2 / 百万 token、缓存命中 ¥0.5 / 百万 token、输出 ¥8 / 百万 token。
+> 页面中的任务、需求文本、需求评分、追问回答、指标、token 与成本全部是**模拟示例数据**，由内置模拟器生成，并未连接真实 agent、账单或业务接口。真实数据接入需要自行改造，见「配置」一节。SPIDER、NEURAL、FACTORY 的 token 成本使用示例单价：输入 ¥2 / 百万 token、缓存命中 ¥0.5 / 百万 token、输出 ¥8 / 百万 token。
 
 ## 主题
 
@@ -14,10 +14,11 @@
 | 02 | SPIDER 蛛网战术 | 粉框作战室 + 巡检蛛 + token 账 + 交付飞轮 | `index.html#spider` |
 | 03 | NEURAL 神经星环 | 3D 神经团 + 任务脉冲 + HUD 星环 + token 账 | `index.html#neural` |
 | 04 | FACTORY 机器人工厂 | 3D 机器人车间 + 子板块接力 + 总装发射 | `index.html#factory` |
+| 05 | NEBULA 星核蜘蛛 | 3D 智能体星云 + 逐字审需求 + 评分派单 | `index.html#nebula` |
 
-点各主题的「主题 / 换主题」按钮打开主题面板，按 T 键依次轮换 OPS → SPIDER → NEURAL → FACTORY，按 Esc 关闭面板。选择保存在 localStorage；地址中的 `#ops`、`#spider`、`#neural` 或 `#factory` 优先于上次选择。没有有效选择记录时默认打开 SPIDER。
+点各主题的「主题 / 换主题」按钮打开主题面板，按 T 键依次轮换 OPS → SPIDER → NEURAL → FACTORY → NEBULA，按 Esc 关闭面板。选择保存在 localStorage；地址中的 `#ops`、`#spider`、`#neural`、`#factory` 或 `#nebula` 优先于上次选择。没有有效选择记录时默认打开 SPIDER。
 
-每款主题运行在独立的 Shadow DOM 中，样式和元素 id 互不干扰。隐藏主题暂停主动画与主要模拟刷新，减少资源占用。四款主题和主题面板使用系列水印「DEVELOPED BY @赛博老爸」。主题面板另有「05 · 下一款」占位。
+每款主题运行在独立的 Shadow DOM 中，样式和元素 id 互不干扰。隐藏主题暂停主动画与主要模拟刷新，减少资源占用。五款主题和主题面板使用系列水印「DEVELOPED BY @赛博老爸」。主题面板另有「06 · 下一款」占位。
 
 ## 功能一览
 
@@ -68,13 +69,24 @@ three.js（WebGL）渲染的整座 3D 机器人车间，以俯瞰视角展示「
 - **视角与交互**：工具栏按钮或 V 键切换俯瞰、斜看、环绕、特写；拖动转视角、滚轮缩放；点击机器人拉近工区，按 Esc 返回；悬停查看详情。
 - **视觉与适配**：UnrealBloom 辉光与软阴影；持续低帧率时依次降低清晰度、关闭阴影。画面适配 16:10、1366×768 等比例；窄屏或竖屏精简为车间与总工程、子板块、今日交付三个数字。
 
-当前四款主题均无暂停按钮与空格键暂停；SPIDER 无倍速按钮。系统开启「减少动态效果」时，大屏仍照常运行，部分 CSS 动画和故障闪烁仍会减少。
+### 05 · NEBULA 星核蜘蛛
+
+冰蓝、白、桃粉的 3D 星云场景：CHIEF 是中央丝带星核，12 个智能体分在三条椭圆轨道上公转，CRAWLER 星云蛛在相关工区之间跳跃、爬行和读词。
+
+- **星图与星云蛛**：三圈分别分布 3、4、5 团星云，六种形态交替排列。星云由淡光雾、尘埃和细丝组成；星云蛛有粒子头部、丝带腹部与 8 条逆解控制的腿，贴着云面移动并随星云公转。
+- **模拟审需求流程**：CHIEF 收到需求后，星云蛛按工作流逐站读词；普通词可连向下一工区，模糊词标红并向 CHIEF 追问，随后补为具体要求。全部读完后回到星核，显示回执和派单效果。评分阈值为 80 分，需求、补齐文本与评分均由本地脚本模拟，并未调用模型审查真实需求。
+- **信息小框**：读出的词、模糊标记、补齐要求、连线与属性标签沿弧线飞向对应底部面板，被击中面板边框闪亮。
+- **六个底部面板**：CRAWL LOG 爬取日志、SECTIONS 章节、SPEC RADAR 七维需求质量、WORD HEAT 读词热力、SPEC SCORE 评分曲线与仪表盘、CRAWLER.PY 审查脚本。顶部另有当前章节、读词计数、流程步骤与帧率。
+- **视角与交互**：默认跟随，工具栏按钮或 V 键切换跟随、俯瞰、斜看、环绕；拖动转视角、滚轮缩放；点击智能体星云拉近，Esc 返回；悬停星云、星核或星云蛛查看详情。
+- **视觉与适配**：UnrealBloom 辉光；持续低帧率时先降清晰度，再关辉光。窄屏或竖屏显示星云与当前需求、需求评分、今日派单三个数字。
+
+当前五款主题均无暂停按钮与空格键暂停；SPIDER 无倍速按钮。系统开启「减少动态效果」时，大屏仍照常运行，部分 CSS 动画和故障闪烁仍会减少。
 
 ## 快速开始
 
 ### 本地打开
 
-直接双击 `index.html`，用支持 Shadow DOM 和 Canvas 的现代 Chrome / Edge / Safari / Firefox 打开。NEURAL 与 FACTORY 的 3D 画面另需 WebGL 与可访问 jsDelivr 的网络；首次切入其中任一款时加载共用的 three.js 及后处理脚本，成功加载后可供另一款复用。
+直接双击 `index.html`，用支持 Shadow DOM 和 Canvas 的现代 Chrome / Edge / Safari / Firefox 打开。NEURAL、FACTORY 与 NEBULA 的 3D 画面另需 WebGL 与可访问 jsDelivr 的网络；首次切入其中任一款时加载共用的 three.js 及后处理脚本，正常加载完成后可供其余 3D 主题复用。
 
 也可以任选一种方式启动静态服务器：
 
@@ -84,19 +96,19 @@ python3 -m http.server 8000
 npx serve .
 ```
 
-使用 Python 命令后访问 `http://localhost:8000`；使用 `npx serve .` 时访问终端显示的地址。加上 `#ops`、`#spider`、`#neural` 或 `#factory` 可直达主题。
+使用 Python 命令后访问 `http://localhost:8000`；使用 `npx serve .` 时访问终端显示的地址。加上 `#ops`、`#spider`、`#neural`、`#factory` 或 `#nebula` 可直达主题。
 
 ### 部署到 GitHub Pages
 
 1. 将文件推送到 GitHub 仓库。
 2. 在仓库 Settings → Pages 中，将 Source 选为 `Deploy from a branch`，分支选 `main`，目录选 `/ (root)`。
-3. 等待部署完成，使用 Pages 设置页提供的地址访问；在地址末尾加 `#ops`、`#spider`、`#neural` 或 `#factory` 检查四款主题。
+3. 等待部署完成，使用 Pages 设置页提供的地址访问；在地址末尾加 `#ops`、`#spider`、`#neural`、`#factory` 或 `#nebula` 检查五款主题。
 
 也可以部署到其他静态托管服务，无需安装运行时或构建项目。
 
 ### 放到大屏上
 
-在电脑或小主机上打开页面，使用浏览器全屏功能；常见快捷键为 F11（Mac 为 Ctrl+Cmd+F）。四款主题均提供「全屏」按钮。推荐 1920×1080 或更高分辨率。
+在电脑或小主机上打开页面，使用浏览器全屏功能；常见快捷键为 F11（Mac 为 Ctrl+Cmd+F）。五款主题均提供「全屏」按钮。推荐 1920×1080 或更高分辨率。
 
 ## 配置（换成你自己的数据）
 
@@ -121,7 +133,10 @@ npx serve .
 | `mountFactory(host, SR)` | `VEH` | 载具类型、部件、尺寸与总装显示参数 |
 | `mountFactory(host, SR)` | `PRICE`、`TOKR`、`INR` | token 示例单价、用量速率、输入占比 |
 | `mountFactory(host, SR)` 的车间布局段 | `LOOP`、`ROAD`、`WS`、`MPT` | 主传送带、AGV 道路、工区与机器位置 |
-| 系列外壳脚本 | `THREE_CDN`、`THREE_DEPS` | 两款 3D 主题共用的 CDN 基址与按需脚本列表 |
+| `mountNebula(host, SR)` | `AG`、`WF` | 角色、星云配色、各工区词库（`words`）、工作流与需求名 |
+| `mountNebula(host, SR)` | `VAGUE`、`PASS`、`AXES` | 模糊词与补齐文本、评分阈值、七维雷达标签 |
+| `mountNebula(host, SR)` 的星图布局段 | `ORBITS`、`CORE_Y`、`CORE_R` | 三圈轨道尺寸、星云数量与周期、星核高度与半径 |
+| 系列外壳脚本 | `THREE_CDN`、`THREE_DEPS` | 三款 3D 主题共用的 CDN 基址与按需脚本列表 |
 
 配色在对应 `<template>` 内的 `<style>` 中。OPS 使用 `:host` 定义纸面配色，使用 `:host([data-theme="dark"])` 和系统深色媒体查询定义粒子荧光配色；Canvas 从这些变量读取颜色。
 
@@ -133,6 +148,7 @@ npx serve .
 - **SPIDER**：`mountSpider` 中的 `simStep(dt)` 驱动任务接力模拟，`tokenStep(dt)` 生成 token 用量；任务、角色、质检、账本和可视化相互关联。接入时需要将真实运行事件和用量记录映射到相应状态，并替换模拟推进与初始化数据，避免模拟值与真实指标混用。
 - **NEURAL**：`mountNeural` 内有独立的模拟状态与 `simStep(dt)`，维护任务、角色、信号脉冲及 token 状态。需要替换模拟初始化与推进逻辑，将真实事件映射到面板和 3D 信号。修改 SPIDER 的配置不会自动同步到 NEURAL。
 - **FACTORY**：`mountFactory` 的「3. 模拟」段维护总工程、子板块、货箱、工区与 token 状态，由 `simStep(dt)` 推进。接入需要将真实工程、工序交接、返工与交付事件映射到这些状态，替换示例初始化及模拟推进。`PROJECTS` 的 8 个子板块、工作流索引与 `VEH` 部件需保持对应关系。
+- **NEBULA**：`mountNebula` 的「3. 模拟」段由 `newTask()` 生成需求，`simStep(dt)` 推进审查，`calcScore()` 计算示例评分；`VAGUE` 的问答与 `PASS` 阈值均为演示配置。接入真实需求需要自行实现文本解析、追问与回答、评分证据和派单接口，并替换模拟初始化、读词与评分流程。
 - `PRICE`、`TOKR`、`INR` 等参数的调整只会改变演示，不会自动接入真实账单或 agent 执行记录。
 
 ## 新增主题的步骤
@@ -145,11 +161,11 @@ npx serve .
 
 ## 技术说明
 
-- 单文件 HTML，无构建步骤。OPS 与 SPIDER 使用原生 JavaScript + CSS + Canvas 2D；NEURAL 与 FACTORY 使用 three.js（WebGL）与后处理效果。
+- 单文件 HTML，无构建步骤。OPS 与 SPIDER 使用原生 JavaScript + CSS + Canvas 2D；NEURAL、FACTORY 与 NEBULA 使用 three.js（WebGL）与后处理效果。
 - 系列外壳按需挂载主题；每款主题由 `<template>`、独立 Shadow DOM 与对应的 `mountXxx(host, SR)` 函数组成。选择保存在 localStorage 的 `agent-series-theme` 中。
-- **两款 3D 主题共用按需依赖**：首次切入 NEURAL 或 FACTORY 时，从 `https://cdn.jsdelivr.net/npm/three@0.147.0/` 依次加载 `build/three.min.js`，以及 `examples/js` 下的 CopyShader、LuminosityHighPassShader、EffectComposer、RenderPass、ShaderPass、UnrealBloomPass。两款 3D 主题使用同一份 `THREE_DEPS`，正常加载完成后可复用。建议首次加载完成后再切换另一款 3D 主题；加载中快速切换可能重复请求或缺少辉光，异常时刷新重试。打开 OPS 或 SPIDER 时不会请求这组脚本。
+- **三款 3D 主题共用按需依赖**：首次切入 NEURAL、FACTORY 或 NEBULA 时，从 `https://cdn.jsdelivr.net/npm/three@0.147.0/` 依次加载 `build/three.min.js`，以及 `examples/js` 下的 CopyShader、LuminosityHighPassShader、EffectComposer、RenderPass、ShaderPass、UnrealBloomPass。三款 3D 主题使用同一份 `THREE_DEPS`，正常加载完成后可复用。建议首次加载完成后再切换另一款 3D 主题；加载中快速切换可能重复请求或缺少辉光，异常时刷新重试。打开 OPS 或 SPIDER 时不会请求这组脚本。
 - **3D 故障提示**：依赖加载失败或无法初始化 WebGL 时，对应的 3D 主题显示画面不可用的提示，数据面板仍可运行，OPS 与 SPIDER 不受影响。网络请求长时间无响应可能延迟初始化，恢复后可刷新重试。若仅辉光后处理不可用，源码会关闭辉光渲染。
-- 字体为 Archivo、JetBrains Mono、Noto Sans SC、Michroma、Big Shoulders Stencil Display（FACTORY 标题），经 Google Fonts 加载。字体无法加载时回退至系统字体；完全离线使用需要自行本地化字体及两款 3D 主题的依赖脚本。
+- 字体为 Archivo、JetBrains Mono、Noto Sans SC、Michroma、Big Shoulders Stencil Display（FACTORY 标题）、Syncopate（NEBULA 标题），经 Google Fonts 加载。字体无法加载时回退至系统字体；完全离线使用需要自行本地化字体及三款 3D 主题的依赖脚本。
 - 系统的 `prefers-reduced-motion` 设置不再让大屏默认停住；部分 CSS 动画及故障闪烁仍会降级。
 - OPS 的部分静态图层使用离屏画布缓存；荧光发光会增加渲染开销。不支持 Canvas 柔光或锥形渐变时，相关效果会降级。
 
@@ -157,10 +173,10 @@ npx serve .
 
 ```text
 agent-display/
-├── index.html          # 四款主题与系列外壳（HTML + CSS + JS）
+├── index.html          # 五款主题与系列外壳（HTML + CSS + JS）
 ├── README.md
 ├── CHANGELOG.md
-└── LICENSE             # MIT 许可证
+└── LICENSE             # PolyForm Noncommercial 1.0.0
 ```
 
 版本记录见 [CHANGELOG.md](CHANGELOG.md)。
@@ -171,6 +187,41 @@ OPS 纸面工程的视觉风格灵感来自网上流传的 Claude Code「Paper L
 
 DEVELOPED BY @赛博老爸
 
-## 许可证
+## 授权 License
 
-MIT，详见 [LICENSE](LICENSE)。
+本项目源码公开，采用 **[PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0)**（SPDX：`PolyForm-Noncommercial-1.0.0`），许可证全文见仓库里的 [`LICENSE`](./LICENSE) 文件。
+
+一句话：**非商业用途免费用，商业用途要授权。**
+
+### ✅ 可以免费做的
+
+- 个人学习、研究、测试，自己在电脑上用，当桌面、当摆件都行。
+- 修改代码、做二次创作，只要不用于商业用途。
+- 学校、科研机构、公益组织、政府机构使用（不受经费来源限制）。
+- 非商业地转发、分享，转发时请附上许可证（或许可证链接）和下面的版权声明。
+
+### ❌ 未经授权不可以做的
+
+- 公司或个体经营者在业务中使用，包括只在公司内部使用。
+- 交付给客户、集成进付费产品或付费服务。
+- 打包出售、二次售卖源码或安装包。
+- 其他以营利为目的的使用。
+
+### 必须保留的版权声明
+
+使用、修改或转发时，请保留 `LICENSE` 文件开头这一行：
+
+```
+Required Notice: Copyright (c) 2026 赛博老爸
+```
+
+### 💼 商业授权
+
+想用于商业用途，请联系 **@赛博老爸** 获取商用授权：[cyberdaddyleo@outlook.com](mailto:cyberdaddyleo@outlook.com)
+
+### 版本说明
+
+- 本项目自 **v5.0** 起采用 PolyForm Noncommercial License 1.0.0。
+- v5.0 之前已经发布的版本，按其发布时附带的许可证执行。
+
+> 以上中文说明仅帮助理解，具体权利和义务以英文许可证原文为准。
