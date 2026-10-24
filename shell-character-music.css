@@ -1,0 +1,23 @@
+/* Module shell accents: module 03 retains the original acid-green palette. */
+:root[data-series="ops"]{--terminal-acid:#ef6677;--terminal-line:#353b49;--shell-tint:239,102,119;--shell-soft:#e7bdc7;--shell-muted:#b0a3b4}
+:root[data-series="neural"]{--terminal-acid:#bca7fa;--terminal-line:#3a3d58;--shell-tint:188,167,250;--shell-soft:#dcd4ff;--shell-muted:#adaacb}
+:root[data-series="ops"] .terminal-header{background:linear-gradient(110deg,#171a23,#20171d)}
+:root[data-series="neural"] .terminal-header{background:linear-gradient(110deg,#171b2c,#211d33)}
+:root:is([data-series="ops"],[data-series="neural"]) .module-bar{background:linear-gradient(90deg,rgba(var(--shell-tint),.12),#15171f);border-color:var(--terminal-line)}
+:root:is([data-series="ops"],[data-series="neural"]) .module-num{color:var(--terminal-acid)}
+:root:is([data-series="ops"],[data-series="neural"]) .module-tab.active{color:var(--shell-soft);background:rgba(var(--shell-tint),.07)}
+:root:is([data-series="ops"],[data-series="neural"]) .rail-link.active{background:rgba(var(--shell-tint),.07)}
+:root:is([data-series="ops"],[data-series="neural"]) .terminal-channel,:root:is([data-series="ops"],[data-series="neural"]) .module-ident small{color:var(--shell-muted)}
+:root:is([data-series="ops"],[data-series="neural"]) .terminal-channel b{border-color:var(--terminal-acid)}
+:root:is([data-series="ops"],[data-series="neural"]) .mission-launch{border-color:var(--terminal-line);background:rgba(var(--shell-tint),.09);color:var(--shell-soft)}
+:root:is([data-series="ops"],[data-series="neural"]) .mission-launch small{color:var(--shell-muted)}
+:root:is([data-series="ops"],[data-series="neural"]) .icon-button:hover{background:rgba(var(--shell-tint),.1)}
+:root:is([data-series="ops"],[data-series="neural"]) .signal-dot{box-shadow:0 0 8px rgba(var(--shell-tint),.3)}
+.terminal-header,.module-bar{transition:background .25s,border-color .25s}.music-player{margin-left:auto;display:flex;align-items:center;gap:8px;border:1px solid var(--terminal-line);background:#090c1288;padding:7px 10px;min-width:285px;max-width:370px;color:var(--terminal-ink)}
+.music-info{min-width:0;flex:1;width:110px}.music-title{display:block;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--terminal-acid);max-width:150px}.music-status{display:block;margin-top:4px;font-size:6px;letter-spacing:.5px;color:#98a0ac;white-space:nowrap;max-width:150px;overflow:hidden;text-overflow:ellipsis}
+.music-controls{display:flex;align-items:center;gap:2px}.music-button{display:grid;place-items:center;width:24px;height:27px;background:transparent;border:0;color:#bac1cc;padding:4px}.music-button:hover{color:var(--terminal-acid)}.music-button svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round}.music-button[data-music="play"]{color:var(--terminal-acid)}
+.music-volume{display:flex;align-items:center;gap:4px}.music-volume input{width:48px;height:14px;margin:0;accent-color:var(--terminal-acid);cursor:pointer}.music-volume output{font-size:7px;min-width:23px;color:#b8c1cd}.music-player~.operator{margin-left:0}.music-player.is-playing{border-left-color:var(--terminal-acid)}
+@media(max-width:1400px){.terminal-channel{display:none}.terminal-header{gap:15px}.terminal-brand{min-width:210px}}
+@media(max-width:1000px){.music-player{min-width:245px;padding:6px;gap:4px}.music-info{width:90px}.music-title{max-width:110px}.music-volume input{width:38px}.terminal-brand{min-width:175px}.terminal-wordmark strong{font-size:23px}.terminal-header{padding-inline:16px;gap:10px}.operator{padding-right:10px}}
+@media(max-width:760px){.music-player{position:fixed;z-index:25;bottom:92px;left:10px;right:10px;max-width:none;min-width:0;background:#10151cf2;padding:7px 10px;box-shadow:0 4px 18px #0006}.music-info{width:auto}.music-title{max-width:230px}.music-status{max-width:230px}.music-volume input{width:60px}.terminal-brand{min-width:0}.terminal-wordmark strong{font-size:19px}.terminal-viewport{margin-bottom:51px}.operator{margin-left:auto!important}}
+@media(prefers-reduced-motion:reduce){.terminal-header,.module-bar{transition:none}}
